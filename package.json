@@ -1,0 +1,56 @@
+{
+  "name": "hutao-gs",
+  "version": "1.0.0",
+  "description": "HuTao GS",
+  "main": "src/entry/mainEntry.ts",
+  "bin": "buildRel/mainEntry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "tsc --noEmit",
+    "build-dev": "node ./build -mode:dev",
+    "build-rel": "node ./build -mode:rel",
+    "build": "node ./build",
+    "start": "node ./buildDev/entry/mainEntry.js",
+    "start:dev": "node ./build -mode:dev & node ./buildDev/entry/mainEntry.js",
+    "pack-exe": "pkg . -o \"dist/HuTao-GS.exe\" --build"
+  },
+  "pkg": {
+    "assets": [
+      "webstaticSea/**/*"
+    ],
+    "scripts": [
+      "buildRel/*.js"
+    ],
+    "targets": [
+      "node16-win"
+    ]
+  },
+  "author": "NotArandomGUY",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "denque": "^2.0.1",
+    "hostile": "^1.3.3",
+    "md5": "^2.3.0",
+    "promise-events": "^0.2.4",
+    "protobufjs": "^6.11.2",
+    "source-map-support": "^0.5.21",
+    "verror": "^1.10.1",
+    "yieldable-json": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/hostile": "^1.3.0",
+    "@types/md5": "^2.3.2",
+    "@types/node": "^18.0.0",
+    "@types/verror": "^1.10.5",
+    "@types/yieldable-json": "^2.0.0",
+    "javascript-obfuscator": "^4.0.0",
+    "pkg": "^5.8.0",
+    "resedit": "^1.6.0",
+    "typescript": "^4.8.3",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-obfuscator": "^3.5.1"
+  }
+}

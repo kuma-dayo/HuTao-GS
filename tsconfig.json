@@ -1,0 +1,36 @@
+{
+  "include": [
+    "src/**/*"
+  ],
+  "compilerOptions": {
+    "sourceMap": true,
+    "lib": [
+      "ES2021"
+    ],
+    "module": "CommonJS",
+    "target": "ES2022",
+    "moduleResolution": "Node",
+    "declaration": false,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "outDir": "buildDev",
+    "baseUrl": "./src",
+    "paths": {
+      "$DT/*": [
+        "types/gameData/*"
+      ],
+      "$/*": [
+        "kcpServer/game/*"
+      ],
+      "#/*": [
+        "kcpServer/*",
+        "webServer/*"
+      ],
+      "@/*": [
+        "*"
+      ]
+    }
+  }
+}
