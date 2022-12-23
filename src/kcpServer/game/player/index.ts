@@ -367,7 +367,7 @@ export default class Player extends BaseClass {
     }
   }
 
-  async unlockAllWeapons() {
+  async getAllWeapons() {
     const { inventory } = this
     const weaponList = await WeaponData.getWeaponList()
 
