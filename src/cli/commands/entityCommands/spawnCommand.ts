@@ -2,8 +2,8 @@ import Monster from '$/entity/monster'
 import translate from '@/translate'
 import { CommandDefinition } from '..'
 
-const monsterCommand: CommandDefinition = {
-  name: 'monster',
+const spawnCommand: CommandDefinition = {
+  name: 'spawn',
   usage: 2,
   args: [
     { name: 'id', type: 'int' },
@@ -33,4 +33,4 @@ const monsterCommand: CommandDefinition = {
   }
 }
 
-export default monsterCommand
+export default spawnCommand
