@@ -1,16 +1,15 @@
-import sourceMapSupport from 'source-map-support'
+import sourceMapSupport from "source-map-support"
 sourceMapSupport.install()
-import CLI from '@/cli'
-import { registerBuiltInCommands } from '@/cli/commands'
-import Logger from '@/logger'
-import Server from '@/server'
-import { getTTY } from '@/tty'
-import parseArgs, { ParsedArgs } from '@/utils/parseArgs'
-import { appendFileSync } from 'fs'
-import { join } from 'path'
-import { cwd } from 'process'
-
-(async (args: ParsedArgs) => {
+import CLI from "@/cli"
+import { registerBuiltInCommands } from "@/cli/commands"
+import Logger from "@/logger"
+import Server from "@/server"
+import { getTTY } from "@/tty"
+import parseArgs, { ParsedArgs } from "@/utils/parseArgs"
+import { appendFileSync } from "fs"
+import { join } from "path"
+import { cwd } from "process"
+;(async (args: ParsedArgs) => {
   // initialize tty
   getTTY().setIO()
 
@@ -21,19 +20,19 @@ import { cwd } from 'process'
   let hasError = false
 
   // restart on error
-  process.on('uncaughtException', (err) => {
+  process.on("uncaughtException", (err) => {
     if (hasError) return
     hasError = true
 
     try {
-      appendFileSync(join(cwd(), 'data/log/server/uncaught.txt'), `${err.stack || err.message}\n`)
-    } catch (e) { }
+      appendFileSync(join(cwd(), "data/log/server/uncaught.txt"), `${err.stack || err.message}\n`)
+    } catch (e) {}
 
-    logger.fatal('Uncaught exception:', err)
+    logger.fatal("Uncaught exception:", err)
     server.restart(5e3)
   })
 
-  logger.debug('Launch arguments:', process.argv)
+  logger.debug("Launch arguments:", process.argv)
 
   if (args.updateState != null) {
     // start update

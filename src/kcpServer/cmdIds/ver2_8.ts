@@ -1,4 +1,4 @@
-import { CmdIds } from '@/types/kcp'
+import { CmdIds } from "@/types/kcp"
 
 const ver2_8: CmdIds = {
   ClientBulletCreateNotify: 4,
@@ -1848,7 +1848,7 @@ const ver2_8: CmdIds = {
   Unk2800_HHPCNJGKIPP: 23388,
   Unk2800_COCHLKHLCPO: 23467,
   Unk2800_BDAPFODFMNE: 24550,
-  Unk2800_GDDLBKEENNA: 24601
+  Unk2800_GDDLBKEENNA: 24601,
 }
 
 export default ver2_8

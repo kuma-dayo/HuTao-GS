@@ -1,4 +1,4 @@
-import { CmdIds } from '@/types/kcp'
+import { CmdIds } from "@/types/kcp"
 
 const ver2_8_50: CmdIds = {
   ClientBulletCreateNotify: 6,
@@ -1527,7 +1527,7 @@ const ver2_8_50: CmdIds = {
   ChannellerSlabLoopDungeonSelectConditionRsp: 8979,
   FindHilichurlFinishSecondQuestNotify: 8981,
   RoguelikeGiveUpReq: 8988,
-  StartBuoyantCombatGalleryReq: 9000
+  StartBuoyantCombatGalleryReq: 9000,
 }
 
 export default ver2_8_50

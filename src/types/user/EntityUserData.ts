@@ -1,5 +1,5 @@
-import { LifeStateEnum } from '../proto/enum'
-import PropsUserData from './PropsUserData'
+import { LifeStateEnum } from "../proto/enum"
+import PropsUserData from "./PropsUserData"
 
 export default interface EntityUserData {
   lifeState: LifeStateEnum

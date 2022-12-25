@@ -10,9 +10,9 @@ import {
   SceneGadgetInfo,
   SceneMonsterInfo,
   SceneNpcInfo,
-  ServerBuff
-} from '.'
-import { LifeStateEnum, ProtEntityTypeEnum } from './enum'
+  ServerBuff,
+} from "."
+import { LifeStateEnum, ProtEntityTypeEnum } from "./enum"
 
 export interface SceneEntityInfo {
   avatar?: SceneAvatarInfo

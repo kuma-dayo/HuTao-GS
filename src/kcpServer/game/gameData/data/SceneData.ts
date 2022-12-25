@@ -1,14 +1,14 @@
-import Loader from '$/gameData/loader'
-import ConfigScenePoint from '$DT/BinOutput/Config/ConfigScenePoint'
-import DungeonEntry from '$DT/BinOutput/Config/ConfigScenePoint/Child/DungeonEntry'
-import SceneDataList, { SceneData } from '@/types/gameData/SceneData'
-import { SceneBlockScriptConfig, SceneGroupScriptConfig } from '@/types/gameData/Script/SceneScriptConfig'
+import Loader from "$/gameData/loader"
+import ConfigScenePoint from "$DT/BinOutput/Config/ConfigScenePoint"
+import DungeonEntry from "$DT/BinOutput/Config/ConfigScenePoint/Child/DungeonEntry"
+import SceneDataList, { SceneData } from "@/types/gameData/SceneData"
+import { SceneBlockScriptConfig, SceneGroupScriptConfig } from "@/types/gameData/Script/SceneScriptConfig"
 
 class SceneDataLoader extends Loader {
   declare data: SceneDataList
 
   constructor() {
-    super('SceneData', [])
+    super("SceneData", [])
   }
 
   async getData(): Promise<SceneDataList> {
@@ -16,7 +16,7 @@ class SceneDataLoader extends Loader {
   }
 
   async getScene(sceneId: number): Promise<SceneData> {
-    return (await this.getData())?.find(scene => scene.Id === sceneId) || null
+    return (await this.getData())?.find((scene) => scene.Id === sceneId) || null
   }
 
   async getSceneList(): Promise<SceneData[]> {
@@ -38,7 +38,7 @@ class SceneDataLoader extends Loader {
       const pointMap = await this.getScenePointMap(parseInt(sceneId))
       for (const pointId in pointMap) {
         const point = pointMap[pointId]
-        if (!point || parseInt(pointId) !== entryPointId || point.$type !== 'DungeonEntry') continue
+        if (!point || parseInt(pointId) !== entryPointId || point.$type !== "DungeonEntry") continue
 
         return point
       }
@@ -65,4 +65,4 @@ class SceneDataLoader extends Loader {
 }
 
 let loader: SceneDataLoader
-export default (() => loader = loader || new SceneDataLoader())()
+export default (() => (loader = loader || new SceneDataLoader()))()

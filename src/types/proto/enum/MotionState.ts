@@ -53,5 +53,5 @@ export enum MotionStateEnum {
   MOTION_FLY_IDLE = 51,
   MOTION_FLY_SLOW = 52,
   MOTION_FLY_FAST = 53,
-  MOTION_NUM = 54
+  MOTION_NUM = 54,
 }

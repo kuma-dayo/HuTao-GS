@@ -43,5 +43,5 @@ export enum EntityTypeEnum {
   RewardStatue = 41,
   MPLevel = 42,
   WindSeed = 43,
-  PlaceHolder = 99
+  PlaceHolder = 99,
 }

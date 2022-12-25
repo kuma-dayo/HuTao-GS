@@ -1,4 +1,4 @@
-import { CmdIds } from '@/types/kcp'
+import { CmdIds } from "@/types/kcp"
 
 const ver1_6_51: CmdIds = {
   PingRsp: 1,
@@ -1243,7 +1243,7 @@ const ver1_6_51: CmdIds = {
   CommonPlayerTipsNotify: 8864,
   ChannellerSlabCheckEnterLoopDungeonReq: 8869,
   g_SailShipEventRewardsInfo: 8956,
-  FindHilichurlAcceptQuestNotify: 8972
+  FindHilichurlAcceptQuestNotify: 8972,
 }
 
 export default ver1_6_51

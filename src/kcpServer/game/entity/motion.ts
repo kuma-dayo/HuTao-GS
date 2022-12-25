@@ -1,8 +1,8 @@
-import { GRID_SIZE } from '$/manager/entityManager'
-import Vector from '$/utils/vector'
-import { MotionInfo } from '@/types/proto'
-import { MotionStateEnum } from '@/types/proto/enum'
-import Entity from '.'
+import { GRID_SIZE } from "$/manager/entityManager"
+import Vector from "$/utils/vector"
+import { MotionInfo } from "@/types/proto"
+import { MotionStateEnum } from "@/types/proto/enum"
+import Entity from "."
 
 export default class Motion {
   entity: Entity
@@ -79,7 +79,7 @@ export default class Motion {
 
     if (state != null) {
       this.state = state
-      if (state !== oldState) entity.emit('MotionStateChanged', state, oldState)
+      if (state !== oldState) entity.emit("MotionStateChanged", state, oldState)
     }
 
     if (sceneTime) this.sceneTime = sceneTime
@@ -100,7 +100,7 @@ export default class Motion {
       rot: rot.export(),
       speed: speed.export(),
       state,
-      params: params.map(param => param.export())
+      params: params.map((param) => param.export()),
     }
   }
 }

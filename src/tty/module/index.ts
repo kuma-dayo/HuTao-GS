@@ -1,5 +1,5 @@
-import EventEmitter from 'promise-events'
-import { TTY } from '..'
+import EventEmitter from "promise-events"
+import { TTY } from ".."
 
 export default class TTYModule extends EventEmitter {
   tty: TTY
@@ -22,7 +22,7 @@ export default class TTYModule extends EventEmitter {
     return this.tty.stdout?.rows || 1
   }
 
-  clear(hideCursor: boolean = false) {
+  clear(hideCursor = false) {
     const { tty, y, height } = this
     const { cursorH } = tty
 

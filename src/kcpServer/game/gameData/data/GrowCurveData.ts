@@ -1,12 +1,12 @@
-import Loader from '$/gameData/loader'
-import { CurveExcelConfig } from '@/types/gameData/ExcelBinOutput/Common/CurveExcelConfig'
-import GrowCurveDataGroup from '@/types/gameData/GrowCurveData'
+import Loader from "$/gameData/loader"
+import { CurveExcelConfig } from "@/types/gameData/ExcelBinOutput/Common/CurveExcelConfig"
+import GrowCurveDataGroup from "@/types/gameData/GrowCurveData"
 
 class GrowCurveDataLoader extends Loader {
   declare data: GrowCurveDataGroup
 
   constructor() {
-    super('GrowCurveData')
+    super("GrowCurveData")
   }
 
   async getData(): Promise<GrowCurveDataGroup> {
@@ -19,4 +19,4 @@ class GrowCurveDataLoader extends Loader {
 }
 
 let loader: GrowCurveDataLoader
-export default (() => loader = loader || new GrowCurveDataLoader())()
+export default (() => (loader = loader || new GrowCurveDataLoader()))()

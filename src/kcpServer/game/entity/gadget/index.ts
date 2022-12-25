@@ -1,13 +1,19 @@
-import { GadgetInteractRsp } from '#/packets/GadgetInteract'
-import GadgetState from '#/packets/GadgetState'
-import Entity from '$/entity'
-import GadgetData from '$/gameData/data/GadgetData'
-import GrowCurveData from '$/gameData/data/GrowCurveData'
-import Player from '$/player'
-import { EntityTypeEnum, GadgetStateEnum } from '@/types/enum'
-import { SceneGadgetInfo } from '@/types/proto'
-import { InteractTypeEnum, InterOpTypeEnum, ProtEntityTypeEnum, ResinCostTypeEnum, RetcodeEnum } from '@/types/proto/enum'
-import EntityUserData from '@/types/user/EntityUserData'
+import { GadgetInteractRsp } from "#/packets/GadgetInteract"
+import GadgetState from "#/packets/GadgetState"
+import Entity from "$/entity"
+import GadgetData from "$/gameData/data/GadgetData"
+import GrowCurveData from "$/gameData/data/GrowCurveData"
+import Player from "$/player"
+import { EntityTypeEnum, GadgetStateEnum } from "@/types/enum"
+import { SceneGadgetInfo } from "@/types/proto"
+import {
+  InteractTypeEnum,
+  InterOpTypeEnum,
+  ProtEntityTypeEnum,
+  ResinCostTypeEnum,
+  RetcodeEnum,
+} from "@/types/proto/enum"
+import EntityUserData from "@/types/user/EntityUserData"
 
 export default class Gadget extends Entity {
   gadgetId: number
@@ -34,13 +40,13 @@ export default class Gadget extends Entity {
     const { gadgetId } = this
 
     this.config = await GadgetData.getFightPropConfig(gadgetId)
-    this.growCurve = await GrowCurveData.getGrowCurve('Gadget')
+    this.growCurve = await GrowCurveData.getGrowCurve("Gadget")
 
     const gadgetData = await GadgetData.getGadget(gadgetId)
     if (!gadgetData) return
 
     this.name = gadgetData.JsonName
-    this.entityType = EntityTypeEnum[gadgetData.Type || ''] || EntityTypeEnum.Gadget
+    this.entityType = EntityTypeEnum[gadgetData.Type || ""] || EntityTypeEnum.Gadget
 
     const { IsInvincible, IsLockHP } = gadgetData.Config?.Combat?.Property || {}
     this.isInvincible = !!IsInvincible
@@ -59,14 +65,20 @@ export default class Gadget extends Entity {
     super.initNew(level)
   }
 
-  async interact(_player: Player, opType: InterOpTypeEnum, gadgetId: number, _isUseCondenseResin: boolean, _resinCostType: ResinCostTypeEnum): Promise<GadgetInteractRsp> {
+  async interact(
+    _player: Player,
+    opType: InterOpTypeEnum,
+    gadgetId: number,
+    _isUseCondenseResin: boolean,
+    _resinCostType: ResinCostTypeEnum
+  ): Promise<GadgetInteractRsp> {
     const { entityId } = this
     return {
       retcode: RetcodeEnum.RET_SUCC,
       gadgetEntityId: entityId,
       interactType: InteractTypeEnum.INTERACT_TYPE_NONE,
       opType,
-      gadgetId
+      gadgetId,
     }
   }
 
@@ -86,7 +98,7 @@ export default class Gadget extends Entity {
       gadgetId,
       groupId,
       configId,
-      gadgetState
+      gadgetState,
     }
 
     if (interactId != null) {

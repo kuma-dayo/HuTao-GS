@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import WorldDataGroup, { WorldData, WorldLevelData } from '@/types/gameData/WorldData'
+import Loader from "$/gameData/loader"
+import WorldDataGroup, { WorldData, WorldLevelData } from "@/types/gameData/WorldData"
 
 class WorldDataLoader extends Loader {
   declare data: WorldDataGroup
 
   constructor() {
-    super('WorldData', [])
+    super("WorldData", [])
   }
 
   async getData(): Promise<WorldDataGroup> {
@@ -13,7 +13,7 @@ class WorldDataLoader extends Loader {
   }
 
   async getWorld(id: number): Promise<WorldData> {
-    return (await this.getWorldList()).find(data => data.Id === id)
+    return (await this.getWorldList()).find((data) => data.Id === id)
   }
 
   async getWorldList(): Promise<WorldData[]> {
@@ -24,10 +24,10 @@ class WorldDataLoader extends Loader {
     const worldLevelList = await this.getWorldLevelList()
     if (worldLevelList.length === 0) return null
 
-    const maxLevel = Math.max(...worldLevelList.map(wl => wl.Level))
+    const maxLevel = Math.max(...worldLevelList.map((wl) => wl.Level))
     if (level > maxLevel) return this.getWorldLevel(maxLevel)
 
-    return worldLevelList.find(data => data.Level === level) || null
+    return worldLevelList.find((data) => data.Level === level) || null
   }
 
   async getWorldLevelList(): Promise<WorldLevelData[]> {
@@ -36,4 +36,4 @@ class WorldDataLoader extends Loader {
 }
 
 let loader: WorldDataLoader
-export default (() => loader = loader || new WorldDataLoader())()
+export default (() => (loader = loader || new WorldDataLoader()))()

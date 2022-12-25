@@ -1,4 +1,4 @@
-import { DynamicVector } from '../BinOutput/Common/DynamicNumber'
+import { DynamicVector } from "../BinOutput/Common/DynamicNumber"
 
 export interface SceneGroupScriptConfig {
   Monsters: SceneMonsterScriptConfig[]
@@ -156,4 +156,6 @@ export interface SceneScriptConfig {
   Block: { [blockId: number]: SceneBlockScriptConfig }
 }
 
-export default interface SceneScriptConfigMap { [sceneId: number]: SceneScriptConfig }
+export default interface SceneScriptConfigMap {
+  [sceneId: number]: SceneScriptConfig
+}

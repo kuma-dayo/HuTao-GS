@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import DungeonDataGroup, { DungeonData } from '@/types/gameData/DungeonData'
+import Loader from "$/gameData/loader"
+import DungeonDataGroup, { DungeonData } from "@/types/gameData/DungeonData"
 
 class DungeonDataLoader extends Loader {
   declare data: DungeonDataGroup
 
   constructor() {
-    super('DungeonData')
+    super("DungeonData")
   }
 
   async getData(): Promise<DungeonDataGroup> {
@@ -13,11 +13,11 @@ class DungeonDataLoader extends Loader {
   }
 
   async getDungeon(id: number): Promise<DungeonData> {
-    return (await this.getDungeonList()).find(data => data.Id === id)
+    return (await this.getDungeonList()).find((data) => data.Id === id)
   }
 
   async getDungeonByScene(sceneId: number): Promise<DungeonData> {
-    return (await this.getDungeonList()).find(data => data.SceneId === sceneId)
+    return (await this.getDungeonList()).find((data) => data.SceneId === sceneId)
   }
 
   async getDungeonList(): Promise<DungeonData[]> {
@@ -26,4 +26,4 @@ class DungeonDataLoader extends Loader {
 }
 
 let loader: DungeonDataLoader
-export default (() => loader = loader || new DungeonDataLoader())()
+export default (() => (loader = loader || new DungeonDataLoader()))()

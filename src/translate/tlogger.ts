@@ -1,6 +1,6 @@
-import Logger, { LogLevel } from '@/logger'
-import { formatWithOptions } from 'util'
-import translate from '.'
+import Logger, { LogLevel } from "@/logger"
+import { formatWithOptions } from "util"
+import translate from "."
 
 export default class TLogger extends Logger {
   constructor(name?: string, color?: number) {
@@ -8,7 +8,7 @@ export default class TLogger extends Logger {
   }
 
   private parseParams(...params: any[]): string[] {
-    return params.map(p => formatWithOptions({ colors: true }, p))
+    return params.map((p) => formatWithOptions({ colors: true }, p))
   }
 
   fatal(key: string, ...params: any[]) {

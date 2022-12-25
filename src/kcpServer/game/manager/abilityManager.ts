@@ -1,82 +1,95 @@
-import BaseClass from '#/baseClass'
-import { PacketContext } from '#/packet'
-import AbilityInvocations from '#/packets/AbilityInvocations'
-import ClientAbilityChange from '#/packets/ClientAbilityChange'
-import ClientAbilityInitFinish from '#/packets/ClientAbilityInitFinish'
-import AbilityAction from '$/ability/abilityAction'
-import AbilityPredicate from '$/ability/abilityPredicate'
-import AbilityScalarValueContainer from '$/ability/abilityScalarValueContainer'
-import AbilityUtils from '$/ability/abilityUtils'
-import AppliedAbility from '$/ability/appliedAbility'
-import AppliedModifier from '$/ability/appliedModifier'
-import Embryo from '$/ability/embryo'
-import Entity from '$/entity'
-import AbilityData from '$/gameData/data/AbilityData'
-import TLogger from '@/translate/tlogger'
-import { AbilityEmbryo, AbilityInvokeEntry, AbilityInvokeEntryHead, AbilityMetaAddAbility, AbilityMetaLoseHp, AbilityMetaModifierChange, AbilityMetaModifierDurabilityChange, AbilityMetaReInitOverrideMap, AbilityMetaSetKilledState, AbilityScalarValueEntry, AbilityString, AbilitySyncStateInfo } from '@/types/proto'
-import { AbilityInvokeArgumentEnum, ModifierActionEnum } from '@/types/proto/enum'
-import { getStringHash } from '@/utils/hash'
-import { dataToProtobuffer } from '@/utils/proto'
+import BaseClass from "#/baseClass"
+import { PacketContext } from "#/packet"
+import AbilityInvocations from "#/packets/AbilityInvocations"
+import ClientAbilityChange from "#/packets/ClientAbilityChange"
+import ClientAbilityInitFinish from "#/packets/ClientAbilityInitFinish"
+import AbilityAction from "$/ability/abilityAction"
+import AbilityPredicate from "$/ability/abilityPredicate"
+import AbilityScalarValueContainer from "$/ability/abilityScalarValueContainer"
+import AbilityUtils from "$/ability/abilityUtils"
+import AppliedAbility from "$/ability/appliedAbility"
+import AppliedModifier from "$/ability/appliedModifier"
+import Embryo from "$/ability/embryo"
+import Entity from "$/entity"
+import AbilityData from "$/gameData/data/AbilityData"
+import TLogger from "@/translate/tlogger"
+import {
+  AbilityEmbryo,
+  AbilityInvokeEntry,
+  AbilityInvokeEntryHead,
+  AbilityMetaAddAbility,
+  AbilityMetaLoseHp,
+  AbilityMetaModifierChange,
+  AbilityMetaModifierDurabilityChange,
+  AbilityMetaReInitOverrideMap,
+  AbilityMetaSetKilledState,
+  AbilityScalarValueEntry,
+  AbilityString,
+  AbilitySyncStateInfo,
+} from "@/types/proto"
+import { AbilityInvokeArgumentEnum, ModifierActionEnum } from "@/types/proto/enum"
+import { getStringHash } from "@/utils/hash"
+import { dataToProtobuffer } from "@/utils/proto"
 
 const protoLookupTable = {
-  ABILITY_NONE: '',
-  ABILITY_META_MODIFIER_CHANGE: 'AbilityMetaModifierChange',
+  ABILITY_NONE: "",
+  ABILITY_META_MODIFIER_CHANGE: "AbilityMetaModifierChange",
   ABILITY_META_COMMAND_MODIFIER_CHANGE_REQUEST: null,
-  ABILITY_META_SPECIAL_FLOAT_ARGUMENT: 'AbilityMetaSpecialFloatArgument',
-  ABILITY_META_OVERRIDE_PARAM: 'AbilityScalarValueEntry',
-  ABILITY_META_CLEAR_OVERRIDE_PARAM: 'AbilityString',
-  ABILITY_META_REINIT_OVERRIDEMAP: 'AbilityMetaReInitOverrideMap',
-  ABILITY_META_GLOBAL_FLOAT_VALUE: 'AbilityScalarValueEntry',
-  ABILITY_META_CLEAR_GLOBAL_FLOAT_VALUE: 'AbilityString',
+  ABILITY_META_SPECIAL_FLOAT_ARGUMENT: "AbilityMetaSpecialFloatArgument",
+  ABILITY_META_OVERRIDE_PARAM: "AbilityScalarValueEntry",
+  ABILITY_META_CLEAR_OVERRIDE_PARAM: "AbilityString",
+  ABILITY_META_REINIT_OVERRIDEMAP: "AbilityMetaReInitOverrideMap",
+  ABILITY_META_GLOBAL_FLOAT_VALUE: "AbilityScalarValueEntry",
+  ABILITY_META_CLEAR_GLOBAL_FLOAT_VALUE: "AbilityString",
   ABILITY_META_ABILITY_ELEMENT_STRENGTH: null,
-  ABILITY_META_ADD_OR_GET_ABILITY_AND_TRIGGER: 'AbilityMetaAddOrGetAbilityAndTrigger',
-  ABILITY_META_SET_KILLED_SETATE: 'AbilityMetaSetKilledState',
-  ABILITY_META_SET_ABILITY_TRIGGER: 'AbilityMetaSetAbilityTrigger',
-  ABILITY_META_ADD_NEW_ABILITY: 'AbilityMetaAddAbility',
-  ABILITY_META_REMOVE_ABILITY: '',
-  ABILITY_META_SET_MODIFIER_APPLY_ENTITY: 'AbilityMetaSetModifierApplyEntityId',
-  ABILITY_META_MODIFIER_DURABILITY_CHANGE: 'AbilityMetaModifierDurabilityChange',
-  ABILITY_META_ELEMENT_REACTION_VISUAL: 'AbilityMetaElementReactionVisual',
-  ABILITY_META_SET_POSE_PARAMETER: 'AbilityMetaSetPoseParameter',
-  ABILITY_META_UPDATE_BASE_REACTION_DAMAGE: 'AbilityMetaUpdateBaseReactionDamage',
-  ABILITY_META_TRIGGER_ELEMENT_REACTION: 'AbilityMetaTriggerElementReaction',
-  ABILITY_META_LOSE_HP: 'AbilityMetaLoseHp',
-  ABILITY_ACTION_TRIGGER_ABILITY: 'AbilityActionTriggerAbility',
-  ABILITY_ACTION_SET_CRASH_DAMAGE: 'AbilityActionSetCrashDamage',
+  ABILITY_META_ADD_OR_GET_ABILITY_AND_TRIGGER: "AbilityMetaAddOrGetAbilityAndTrigger",
+  ABILITY_META_SET_KILLED_SETATE: "AbilityMetaSetKilledState",
+  ABILITY_META_SET_ABILITY_TRIGGER: "AbilityMetaSetAbilityTrigger",
+  ABILITY_META_ADD_NEW_ABILITY: "AbilityMetaAddAbility",
+  ABILITY_META_REMOVE_ABILITY: "",
+  ABILITY_META_SET_MODIFIER_APPLY_ENTITY: "AbilityMetaSetModifierApplyEntityId",
+  ABILITY_META_MODIFIER_DURABILITY_CHANGE: "AbilityMetaModifierDurabilityChange",
+  ABILITY_META_ELEMENT_REACTION_VISUAL: "AbilityMetaElementReactionVisual",
+  ABILITY_META_SET_POSE_PARAMETER: "AbilityMetaSetPoseParameter",
+  ABILITY_META_UPDATE_BASE_REACTION_DAMAGE: "AbilityMetaUpdateBaseReactionDamage",
+  ABILITY_META_TRIGGER_ELEMENT_REACTION: "AbilityMetaTriggerElementReaction",
+  ABILITY_META_LOSE_HP: "AbilityMetaLoseHp",
+  ABILITY_ACTION_TRIGGER_ABILITY: "AbilityActionTriggerAbility",
+  ABILITY_ACTION_SET_CRASH_DAMAGE: "AbilityActionSetCrashDamage",
   ABILITY_ACTION_EFFECT: null,
-  ABILITY_ACTION_SUMMON: 'AbilityActionSummon',
-  ABILITY_ACTION_BLINK: 'AbilityActionBlink',
-  ABILITY_ACTION_CREATE_GADGET: 'AbilityActionCreateGadget',
+  ABILITY_ACTION_SUMMON: "AbilityActionSummon",
+  ABILITY_ACTION_BLINK: "AbilityActionBlink",
+  ABILITY_ACTION_CREATE_GADGET: "AbilityActionCreateGadget",
   ABILITY_ACTION_APPLY_LEVEL_MODIFIER: null,
-  ABILITY_ACTION_GENERATE_ELEM_BALL: 'AbilityActionGenerateElemBall',
-  ABILITY_ACTION_SET_RANDOM_OVERRIDE_MAP_VALUE: 'AbilityActionSetRandomOverrideMapValue',
-  ABILITY_ACTION_SERVER_MONSTER_LOG: 'AbilityActionServerMonsterLog',
-  ABILITY_ACTION_CREATE_TILE: 'AbilityActionCreateTile',
-  ABILITY_ACTION_DESTROY_TILE: 'AbilityActionDestroyTile',
-  ABILITY_ACTION_FIRE_AFTER_IMAGE: 'AbilityActionFireAfterImgae',
-  ABILITY_MIXIN_AVATAR_STEER_BY_CAMERA: 'AbilityMixinAvatarSteerByCamera',
+  ABILITY_ACTION_GENERATE_ELEM_BALL: "AbilityActionGenerateElemBall",
+  ABILITY_ACTION_SET_RANDOM_OVERRIDE_MAP_VALUE: "AbilityActionSetRandomOverrideMapValue",
+  ABILITY_ACTION_SERVER_MONSTER_LOG: "AbilityActionServerMonsterLog",
+  ABILITY_ACTION_CREATE_TILE: "AbilityActionCreateTile",
+  ABILITY_ACTION_DESTROY_TILE: "AbilityActionDestroyTile",
+  ABILITY_ACTION_FIRE_AFTER_IMAGE: "AbilityActionFireAfterImgae",
+  ABILITY_MIXIN_AVATAR_STEER_BY_CAMERA: "AbilityMixinAvatarSteerByCamera",
   ABILITY_MIXIN_MONSTER_DEFEND: null,
-  ABILITY_MIXIN_WIND_ZONE: 'AbilityMixinWindZone',
-  ABILITY_MIXIN_COST_STAMINA: 'AbilityMixinCostStamina',
-  ABILITY_MIXIN_ELITE_SHIELD: 'AbilityMixinEliteShield',
-  ABILITY_MIXIN_ELEMENT_SHIELD: 'AbilityMixinElementShield',
-  ABILITY_MIXIN_GLOBAL_SHIELD: 'AbilityMixinGlobalShield',
-  ABILITY_MIXIN_SHIELD_BAR: 'AbilityMixinShieldBar',
-  ABILITY_MIXIN_WIND_SEED_SPAWNER: 'AbilityMixinWindSeedSpawner',
-  ABILITY_MIXIN_DO_ACTION_BY_ELEMENT_REACTION: 'AbilityMixinDoActionByElementReaction',
-  ABILITY_MIXIN_FIELD_ENTITY_COUNT_CHANGE: 'AbilityMixinFieldEntityCountChange',
-  ABILITY_MIXIN_SCENE_PROP_SYNC: 'AbilityMixinScenePropSync',
-  ABILITY_MIXIN_WIDGET_MP_SUPPORT: 'AbilityMixinWidgetMpSupport'
+  ABILITY_MIXIN_WIND_ZONE: "AbilityMixinWindZone",
+  ABILITY_MIXIN_COST_STAMINA: "AbilityMixinCostStamina",
+  ABILITY_MIXIN_ELITE_SHIELD: "AbilityMixinEliteShield",
+  ABILITY_MIXIN_ELEMENT_SHIELD: "AbilityMixinElementShield",
+  ABILITY_MIXIN_GLOBAL_SHIELD: "AbilityMixinGlobalShield",
+  ABILITY_MIXIN_SHIELD_BAR: "AbilityMixinShieldBar",
+  ABILITY_MIXIN_WIND_SEED_SPAWNER: "AbilityMixinWindSeedSpawner",
+  ABILITY_MIXIN_DO_ACTION_BY_ELEMENT_REACTION: "AbilityMixinDoActionByElementReaction",
+  ABILITY_MIXIN_FIELD_ENTITY_COUNT_CHANGE: "AbilityMixinFieldEntityCountChange",
+  ABILITY_MIXIN_SCENE_PROP_SYNC: "AbilityMixinScenePropSync",
+  ABILITY_MIXIN_WIDGET_MP_SUPPORT: "AbilityMixinWidgetMpSupport",
 }
 
 export interface AbilityInvokeEntryParsed {
-  type: string,
-  head: AbilityInvokeEntryHead,
-  data: any,
+  type: string
+  head: AbilityInvokeEntryHead
+  data: any
   buf: Buffer
 }
 
-const logger = new TLogger('ABILIT', 0x10ff10)
+const logger = new TLogger("ABILIT", 0x10ff10)
 
 export default class AbilityManager extends BaseClass {
   entity: Entity
@@ -119,7 +132,7 @@ export default class AbilityManager extends BaseClass {
     const { embryoList } = this
 
     let id = 0
-    while (embryoList.find(e => e.id === id)) id++
+    while (embryoList.find((e) => e.id === id)) id++
 
     return id
   }
@@ -127,19 +140,19 @@ export default class AbilityManager extends BaseClass {
   private async parseEntry(entry: AbilityInvokeEntry): Promise<AbilityInvokeEntryParsed> {
     const { head, argumentType, abilityData } = entry
     const argType = AbilityInvokeArgumentEnum[argumentType]
-    const buf = Buffer.from(abilityData, 'base64')
+    const buf = Buffer.from(abilityData, "base64")
     const proto = protoLookupTable[argType]
 
     if (proto == null) {
-      logger.warn('message.ability.warn.noProto', argumentType, argType, buf.toString('base64'))
+      logger.warn("message.ability.warn.noProto", argumentType, argType, buf.toString("base64"))
       return null
     }
 
     return {
-      type: argType.replace(/(?<=(^|_)[A-Z]).*?(?=($|_))/g, v => v.toLowerCase()).replace(/_/g, ''),
+      type: argType.replace(/(?<=(^|_)[A-Z]).*?(?=($|_))/g, (v) => v.toLowerCase()).replace(/_/g, ""),
       head,
       data: await dataToProtobuffer(buf, proto),
-      buf
+      buf,
     }
   }
 
@@ -152,24 +165,26 @@ export default class AbilityManager extends BaseClass {
     if (!localId) return
 
     const ability = this.getAbility(instancedAbilityId)
-    if (ability == null) return logger.debug('generic.param4', entity.entityId, type, 'ability == null', head)
+    if (ability == null) return logger.debug("generic.param4", entity.entityId, type, "ability == null", head)
 
     const abilityName = await AbilityData.lookupString(ability.abilityName)
     const actionConfig = await AbilityData.getActionByLocalId(abilityName, localId)
-    if (actionConfig == null) return logger.debug('generic.param5', entity.entityId, type, 'action == null', head, abilityName)
+    if (actionConfig == null)
+      return logger.debug("generic.param5", entity.entityId, type, "action == null", head, abilityName)
 
     const target = entityManager.getEntity(targetId) || entity
-    if (target == null) return logger.debug('generic.param5', entity.entityId, type, 'target == null', head, abilityName)
+    if (target == null)
+      return logger.debug("generic.param5", entity.entityId, type, "target == null", head, abilityName)
 
     await action.runActionConfig(context, ability, actionConfig, data, target)
   }
 
-  addEmbryo(name: string = 'Default', overrideName: string = 'Default'): Embryo {
+  addEmbryo(name = "Default", overrideName = "Default"): Embryo {
     const id = this.getNewId()
     const embryo = new Embryo(this, id, name, overrideName)
 
     this.embryoList.push(embryo)
-    logger.verbose('message.ability.debug.register', id, name, overrideName)
+    logger.verbose("message.ability.debug.register", id, name, overrideName)
 
     return embryo
   }
@@ -181,7 +196,7 @@ export default class AbilityManager extends BaseClass {
 
     embryoList.splice(embryoList.indexOf(embryo), 1)
 
-    logger.verbose('message.ability.debug.unregister', id, name, overrideName)
+    logger.verbose("message.ability.debug.unregister", id, name, overrideName)
   }
 
   clearEmbryo() {
@@ -190,7 +205,7 @@ export default class AbilityManager extends BaseClass {
   }
 
   getEmbryo(id: number): Embryo {
-    return this.embryoList.find(embryo => embryo.id === id) || null
+    return this.embryoList.find((embryo) => embryo.id === id) || null
   }
 
   applyAbility(id: number): AppliedAbility {
@@ -217,17 +232,21 @@ export default class AbilityManager extends BaseClass {
   }
 
   getAbility(id: number): AppliedAbility {
-    return this.abilityList.find(a => a.id === id) || null
+    return this.abilityList.find((a) => a.id === id) || null
   }
 
   getAbilityByName(name: AbilityString): AppliedAbility {
-    return this.abilityList.find(a => a.abilityName?.hash === name.hash || (name.str && a.abilityName?.str === name.str)) || null
+    return (
+      this.abilityList.find(
+        (a) => a.abilityName?.hash === name.hash || (name.str && a.abilityName?.str === name.str)
+      ) || null
+    )
   }
 
   applyModifier(id: number): AppliedModifier {
     let modifier = this.getModifier(id)
     if (modifier) {
-      logger.debug('message.ability.debug.indexWrong', this.entity.entityId, modifier.name)
+      logger.debug("message.ability.debug.indexWrong", this.entity.entityId, modifier.name)
       return modifier
     }
 
@@ -251,14 +270,14 @@ export default class AbilityManager extends BaseClass {
   }
 
   getModifier(id: number): AppliedModifier {
-    return this.modifierList.find(modifier => modifier.id === id) || null
+    return this.modifierList.find((modifier) => modifier.id === id) || null
   }
 
   initFromEmbryos() {
     const { embryoList, abilityList } = this
     for (const embryo of embryoList) {
       const { name, overrideName } = embryo
-      const usedIdList = abilityList.map(a => a.id)
+      const usedIdList = abilityList.map((a) => a.id)
 
       let id = 1
       while (usedIdList.includes(id)) id++
@@ -282,7 +301,8 @@ export default class AbilityManager extends BaseClass {
     const { OnAbilityStart } = abilityConfig
     if (!Array.isArray(OnAbilityStart)) return
 
-    for (const actionConfig of OnAbilityStart) await action.runActionConfig(context, ability, actionConfig, null, entity)
+    for (const actionConfig of OnAbilityStart)
+      await action.runActionConfig(context, ability, actionConfig, null, entity)
   }
 
   exportAbilitySyncStateInfo(): AbilitySyncStateInfo {
@@ -292,14 +312,14 @@ export default class AbilityManager extends BaseClass {
     return {
       isInited: true,
       dynamicValueMap: dynamicValueMapContainer.export(),
-      appliedAbilities: abilityList.map(ability => ability.export()),
-      appliedModifiers: modifierList.map(modifier => modifier.export()),
-      sgvDynamicValueMap: sgvDynamicValueMapContainer.export()
+      appliedAbilities: abilityList.map((ability) => ability.export()),
+      appliedModifiers: modifierList.map((modifier) => modifier.export()),
+      sgvDynamicValueMap: sgvDynamicValueMapContainer.export(),
     }
   }
 
   exportEmbryoList(): AbilityEmbryo[] {
-    return this.embryoList.map(embryo => embryo.export())
+    return this.embryoList.map((embryo) => embryo.export())
   }
 
   /**Events**/
@@ -314,7 +334,7 @@ export default class AbilityManager extends BaseClass {
     if (parsed == null) return
     const { type, head, data, buf } = parsed
 
-    logger.verbose('generic.param1', type)
+    logger.verbose("generic.param1", type)
 
     await this.emit(type, context, head, data, buf)
     await this.runAction(context, parsed)
@@ -353,7 +373,11 @@ export default class AbilityManager extends BaseClass {
   /**Ability Events**/
 
   // AbilityMetaAddNewAbility
-  async handleAbilityMetaAddNewAbility(_context: PacketContext, _head: AbilityInvokeEntryHead, data: AbilityMetaAddAbility) {
+  async handleAbilityMetaAddNewAbility(
+    _context: PacketContext,
+    _head: AbilityInvokeEntryHead,
+    data: AbilityMetaAddAbility
+  ) {
     const { instancedAbilityId, abilityName, abilityOverride, overrideMap } = data?.ability || {}
     if (instancedAbilityId == null) return
 
@@ -373,12 +397,20 @@ export default class AbilityManager extends BaseClass {
   }
 
   // AbilityMetaGlobalFloatValue
-  async handleAbilityMetaGlobalFloatValue(_context: PacketContext, _head: AbilityInvokeEntryHead, data: AbilityScalarValueEntry) {
+  async handleAbilityMetaGlobalFloatValue(
+    _context: PacketContext,
+    _head: AbilityInvokeEntryHead,
+    data: AbilityScalarValueEntry
+  ) {
     this.dynamicValueMapContainer.setValue(data)
   }
 
   // AbilityMetaReinitOverridemap
-  async handleAbilityMetaReinitOverridemap(_context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityMetaReInitOverrideMap) {
+  async handleAbilityMetaReinitOverridemap(
+    _context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityMetaReInitOverrideMap
+  ) {
     const { instancedAbilityId } = head
     const { overrideMap } = data
     const ability = this.getAbility(instancedAbilityId)
@@ -388,7 +420,11 @@ export default class AbilityManager extends BaseClass {
   }
 
   // AbilityMetaOverrideParam
-  async handleAbilityMetaOverrideParam(_context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityScalarValueEntry) {
+  async handleAbilityMetaOverrideParam(
+    _context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityScalarValueEntry
+  ) {
     const { instancedAbilityId } = head
     const ability = this.getAbility(instancedAbilityId)
     if (ability == null) return
@@ -397,7 +433,11 @@ export default class AbilityManager extends BaseClass {
   }
 
   // AbilityMetaModifierChange
-  async handleAbilityMetaModifierChange(context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityMetaModifierChange) {
+  async handleAbilityMetaModifierChange(
+    context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityMetaModifierChange
+  ) {
     const { entity } = this
     const { instancedAbilityId, instancedModifierId, modifierConfigLocalId } = head
     const { action, parentAbilityName, parentAbilityOverride, isAttachedParentAbility, applyEntityId } = data
@@ -412,25 +452,29 @@ export default class AbilityManager extends BaseClass {
         modifier.setAttachedParent(isAttachedParentAbility)
         modifier.setApplyEntityId(applyEntityId)
 
-        await modifier.emit('Added', context)
+        await modifier.emit("Added", context)
         break
       }
       case ModifierActionEnum.REMOVED: {
         const modifier = this.getModifier(instancedModifierId)
         if (modifier == null) return
 
-        await modifier.emit('Removed', context)
+        await modifier.emit("Removed", context)
 
         this.removeModifier(instancedModifierId)
         break
       }
       default:
-        logger.warn('generic.param4', entity.entityId, 'MetaModifierChange', 'Unknown action:', action)
+        logger.warn("generic.param4", entity.entityId, "MetaModifierChange", "Unknown action:", action)
     }
   }
 
   // AbilityMetaModifierDurabilityChange
-  async handleAbilityMetaModifierDurabilityChange(_context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityMetaModifierDurabilityChange) {
+  async handleAbilityMetaModifierDurabilityChange(
+    _context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityMetaModifierDurabilityChange
+  ) {
     const { instancedModifierId } = head
     const { reduceDurability, remainDurability } = data
     const modifier = this.getModifier(instancedModifierId)
@@ -440,20 +484,30 @@ export default class AbilityManager extends BaseClass {
   }
 
   // AbilityMetaLoseHp
-  async handleAbilityMetaLoseHp(_context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityMetaLoseHp, buf: Buffer) {
+  async handleAbilityMetaLoseHp(
+    _context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityMetaLoseHp,
+    buf: Buffer
+  ) {
     const { entity } = this
     const { instancedAbilityId } = head
     const ability = this.getAbility(instancedAbilityId)
 
-    logger.debug('generic.param6', entity.entityId, 'MetaLoseHp', ability?.abilityName, head, data, buf)
+    logger.debug("generic.param6", entity.entityId, "MetaLoseHp", ability?.abilityName, head, data, buf)
   }
 
   // AbilityMetaSetKilledState
-  async handleAbilityMetaSetKilledState(_context: PacketContext, head: AbilityInvokeEntryHead, data: AbilityMetaSetKilledState, buf: Buffer) {
+  async handleAbilityMetaSetKilledState(
+    _context: PacketContext,
+    head: AbilityInvokeEntryHead,
+    data: AbilityMetaSetKilledState,
+    buf: Buffer
+  ) {
     const { entity } = this
     const { instancedAbilityId } = head
     const ability = this.getAbility(instancedAbilityId)
 
-    logger.debug('generic.param6', entity.entityId, 'MetaSetKilledState', ability?.abilityName, head, data, buf)
+    logger.debug("generic.param6", entity.entityId, "MetaSetKilledState", ability?.abilityName, head, data, buf)
   }
 }

@@ -1,5 +1,5 @@
-import { AvatarEquipAffixInfo, AvatarExcelInfo, AvatarFetterInfo, AvatarSkillInfo, PropValue, TrialAvatarInfo } from '.'
-import { AvatarExpeditionStateEnum, AvatarTypeEnum, LifeStateEnum } from './enum'
+import { AvatarEquipAffixInfo, AvatarExcelInfo, AvatarFetterInfo, AvatarSkillInfo, PropValue, TrialAvatarInfo } from "."
+import { AvatarExpeditionStateEnum, AvatarTypeEnum, LifeStateEnum } from "./enum"
 
 export interface AvatarInfo {
   avatarId?: number

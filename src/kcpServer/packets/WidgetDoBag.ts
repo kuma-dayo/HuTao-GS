@@ -1,7 +1,7 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import { ClientStateEnum } from '@/types/enum'
-import { WidgetCreateLocationInfo, WidgetCreatorInfo } from '@/types/proto'
-import { RetcodeEnum } from '@/types/proto/enum'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import { ClientStateEnum } from "@/types/enum"
+import { WidgetCreateLocationInfo, WidgetCreatorInfo } from "@/types/proto"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface WidgetDoBagReq {
   locationInfo?: WidgetCreateLocationInfo
@@ -16,9 +16,9 @@ export interface WidgetDoBagRsp {
 
 class WidgetDoBagPacket extends Packet implements PacketInterface {
   constructor() {
-    super('WidgetDoBag', {
+    super("WidgetDoBag", {
       reqState: ClientStateEnum.IN_GAME,
-      reqStatePass: true
+      reqStatePass: true,
     })
   }
 
@@ -28,7 +28,7 @@ class WidgetDoBagPacket extends Packet implements PacketInterface {
     console.log(data)
     await this.response(context, {
       retcode: RetcodeEnum.RET_SUCC,
-      materialId
+      materialId,
     })
   }
 
@@ -38,4 +38,4 @@ class WidgetDoBagPacket extends Packet implements PacketInterface {
 }
 
 let packet: WidgetDoBagPacket
-export default (() => packet = packet || new WidgetDoBagPacket())()
+export default (() => (packet = packet || new WidgetDoBagPacket()))()

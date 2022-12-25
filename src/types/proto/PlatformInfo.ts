@@ -1,5 +1,5 @@
-import { MathQuaternionInfo, Route, VectorInfo } from '.'
-import { MovingPlatformTypeEnum } from './enum'
+import { MathQuaternionInfo, Route, VectorInfo } from "."
+import { MovingPlatformTypeEnum } from "./enum"
 
 export interface PlatformInfo {
   routeId: number

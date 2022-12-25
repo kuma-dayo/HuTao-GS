@@ -1,6 +1,6 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import Entity from '$/entity'
-import { AuthorityChange } from '@/types/proto'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import Entity from "$/entity"
+import { AuthorityChange } from "@/types/proto"
 
 export interface EntityAuthorityChangeNotify {
   authorityChangeList: AuthorityChange[]
@@ -10,7 +10,7 @@ class EntityAuthorityChangePacket extends Packet implements PacketInterface {
   entityList: Entity[]
 
   constructor() {
-    super('EntityAuthorityChange')
+    super("EntityAuthorityChange")
 
     this.entityList = []
   }
@@ -19,11 +19,11 @@ class EntityAuthorityChangePacket extends Packet implements PacketInterface {
     if (entityList.length <= 0) return
 
     const notifyData: EntityAuthorityChangeNotify = {
-      authorityChangeList: entityList.map(entity => ({
+      authorityChangeList: entityList.map((entity) => ({
         entityId: entity.entityId,
         authorityPeerId: entity.authorityPeerId,
-        entityAuthorityInfo: entity.exportEntityAuthorityInfo()
-      }))
+        entityAuthorityInfo: entity.exportEntityAuthorityInfo(),
+      })),
     }
 
     await super.sendNotify(context, notifyData)
@@ -40,4 +40,4 @@ class EntityAuthorityChangePacket extends Packet implements PacketInterface {
 }
 
 let packet: EntityAuthorityChangePacket
-export default (() => packet = packet || new EntityAuthorityChangePacket())()
+export default (() => (packet = packet || new EntityAuthorityChangePacket()))()

@@ -1,15 +1,20 @@
-import Entity from '$/entity'
-import Gadget from '$/entity/gadget'
-import Monster from '$/entity/monster'
-import Npc from '$/entity/npc'
-import SceneData from '$/gameData/data/SceneData'
-import WorldData from '$/gameData/data/WorldData'
-import Vector from '$/utils/vector'
-import Logger from '@/logger'
-import { SceneGadgetScriptConfig, SceneMonsterScriptConfig, SceneNpcScriptConfig, SceneSuiteScriptConfig } from '@/types/gameData/Script/SceneScriptConfig'
-import { VisionTypeEnum } from '@/types/proto/enum'
-import { WaitOnBlock } from '@/utils/asyncWait'
-import SceneBlock from './sceneBlock'
+import Entity from "$/entity"
+import Gadget from "$/entity/gadget"
+import Monster from "$/entity/monster"
+import Npc from "$/entity/npc"
+import SceneData from "$/gameData/data/SceneData"
+import WorldData from "$/gameData/data/WorldData"
+import Vector from "$/utils/vector"
+import Logger from "@/logger"
+import {
+  SceneGadgetScriptConfig,
+  SceneMonsterScriptConfig,
+  SceneNpcScriptConfig,
+  SceneSuiteScriptConfig,
+} from "@/types/gameData/Script/SceneScriptConfig"
+import { VisionTypeEnum } from "@/types/proto/enum"
+import { WaitOnBlock } from "@/utils/asyncWait"
+import SceneBlock from "./sceneBlock"
 
 export default class SceneGroup {
   block: SceneBlock
@@ -61,7 +66,7 @@ export default class SceneGroup {
     if (await this.reloadList(monsterList)) return
 
     const worldLevelData = await WorldData.getWorldLevel(world.level)
-    const levelOffset = worldLevelData == null ? 0 : (worldLevelData.MonsterLevel - 22)
+    const levelOffset = worldLevelData == null ? 0 : worldLevelData.MonsterLevel - 22
 
     for (const monster of monsters) {
       const { MonsterId, ConfigId, PoseId, IsElite, Level, Pos, Rot } = monster
@@ -103,8 +108,8 @@ export default class SceneGroup {
       entity.blockId = blockId
       entity.suitIdList = suites
         .map((suite, index) => ({ index, suite }))
-        .filter(e => e.suite?.Npcs?.includes(ConfigId))
-        .map(e => e.index + 1)
+        .filter((e) => e.suite?.Npcs?.includes(ConfigId))
+        .map((e) => e.index + 1)
 
       const { motion, bornPos } = entity
       const { pos, rot } = motion
@@ -182,7 +187,7 @@ export default class SceneGroup {
     await wob.waitTick()
     await this.loadGadgets(Object.values(groupData.Gadgets || {}))
 
-    Logger.measure('Group load', grpLoadPerfMark)
+    Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)
   }
 
@@ -199,7 +204,7 @@ export default class SceneGroup {
     await this.unloadList(npcList)
     await this.unloadList(gadgetList)
 
-    Logger.measure('Group unload', grpUnloadPerfMark)
+    Logger.measure("Group unload", grpUnloadPerfMark)
     Logger.clearMarks(grpUnloadPerfMark)
   }
 }

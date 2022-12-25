@@ -1,5 +1,5 @@
-import { MathQuaternionInfo, VectorInfo } from '.'
-import { ShapeTypeEnum } from './enum'
+import { MathQuaternionInfo, VectorInfo } from "."
+import { ShapeTypeEnum } from "./enum"
 
 export interface ObstacleInfo {
   obstacleId: number

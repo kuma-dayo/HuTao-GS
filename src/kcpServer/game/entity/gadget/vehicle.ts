@@ -1,12 +1,12 @@
-import { PacketContext } from '#/packet'
-import VehicleInteract from '#/packets/VehicleInteract'
-import StaminaManager from '$/manager/staminaManager'
-import VehicleManager from '$/manager/vehicleManager'
-import Player from '$/player'
-import { FightPropEnum } from '@/types/enum'
-import { SceneGadgetInfo, VehicleLocationInfo, VehicleMember } from '@/types/proto'
-import { RetcodeEnum, VehicleInteractTypeEnum } from '@/types/proto/enum'
-import Gadget from '.'
+import { PacketContext } from "#/packet"
+import VehicleInteract from "#/packets/VehicleInteract"
+import StaminaManager from "$/manager/staminaManager"
+import VehicleManager from "$/manager/vehicleManager"
+import Player from "$/player"
+import { FightPropEnum } from "@/types/enum"
+import { SceneGadgetInfo, VehicleLocationInfo, VehicleMember } from "@/types/proto"
+import { RetcodeEnum, VehicleInteractTypeEnum } from "@/types/proto/enum"
+import Gadget from "."
 
 export default class Vehicle extends Gadget {
   vehicleManager: VehicleManager
@@ -15,7 +15,7 @@ export default class Vehicle extends Gadget {
   staminaManager: StaminaManager
 
   pointId: number
-  memberList: { pos: number, player: Player }[]
+  memberList: { pos: number; player: Player }[]
 
   constructor(manager: VehicleManager, player: Player, vehicleId: number, pointId: number) {
     super(vehicleId)
@@ -37,7 +37,7 @@ export default class Vehicle extends Gadget {
 
   async addPassenger(player: Player, pos: number, context?: PacketContext) {
     const { entityId, memberList } = this
-    const member = memberList.find(m => m.pos === pos)
+    const member = memberList.find((m) => m.pos === pos)
 
     if (member) {
       if (member.player === player) {
@@ -45,7 +45,7 @@ export default class Vehicle extends Gadget {
           retcode: RetcodeEnum.RET_SUCC,
           entityId,
           interactType: VehicleInteractTypeEnum.VEHICLE_INTERACT_IN,
-          member: this.exportVehicleMember(pos)
+          member: this.exportVehicleMember(pos),
         })
       } else {
         await VehicleInteract.response(context || player.context, { retcode: RetcodeEnum.RET_VEHICLE_SLOT_OCCUPIED })
@@ -60,13 +60,13 @@ export default class Vehicle extends Gadget {
       retcode: RetcodeEnum.RET_SUCC,
       entityId,
       interactType: VehicleInteractTypeEnum.VEHICLE_INTERACT_IN,
-      member: this.exportVehicleMember(pos)
+      member: this.exportVehicleMember(pos),
     })
   }
 
   async removePassenger(player: Player, context?: PacketContext) {
     const { entityId, memberList } = this
-    const member = memberList.find(m => m.player === player)
+    const member = memberList.find((m) => m.player === player)
 
     if (member == null) {
       await VehicleInteract.response(context || player.context, { retcode: RetcodeEnum.RET_NOT_IN_VEHICLE })
@@ -80,7 +80,7 @@ export default class Vehicle extends Gadget {
       retcode: RetcodeEnum.RET_SUCC,
       entityId,
       interactType: VehicleInteractTypeEnum.VEHICLE_INTERACT_OUT,
-      member: memberInfo
+      member: memberInfo,
     })
   }
 
@@ -106,9 +106,9 @@ export default class Vehicle extends Gadget {
     const info = super.exportSceneGadgetInfo()
 
     info.vehicleInfo = {
-      memberList: memberList.map(m => this.exportVehicleMember(m.pos)),
+      memberList: memberList.map((m) => this.exportVehicleMember(m.pos)),
       ownerUid: player.uid,
-      curStamina: 240
+      curStamina: 240,
     }
 
     return info
@@ -126,25 +126,25 @@ export default class Vehicle extends Gadget {
       rot: rot.export(),
       curHp: this.getProp(FightPropEnum.FIGHT_PROP_CUR_HP),
       maxHp: this.getProp(FightPropEnum.FIGHT_PROP_MAX_HP),
-      uidList: memberList.map(m => m.player.uid)
+      uidList: memberList.map((m) => m.player.uid),
     }
   }
 
   exportVehicleMember(pos: number): VehicleMember {
-    const member = this.memberList.find(m => m.pos === pos)
+    const member = this.memberList.find((m) => m.pos === pos)
     if (member == null) return null
 
     return {
       uid: member.player.uid,
       avatarGuid: member.player.currentAvatar?.guid?.toString(),
-      pos
+      pos,
     }
   }
 
   /**Events**/
 
   // Death
-  async handleDeath(seqId?: number, batch: boolean = false) {
+  async handleDeath(seqId?: number, batch = false) {
     await this.clearPassengers()
     await super.handleDeath(seqId, batch)
   }

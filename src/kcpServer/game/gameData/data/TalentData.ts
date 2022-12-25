@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import TalentDataList, { AvatarTalentData } from '@/types/gameData/TalentData'
+import Loader from "$/gameData/loader"
+import TalentDataList, { AvatarTalentData } from "@/types/gameData/TalentData"
 
 class TalentDataLoader extends Loader {
   declare data: TalentDataList
 
   constructor() {
-    super('TalentData')
+    super("TalentData")
   }
 
   async getData(): Promise<TalentDataList> {
@@ -13,7 +13,7 @@ class TalentDataLoader extends Loader {
   }
 
   async getAvatarTalent(id: number): Promise<AvatarTalentData> {
-    return (await this.getAvatarTalentList()).find(data => data.Id === id)
+    return (await this.getAvatarTalentList()).find((data) => data.Id === id)
   }
 
   async getAvatarTalentList(): Promise<AvatarTalentData[]> {
@@ -22,4 +22,4 @@ class TalentDataLoader extends Loader {
 }
 
 let loader: TalentDataLoader
-export default (() => loader = loader || new TalentDataLoader())()
+export default (() => (loader = loader || new TalentDataLoader()))()

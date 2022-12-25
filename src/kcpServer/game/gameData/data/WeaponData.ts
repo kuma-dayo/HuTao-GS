@@ -1,12 +1,12 @@
-import Loader from '$/gameData/loader'
-import { EntityFightPropConfig } from '@/types/game'
-import WeaponDataGroup, { WeaponData } from '@/types/gameData/WeaponData'
+import Loader from "$/gameData/loader"
+import { EntityFightPropConfig } from "@/types/game"
+import WeaponDataGroup, { WeaponData } from "@/types/gameData/WeaponData"
 
 class WeaponDataLoader extends Loader {
   declare data: WeaponDataGroup
 
   constructor() {
-    super('WeaponData')
+    super("WeaponData")
   }
 
   async getData(): Promise<WeaponDataGroup> {
@@ -14,11 +14,11 @@ class WeaponDataLoader extends Loader {
   }
 
   async getWeapon(id: number): Promise<WeaponData> {
-    return (await this.getWeaponList()).find(data => data.Id === id)
+    return (await this.getWeaponList()).find((data) => data.Id === id)
   }
 
   async getWeaponByGadgetId(gadgetId: number): Promise<WeaponData> {
-    return (await this.getWeaponList()).find(data => data.GadgetId === gadgetId)
+    return (await this.getWeaponList()).find((data) => data.GadgetId === gadgetId)
   }
 
   async getWeaponList(): Promise<WeaponData[]> {
@@ -29,21 +29,21 @@ class WeaponDataLoader extends Loader {
     const data = await this.getWeapon(id)
     if (!data) {
       return {
-        PropGrowCurves: []
+        PropGrowCurves: [],
       }
     }
 
     const { Prop } = data
 
     return {
-      PropGrowCurves: Prop.map(c => ({
+      PropGrowCurves: Prop.map((c) => ({
         PropType: c.PropType,
         Value: c.InitValue,
-        Type: c.Type
-      }))
+        Type: c.Type,
+      })),
     }
   }
 }
 
 let loader: WeaponDataLoader
-export default (() => loader = loader || new WeaponDataLoader())()
+export default (() => (loader = loader || new WeaponDataLoader()))()

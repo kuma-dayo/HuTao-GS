@@ -1,12 +1,12 @@
-import Loader from '$/gameData/loader'
-import { EntityFightPropConfig } from '@/types/game'
-import GadgetDataGroup, { GadgetData, GadgetPropData } from '@/types/gameData/GadgetData'
+import Loader from "$/gameData/loader"
+import { EntityFightPropConfig } from "@/types/game"
+import GadgetDataGroup, { GadgetData, GadgetPropData } from "@/types/gameData/GadgetData"
 
 class GadgetDataLoader extends Loader {
   declare data: GadgetDataGroup
 
   constructor() {
-    super('GadgetData')
+    super("GadgetData")
   }
 
   async getData(): Promise<GadgetDataGroup> {
@@ -14,7 +14,7 @@ class GadgetDataLoader extends Loader {
   }
 
   async getGadget(id: number): Promise<GadgetData> {
-    return (await this.getGadgetList()).find(data => data.Id === id)
+    return (await this.getGadgetList()).find((data) => data.Id === id)
   }
 
   async getGadgetList(): Promise<GadgetData[]> {
@@ -22,7 +22,7 @@ class GadgetDataLoader extends Loader {
   }
 
   async getProp(id: number): Promise<GadgetPropData> {
-    return (await this.getPropList()).find(data => data.Id === id)
+    return (await this.getPropList()).find((data) => data.Id === id)
   }
 
   async getPropList(): Promise<GadgetPropData[]> {
@@ -39,7 +39,7 @@ class GadgetDataLoader extends Loader {
         HpBase: HP || 0,
         AttackBase: Attack || 0,
         DefenseBase: Defense || 0,
-        PropGrowCurves: []
+        PropGrowCurves: [],
       }
     }
 
@@ -51,21 +51,21 @@ class GadgetDataLoader extends Loader {
       DefenseBase: Defense,
       PropGrowCurves: [
         {
-          PropType: 'FIGHT_PROP_BASE_HP',
-          Type: HpCurve
+          PropType: "FIGHT_PROP_BASE_HP",
+          Type: HpCurve,
         },
         {
-          PropType: 'FIGHT_PROP_BASE_ATTACK',
-          Type: AttackCurve
+          PropType: "FIGHT_PROP_BASE_ATTACK",
+          Type: AttackCurve,
         },
         {
-          PropType: 'FIGHT_PROP_BASE_DEFENSE',
-          Type: DefenseCurve
-        }
-      ]
+          PropType: "FIGHT_PROP_BASE_DEFENSE",
+          Type: DefenseCurve,
+        },
+      ],
     }
   }
 }
 
 let loader: GadgetDataLoader
-export default (() => loader = loader || new GadgetDataLoader())()
+export default (() => (loader = loader || new GadgetDataLoader()))()

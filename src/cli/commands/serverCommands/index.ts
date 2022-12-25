@@ -1,13 +1,13 @@
-import { CommandDefinition } from '..'
-import disconnectCommand from './disconnectCommand'
-import gsCommand from './gsCommand'
-import helpCommand from './helpCommand'
-import listCommand from './listCommand'
-import logLevelCommand from './logLevelCommand'
-import restartCommand from './restartCommand'
-import scriptCommand from './scriptCommand'
-import stopCommand from './stopCommand'
-import updateCommand from './updateCommand'
+import { CommandDefinition } from ".."
+import disconnectCommand from "./disconnectCommand"
+import gsCommand from "./gsCommand"
+import helpCommand from "./helpCommand"
+import listCommand from "./listCommand"
+import logLevelCommand from "./logLevelCommand"
+import restartCommand from "./restartCommand"
+import scriptCommand from "./scriptCommand"
+import stopCommand from "./stopCommand"
+import updateCommand from "./updateCommand"
 
 const serverCommands: CommandDefinition[] = [
   helpCommand,
@@ -18,7 +18,7 @@ const serverCommands: CommandDefinition[] = [
   updateCommand,
   listCommand,
   disconnectCommand,
-  scriptCommand
+  scriptCommand,
 ]
 
 export default serverCommands

@@ -1,5 +1,5 @@
-import { AbilityScalarValueEntry, AbilityString } from '@/types/proto'
-import { AbilityScalarTypeEnum } from '@/types/proto/enum'
+import { AbilityScalarValueEntry, AbilityString } from "@/types/proto"
+import { AbilityScalarTypeEnum } from "@/types/proto/enum"
 
 interface ValueEntry {
   key: AbilityString
@@ -26,7 +26,7 @@ export default class AbilityScalarValueContainer {
       case AbilityScalarTypeEnum.UINT:
         return { key, type, val: uintValue }
       case AbilityScalarTypeEnum.BOOL:
-        return { key, type, val: (intValue === 1 || uintValue === 1) } // too lazy to check, it's probably one of this :D
+        return { key, type, val: intValue === 1 || uintValue === 1 } // too lazy to check, it's probably one of this :D
       case AbilityScalarTypeEnum.TRIGGER:
         return null // now i really can't guess what this could be...
       default:
@@ -55,7 +55,7 @@ export default class AbilityScalarValueContainer {
   }
 
   getValue(key: AbilityString) {
-    return this.valList.find(v => v.key.hash === key?.hash || (key?.str && v.key.str === key?.str)) || null
+    return this.valList.find((v) => v.key.hash === key?.hash || (key?.str && v.key.str === key?.str)) || null
   }
 
   setValue(sval: AbilityScalarValueEntry) {
@@ -82,6 +82,6 @@ export default class AbilityScalarValueContainer {
   }
 
   export(): AbilityScalarValueEntry[] {
-    return this.valList.map(this.toScalarValueEntry).filter(svalEntry => svalEntry != null)
+    return this.valList.map(this.toScalarValueEntry).filter((svalEntry) => svalEntry != null)
   }
 }

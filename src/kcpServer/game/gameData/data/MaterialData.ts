@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import MaterialDataList, { MaterialData } from '@/types/gameData/MaterialData'
+import Loader from "$/gameData/loader"
+import MaterialDataList, { MaterialData } from "@/types/gameData/MaterialData"
 
 class MaterialDataLoader extends Loader {
   declare data: MaterialDataList
 
   constructor() {
-    super('MaterialData', [])
+    super("MaterialData", [])
   }
 
   async getData(): Promise<MaterialDataList> {
@@ -13,7 +13,7 @@ class MaterialDataLoader extends Loader {
   }
 
   async getMaterial(id: number): Promise<MaterialData> {
-    return (await this.getMaterialList()).find(data => data.Id === id)
+    return (await this.getMaterialList()).find((data) => data.Id === id)
   }
 
   async getMaterialList(): Promise<MaterialData[]> {
@@ -22,4 +22,4 @@ class MaterialDataLoader extends Loader {
 }
 
 let loader: MaterialDataLoader
-export default (() => loader = loader || new MaterialDataLoader())()
+export default (() => (loader = loader || new MaterialDataLoader()))()

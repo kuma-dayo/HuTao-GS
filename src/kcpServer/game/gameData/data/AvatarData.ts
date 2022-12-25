@@ -1,32 +1,32 @@
-import Loader from '$/gameData/loader'
-import { EntityFightPropConfig } from '@/types/game'
-import AvatarDataGroup, { AvatarData, CostumeData, FlycloakData } from '@/types/gameData/AvatarData'
+import Loader from "$/gameData/loader"
+import { EntityFightPropConfig } from "@/types/game"
+import AvatarDataGroup, { AvatarData, CostumeData, FlycloakData } from "@/types/gameData/AvatarData"
 
 class AvatarDataLoader extends Loader {
   declare data: AvatarDataGroup
 
   constructor() {
-    super('AvatarData')
+    super("AvatarData")
   }
 
   async getData(): Promise<AvatarDataGroup> {
     return super.getData()
   }
 
-  async getAvatar(id: number, silent: boolean = false): Promise<AvatarData> {
-    const data = (await this.getAvatarList())?.find(avatar => avatar.Id === id)
+  async getAvatar(id: number, silent = false): Promise<AvatarData> {
+    const data = (await this.getAvatarList())?.find((avatar) => avatar.Id === id)
     if (!silent) {
-      if (data == null) this.warn('message.loader.avatarData.warn.noData', id)
-      else if (data.Config == null) this.warn('message.loader.avatarData.warn.noConfig', id)
+      if (data == null) this.warn("message.loader.avatarData.warn.noData", id)
+      else if (data.Config == null) this.warn("message.loader.avatarData.warn.noConfig", id)
     }
     return data
   }
 
-  async getAvatarByName(name: string, silent: boolean = false): Promise<AvatarData> {
-    const data = (await this.getAvatarList())?.find(avatar => avatar.Name === name)
+  async getAvatarByName(name: string, silent = false): Promise<AvatarData> {
+    const data = (await this.getAvatarList())?.find((avatar) => avatar.Name === name)
     if (!silent) {
-      if (data == null) this.warn('message.loader.avatarData.warn.noData', name)
-      else if (data.Config == null) this.warn('message.loader.avatarData.warn.noConfig', name)
+      if (data == null) this.warn("message.loader.avatarData.warn.noData", name)
+      else if (data.Config == null) this.warn("message.loader.avatarData.warn.noConfig", name)
     }
     return data
   }
@@ -36,7 +36,7 @@ class AvatarDataLoader extends Loader {
   }
 
   async getCostume(avatarId: number, id: number): Promise<CostumeData> {
-    return (await this.getCostumeList())?.find(costume => costume.AvatarId === avatarId && costume.Id === id)
+    return (await this.getCostumeList())?.find((costume) => costume.AvatarId === avatarId && costume.Id === id)
   }
 
   async getCostumeList(): Promise<CostumeData[]> {
@@ -44,7 +44,7 @@ class AvatarDataLoader extends Loader {
   }
 
   async getFlycloak(id: number): Promise<FlycloakData> {
-    return (await this.getFlycloakList())?.find(flycloak => flycloak.Id === id)
+    return (await this.getFlycloakList())?.find((flycloak) => flycloak.Id === id)
   }
 
   async getFlycloakList(): Promise<FlycloakData[]> {
@@ -54,7 +54,7 @@ class AvatarDataLoader extends Loader {
   async getFightPropConfig(id: number): Promise<EntityFightPropConfig> {
     const data = await this.getAvatar(id)
     if (!data) {
-      this.warn('message.loader.avatarData.warn.noFightPropConfig', id)
+      this.warn("message.loader.avatarData.warn.noFightPropConfig", id)
 
       return {
         HpBase: 0,
@@ -62,7 +62,7 @@ class AvatarDataLoader extends Loader {
         DefenseBase: 0,
         Critical: 0,
         CriticalHurt: 0,
-        PropGrowCurves: []
+        PropGrowCurves: [],
       }
     }
 
@@ -74,13 +74,13 @@ class AvatarDataLoader extends Loader {
       DefenseBase,
       Critical,
       CriticalHurt,
-      PropGrowCurves: PropGrowCurves.map(c => ({
+      PropGrowCurves: PropGrowCurves.map((c) => ({
         PropType: c.Type,
-        Type: c.GrowCurve
-      }))
+        Type: c.GrowCurve,
+      })),
     }
   }
 }
 
 let loader: AvatarDataLoader
-export default (() => loader = loader || new AvatarDataLoader())()
+export default (() => (loader = loader || new AvatarDataLoader()))()

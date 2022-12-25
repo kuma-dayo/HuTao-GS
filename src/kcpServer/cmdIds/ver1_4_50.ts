@@ -1,4 +1,4 @@
-import { CmdIds } from '@/types/kcp'
+import { CmdIds } from "@/types/kcp"
 
 const ver1_4_50: CmdIds = {
   KeepAliveNotify: 1,
@@ -1239,7 +1239,7 @@ const ver1_4_50: CmdIds = {
   ActivityTakeAllScoreRewardRsp: 8061,
   CommonPlayerTipsNotify: 8081,
   FindHilichurlFinishSecondQuestNotify: 8082,
-  FindHilichurlAcceptQuestNotify: 8083
+  FindHilichurlAcceptQuestNotify: 8083,
 }
 
 export default ver1_4_50

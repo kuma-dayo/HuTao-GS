@@ -1,6 +1,6 @@
-import TalentData from '$/gameData/data/TalentData'
-import TalentManager from '$/manager/talentManager'
-import ConfigTalent from '$DT/BinOutput/Config/ConfigTalent'
+import TalentData from "$/gameData/data/TalentData"
+import TalentManager from "$/manager/talentManager"
+import ConfigTalent from "$DT/BinOutput/Config/ConfigTalent"
 
 export default class Talent {
   manager: TalentManager
@@ -42,8 +42,10 @@ export default class Talent {
   private loadTalentConfig(config: ConfigTalent) {
     const { abilityList } = this
 
-    switch (config.$type) { // NOSONAR
-      case 'AddAbility':
+    switch (
+      config.$type // NOSONAR
+    ) {
+      case "AddAbility":
         abilityList.push(config.AbilityName)
         break
     }

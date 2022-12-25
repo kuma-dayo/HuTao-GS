@@ -1,11 +1,19 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import config from '@/config'
-import { AdjustTrackingInfo, BlockInfo, FeatureBlockInfo, QueryCurrRegionHttpRsp, ResVersionConfig, ShortAbilityHashPair, TrackingIOInfo } from '@/types/proto'
-import { ENetReasonEnum, RetcodeEnum } from '@/types/proto/enum'
-import { fileExists, readFile } from '@/utils/fileSystem'
-import { dataToProtobuffer } from '@/utils/proto'
-import { join } from 'path'
-import { cwd } from 'process'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import config from "@/config"
+import {
+  AdjustTrackingInfo,
+  BlockInfo,
+  FeatureBlockInfo,
+  QueryCurrRegionHttpRsp,
+  ResVersionConfig,
+  ShortAbilityHashPair,
+  TrackingIOInfo,
+} from "@/types/proto"
+import { ENetReasonEnum, RetcodeEnum } from "@/types/proto/enum"
+import { fileExists, readFile } from "@/utils/fileSystem"
+import { dataToProtobuffer } from "@/utils/proto"
+import { join } from "path"
+import { cwd } from "process"
 
 export interface PlayerLoginReq {
   token: string
@@ -86,16 +94,15 @@ export interface PlayerLoginRsp {
   birthday?: string
 }
 
-
 class PlayerLoginPacket extends Packet implements PacketInterface {
   constructor() {
-    super('PlayerLogin')
+    super("PlayerLogin")
   }
 
   async request(context: PacketContext, _data: PlayerLoginReq): Promise<void> {
     const { server, game, client } = context
 
-    if (!await game.playerLogin(context)) server.disconnect(client.conv, ENetReasonEnum.ENET_LOGIN_UNFINISHED)
+    if (!(await game.playerLogin(context))) server.disconnect(client.conv, ENetReasonEnum.ENET_LOGIN_UNFINISHED)
   }
 
   async response(context: PacketContext): Promise<void> {
@@ -103,9 +110,9 @@ class PlayerLoginPacket extends Packet implements PacketInterface {
 
     if (config.autoPatch) {
       const binPath = join(cwd(), `data/bin/${config.version}/QueryCurrRegionHttpRsp.bin`)
-      if (!await fileExists(binPath)) return
+      if (!(await fileExists(binPath))) return
 
-      curRegionData = await dataToProtobuffer(await readFile(binPath), 'QueryCurrRegionHttpRsp', true)
+      curRegionData = await dataToProtobuffer(await readFile(binPath), "QueryCurrRegionHttpRsp", true)
     }
 
     const {
@@ -115,7 +122,7 @@ class PlayerLoginPacket extends Packet implements PacketInterface {
       clientSilenceDataMd5,
       resVersionConfig,
       clientVersionSuffix,
-      clientSilenceVersionSuffix
+      clientSilenceVersionSuffix,
     } = curRegionData.regionInfo
 
     const data: PlayerLoginRsp = {
@@ -124,15 +131,15 @@ class PlayerLoginPacket extends Packet implements PacketInterface {
       abilityHashCode: 557879627,
       clientDataVersion,
       clientSilenceDataVersion,
-      gameBiz: 'hk4e_global',
+      gameBiz: "hk4e_global",
       clientMd5: clientDataMd5,
       clientSilenceMd5: clientSilenceDataMd5,
       resVersionConfig,
       clientVersionSuffix,
       clientSilenceVersionSuffix,
       isScOpen: false,
-      registerCps: 'mihoyo',
-      countryCode: 'HK'
+      registerCps: "mihoyo",
+      countryCode: "HK",
     }
 
     await super.response(context, data)
@@ -140,4 +147,4 @@ class PlayerLoginPacket extends Packet implements PacketInterface {
 }
 
 let packet: PlayerLoginPacket
-export default (() => packet = packet || new PlayerLoginPacket())()
+export default (() => (packet = packet || new PlayerLoginPacket()))()

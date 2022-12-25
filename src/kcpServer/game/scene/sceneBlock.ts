@@ -1,13 +1,13 @@
-import BaseClass from '#/baseClass'
-import SceneData from '$/gameData/data/SceneData'
-import Player from '$/player'
-import Vector from '$/utils/vector'
-import TLogger from '@/translate/tlogger'
-import { WaitOnBlock } from '@/utils/asyncWait'
-import Scene from '.'
-import SceneGroup from './sceneGroup'
+import BaseClass from "#/baseClass"
+import SceneData from "$/gameData/data/SceneData"
+import Player from "$/player"
+import Vector from "$/utils/vector"
+import TLogger from "@/translate/tlogger"
+import { WaitOnBlock } from "@/utils/asyncWait"
+import Scene from "."
+import SceneGroup from "./sceneGroup"
 
-const logger = new TLogger('GSCENE', 0xefa8ec)
+const logger = new TLogger("GSCENE", 0xefa8ec)
 
 const MAX_BLOCK_MS = 10
 const NON_DYNAMIC_LOAD_DISTANCE = 512
@@ -17,10 +17,12 @@ export default class SceneBlock extends BaseClass {
 
   id: number
 
-  rect: {
-    min: Vector
-    max: Vector
-  } | false
+  rect:
+    | {
+        min: Vector
+        max: Vector
+      }
+    | false
 
   groupList: SceneGroup[]
   wob: WaitOnBlock
@@ -45,18 +47,18 @@ export default class SceneBlock extends BaseClass {
     const blockData = await SceneData.getBlock(scene.id, id)
     if (blockData == null) return
 
-    this.rect = blockData?.Rect != null ? {
-      min: new Vector().setData(blockData.Rect.Min),
-      max: new Vector().setData(blockData.Rect.Max)
-    } : false
+    this.rect =
+      blockData?.Rect != null
+        ? {
+            min: new Vector().setData(blockData.Rect.Min),
+            max: new Vector().setData(blockData.Rect.Max),
+          }
+        : false
 
-    this.groupList = blockData?.Groups
-      ?.map(group => new SceneGroup(
-        this,
-        group.Id,
-        new Vector().setData(group.Pos),
-        group.DynamicLoad
-      )) || []
+    this.groupList =
+      blockData?.Groups?.map(
+        (group) => new SceneGroup(this, group.Id, new Vector().setData(group.Pos), group.DynamicLoad)
+      ) || []
   }
 
   private inBoundingRect(player: Player): boolean {
@@ -74,7 +76,7 @@ export default class SceneBlock extends BaseClass {
     const minZ = Math.min(min.z, max.z)
     const maxZ = Math.max(min.z, max.z)
 
-    return (X >= minX && X <= maxX && Z >= minZ && Z <= maxZ)
+    return X >= minX && X <= maxX && Z >= minZ && Z <= maxZ
   }
 
   private canLoad() {
@@ -105,7 +107,9 @@ export default class SceneBlock extends BaseClass {
       const { pos, dynamicLoad, loaded } = group
       if (dynamicLoad) continue
 
-      const canLoad = playerList.find(player => player.pos != null && pos.distanceTo2D(player.pos) <= NON_DYNAMIC_LOAD_DISTANCE) != null
+      const canLoad =
+        playerList.find((player) => player.pos != null && pos.distanceTo2D(player.pos) <= NON_DYNAMIC_LOAD_DISTANCE) !=
+        null
 
       if (!loaded && canLoad) await group.load(wob)
       if (loaded && !canLoad) await group.unload()
@@ -121,7 +125,7 @@ export default class SceneBlock extends BaseClass {
     if (loaded) return
     this.loaded = true
 
-    logger.debug('message.scene.debug.loadBlock', id)
+    logger.debug("message.scene.debug.loadBlock", id)
 
     for (const group of groupList) {
       if (!group.dynamicLoad) continue
@@ -138,7 +142,7 @@ export default class SceneBlock extends BaseClass {
     if (!loaded) return
     this.loaded = false
 
-    logger.debug('message.scene.debug.unloadBlock', id)
+    logger.debug("message.scene.debug.unloadBlock", id)
 
     for (const group of groupList) {
       if (!group.dynamicLoad) continue

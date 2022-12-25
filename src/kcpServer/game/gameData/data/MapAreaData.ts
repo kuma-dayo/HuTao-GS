@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import MapAreaDataList, { MapAreaData } from '@/types/gameData/MapAreaData'
+import Loader from "$/gameData/loader"
+import MapAreaDataList, { MapAreaData } from "@/types/gameData/MapAreaData"
 
 class MapAreaDataLoader extends Loader {
   declare data: MapAreaDataList
 
   constructor() {
-    super('MapAreaData', [])
+    super("MapAreaData", [])
   }
 
   async getData(): Promise<MapAreaDataList> {
@@ -13,7 +13,7 @@ class MapAreaDataLoader extends Loader {
   }
 
   async getMapArea(id: number): Promise<MapAreaData> {
-    return (await this.getMapAreaList()).find(data => data.Id === id)
+    return (await this.getMapAreaList()).find((data) => data.Id === id)
   }
 
   async getMapAreaList(): Promise<MapAreaData[]> {
@@ -22,4 +22,4 @@ class MapAreaDataLoader extends Loader {
 }
 
 let loader: MapAreaDataLoader
-export default (() => loader = loader || new MapAreaDataLoader())()
+export default (() => (loader = loader || new MapAreaDataLoader()))()

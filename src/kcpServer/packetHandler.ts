@@ -1,11 +1,11 @@
-import ProtoMatch from '#/protomatch'
-import GlobalState from '@/globalState'
-import TLogger from '@/translate/tlogger'
-import { ClientStateEnum } from '@/types/enum'
-import dataUtil from '@/utils/proto'
-import { PacketContext, PacketInterface } from './packet'
+import ProtoMatch from "#/protomatch"
+import GlobalState from "@/globalState"
+import TLogger from "@/translate/tlogger"
+import { ClientStateEnum } from "@/types/enum"
+import dataUtil from "@/utils/proto"
+import { PacketContext, PacketInterface } from "./packet"
 
-const logger = new TLogger('PACKET', 0x8810cd)
+const logger = new TLogger("PACKET", 0x8810cd)
 
 export default class PacketHandler {
   private ptm: ProtoMatch
@@ -28,7 +28,7 @@ export default class PacketHandler {
     return instances[name]
   }
 
-  private parsePacketName(packetName: string): { name: string, type: string } {
+  private parsePacketName(packetName: string): { name: string; type: string } {
     const [name, type] = packetName.match(/(^.*)([A-Z].*$)/).slice(1)
     return { name, type }
   }
@@ -36,13 +36,25 @@ export default class PacketHandler {
   private unknownPacket(packetData: Buffer, packetID: number): void {
     const { ptm } = this
 
-    logger.warn('message.packet.warn.unknownPacket', packetID)
-    if (!GlobalState.get('UseProtoMatch')) return
+    logger.warn("message.packet.warn.unknownPacket", packetID)
+    if (!GlobalState.get("UseProtoMatch")) return
 
-    logger.debug('generic.param4', 'ProtoMatch:', packetID, JSON.stringify(ptm.parseBuffer(packetData), null, 2), JSON.stringify(ptm.findProto(packetData), null, 2))
+    logger.debug(
+      "generic.param4",
+      "ProtoMatch:",
+      packetID,
+      JSON.stringify(ptm.parseBuffer(packetData), null, 2),
+      JSON.stringify(ptm.findProto(packetData), null, 2)
+    )
   }
 
-  async handle(packetID: number, packetName: string, packetData: Buffer, context: PacketContext, ...any: any[]): Promise<void> {
+  async handle(
+    packetID: number,
+    packetName: string,
+    packetData: Buffer,
+    context: PacketContext,
+    ...any: any[]
+  ): Promise<void> {
     // Unknown packet
     if (packetID === parseInt(packetName)) return this.unknownPacket(packetData, packetID)
 
@@ -50,21 +62,30 @@ export default class PacketHandler {
       const { name, type } = this.parsePacketName(packetName)
       const packet = await this.getPacket(name)
       const {
-        reqState, reqStatePass, reqStateMask,
-        notifyState, notifyStatePass, notifyStateMask,
-        reqWaitState, reqWaitStatePass, reqWaitStateMask,
-        notifyWaitState, notifyWaitStatePass, notifyWaitStateMask
+        reqState,
+        reqStatePass,
+        reqStateMask,
+        notifyState,
+        notifyStatePass,
+        notifyStateMask,
+        reqWaitState,
+        reqWaitStatePass,
+        reqWaitStateMask,
+        notifyWaitState,
+        notifyWaitStatePass,
+        notifyWaitStateMask,
       } = packet
 
       const state = {
-        'Req': [
-          reqState, reqStatePass, reqStateMask,
-          reqWaitState, reqWaitStatePass, reqWaitStateMask
+        Req: [reqState, reqStatePass, reqStateMask, reqWaitState, reqWaitStatePass, reqWaitStateMask],
+        Notify: [
+          notifyState,
+          notifyStatePass,
+          notifyStateMask,
+          notifyWaitState,
+          notifyWaitStatePass,
+          notifyWaitStateMask,
         ],
-        'Notify': [
-          notifyState, notifyStatePass, notifyStateMask,
-          notifyWaitState, notifyWaitStatePass, notifyWaitStateMask
-        ]
       }[type] as [ClientStateEnum, boolean, number, ClientStateEnum, boolean, number]
 
       const data = await dataUtil.dataToProtobuffer(packetData, packetID)
@@ -73,16 +94,17 @@ export default class PacketHandler {
       await packet.waitState(context, state[3], state[4], state[5])
 
       switch (type) {
-        case 'Req':
+        case "Req":
           await packet.request(context, data, ...any)
           break
-        case 'Notify':
+        case "Notify":
           await packet.recvNotify(context, data, ...any)
           break
       }
     } catch (err) {
-      if (err.code === 'MODULE_NOT_FOUND') logger.verbose('message.packet.debug.noHandler', GlobalState.get('ShowPacketId') ? packetID : '-', packetName)
-      else logger.error('message.packet.error.handler', err)
+      if (err.code === "MODULE_NOT_FOUND")
+        logger.verbose("message.packet.debug.noHandler", GlobalState.get("ShowPacketId") ? packetID : "-", packetName)
+      else logger.error("message.packet.error.handler", err)
     }
   }
 }

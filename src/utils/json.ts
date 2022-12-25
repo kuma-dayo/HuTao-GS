@@ -1,15 +1,15 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { join } from 'path'
-import { cwd } from 'process'
-import { parseAsync, stringifyAsync } from 'yieldable-json'
-import { fileExists, readFile, writeFile } from './fileSystem'
+import { existsSync, readFileSync, writeFileSync } from "fs"
+import { join } from "path"
+import { cwd } from "process"
+import { parseAsync, stringifyAsync } from "yieldable-json"
+import { fileExists, readFile, writeFile } from "./fileSystem"
 
 export const getJson = (path: string, defValue: any = null): any => {
   try {
-    const data = JSON.parse(readFileSync(join(cwd(), path), 'utf8'))
+    const data = JSON.parse(readFileSync(join(cwd(), path), "utf8"))
 
     if (Array.isArray(data)) return data
-    if (typeof defValue === 'object') return Object.assign({}, defValue, data)
+    if (typeof defValue === "object") return Object.assign({}, defValue, data)
 
     return data
   } catch (err) {
@@ -30,16 +30,16 @@ export const setJson = (path: string, value: any): boolean => {
 export const hasJson = (path: string): boolean => existsSync(join(cwd(), path))
 
 export const getJsonAsync = (path: string, defValue: any = null): Promise<any> => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     const jsonPath = join(cwd(), path)
-    if (!await fileExists(jsonPath)) return resolve(defValue)
+    if (!(await fileExists(jsonPath))) return resolve(defValue)
 
     try {
       parseAsync((await readFile(jsonPath)).toString(), async (err, data) => {
         if (err) return resolve(false)
 
         if (Array.isArray(data)) return resolve(data)
-        if (typeof defValue === 'object') return resolve(Object.assign({}, defValue, data))
+        if (typeof defValue === "object") return resolve(Object.assign({}, defValue, data))
 
         resolve(data)
       })
@@ -50,7 +50,7 @@ export const getJsonAsync = (path: string, defValue: any = null): Promise<any> =
 }
 
 export const setJsonAsync = (path: string, value: any): Promise<boolean> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const jsonPath = join(cwd(), path)
     stringifyAsync(value, async (err, str) => {
       if (err) return resolve(false)

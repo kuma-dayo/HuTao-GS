@@ -1,5 +1,5 @@
-import { VectorInfo } from '../proto'
-import SceneUserData from './SceneUserData'
+import { VectorInfo } from "../proto"
+import SceneUserData from "./SceneUserData"
 
 export interface LastStateUserData {
   sceneId: number

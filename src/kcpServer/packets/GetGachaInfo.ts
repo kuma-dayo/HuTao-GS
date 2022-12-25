@@ -1,9 +1,9 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import { ClientStateEnum } from '@/types/enum'
-import { GachaInfo } from '@/types/proto'
-import { RetcodeEnum } from '@/types/proto/enum'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import { ClientStateEnum } from "@/types/enum"
+import { GachaInfo } from "@/types/proto"
+import { RetcodeEnum } from "@/types/proto/enum"
 
-export interface GetGachaInfoReq { }
+export interface GetGachaInfoReq {}
 
 export interface GetGachaInfoRsp {
   retcode: RetcodeEnum
@@ -13,9 +13,9 @@ export interface GetGachaInfoRsp {
 
 class GetGachaInfoPacket extends Packet implements PacketInterface {
   constructor() {
-    super('GetGachaInfo', {
+    super("GetGachaInfo", {
       reqState: ClientStateEnum.POST_LOGIN,
-      reqStatePass: true
+      reqStatePass: true,
     })
   }
 
@@ -29,4 +29,4 @@ class GetGachaInfoPacket extends Packet implements PacketInterface {
 }
 
 let packet: GetGachaInfoPacket
-export default (() => packet = packet || new GetGachaInfoPacket())()
+export default (() => (packet = packet || new GetGachaInfoPacket()))()

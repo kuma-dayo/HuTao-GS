@@ -1,37 +1,37 @@
-import Client from '#/client'
-import DummyClient from '#/dummyClient'
-import { PacketContext } from '#/packet'
-import ActivityScheduleInfo from '#/packets/ActivityScheduleInfo'
-import AllWidgetData from '#/packets/AllWidgetData'
-import AvatarData from '#/packets/AvatarData'
-import AvatarSatiationData from '#/packets/AvatarSatiationData'
-import CoopData from '#/packets/CoopData'
-import DoSetPlayerBornData from '#/packets/DoSetPlayerBornData'
-import FinishedParentQuest from '#/packets/FinishedParentQuest'
-import GachaSimpleInfo from '#/packets/GachaSimpleInfo'
-import OpenStateUpdate from '#/packets/OpenStateUpdate'
-import PlayerData from '#/packets/PlayerData'
-import PlayerLogin from '#/packets/PlayerLogin'
-import PlayerProp from '#/packets/PlayerProp'
-import PlayerRechargeData from '#/packets/PlayerRechargeData'
-import PlayerStore from '#/packets/PlayerStore'
-import QuestList from '#/packets/QuestList'
-import StoreWeightLimit from '#/packets/StoreWeightLimit'
-import Player from '$/player'
-import World from '$/world'
-import config from '@/config'
-import Logger from '@/logger'
-import { ClientStateEnum, PlayerPropEnum } from '@/types/enum'
-import { PlayerInfo } from '@/types/game'
-import { OnlinePlayerInfo } from '@/types/proto'
-import { ENetReasonEnum, MpSettingTypeEnum } from '@/types/proto/enum'
-import UserData from '@/types/user'
-import { getJsonAsync, setJsonAsync } from '@/utils/json'
-import KcpServer from '..'
-import hash from '../../utils/hash'
-import ActivityManager from './manager/activityManager'
-import { ChatManager } from './manager/chatManager'
-import ShopManager from './manager/shopManager'
+import Client from "#/client"
+import DummyClient from "#/dummyClient"
+import { PacketContext } from "#/packet"
+import ActivityScheduleInfo from "#/packets/ActivityScheduleInfo"
+import AllWidgetData from "#/packets/AllWidgetData"
+import AvatarData from "#/packets/AvatarData"
+import AvatarSatiationData from "#/packets/AvatarSatiationData"
+import CoopData from "#/packets/CoopData"
+import DoSetPlayerBornData from "#/packets/DoSetPlayerBornData"
+import FinishedParentQuest from "#/packets/FinishedParentQuest"
+import GachaSimpleInfo from "#/packets/GachaSimpleInfo"
+import OpenStateUpdate from "#/packets/OpenStateUpdate"
+import PlayerData from "#/packets/PlayerData"
+import PlayerLogin from "#/packets/PlayerLogin"
+import PlayerProp from "#/packets/PlayerProp"
+import PlayerRechargeData from "#/packets/PlayerRechargeData"
+import PlayerStore from "#/packets/PlayerStore"
+import QuestList from "#/packets/QuestList"
+import StoreWeightLimit from "#/packets/StoreWeightLimit"
+import Player from "$/player"
+import World from "$/world"
+import config from "@/config"
+import Logger from "@/logger"
+import { ClientStateEnum, PlayerPropEnum } from "@/types/enum"
+import { PlayerInfo } from "@/types/game"
+import { OnlinePlayerInfo } from "@/types/proto"
+import { ENetReasonEnum, MpSettingTypeEnum } from "@/types/proto/enum"
+import UserData from "@/types/user"
+import { getJsonAsync, setJsonAsync } from "@/utils/json"
+import KcpServer from ".."
+import hash from "../../utils/hash"
+import ActivityManager from "./manager/activityManager"
+import { ChatManager } from "./manager/chatManager"
+import ShopManager from "./manager/shopManager"
 
 export default class Game {
   server: KcpServer
@@ -59,13 +59,13 @@ export default class Game {
       const { server } = this
 
       const client = new DummyClient(server)
-      client.setUid('1', 1)
+      client.setUid("1", 1)
 
       // create new player
       const player = new Player(this, client)
       const { props, profile } = player
 
-      this.playerMap['1'] = player
+      this.playerMap["1"] = player
       client.player = player
 
       // set player data
@@ -78,7 +78,7 @@ export default class Game {
       player.hostWorld.hostLastState.init({
         sceneId: 3,
         pos: { x: -657.9599609375, y: 219.54281616210938, z: 266.7440490722656 },
-        rot: { y: 180 }
+        rot: { y: 180 },
       })
 
       // set profile data
@@ -93,7 +93,7 @@ export default class Game {
       // login
       await this.playerLogin(player.context)
     } catch (err) {
-      console.log('Failed to create server player:', err)
+      console.log("Failed to create server player:", err)
     }
   }
 
@@ -126,11 +126,11 @@ export default class Game {
 
   async getPlayerInfo(auid: string): Promise<PlayerInfo> {
     const userData = await this.loadUserData(auid)
-    const uid = userData ? userData.uid : parseInt('1' + hash(auid).slice(0, 5))
+    const uid = userData ? userData.uid : parseInt("1" + hash(auid).slice(0, 5))
 
     return {
       uid,
-      userData
+      userData,
     }
   }
 
@@ -170,7 +170,7 @@ export default class Game {
     // Set client state
     client.state = ClientStateEnum.LOGIN
 
-    await player.windyRce('login')
+    await player.windyRce("login")
 
     await PlayerProp.sendNotify(context, PlayerPropEnum.PROP_PLAYER_RESIN)
 
@@ -203,7 +203,7 @@ export default class Game {
 
     await PlayerLogin.response(context)
 
-    Logger.measure('Player login', loginPerfMark)
+    Logger.measure("Player login", loginPerfMark)
     Logger.clearMarks(loginPerfMark)
 
     return player
@@ -240,7 +240,7 @@ export default class Game {
   }
 
   getPlayerByUid(uid: number): Player {
-    return Object.values(this.playerMap).find(player => player.uid === uid)
+    return Object.values(this.playerMap).find((player) => player.uid === uid)
   }
 
   getOnlinePlayerInfo(uid: number): OnlinePlayerInfo {
@@ -251,8 +251,11 @@ export default class Game {
   }
 
   getOnlinePlayerList(ignorePlayer?: Player): OnlinePlayerInfo[] {
-    const playerList = Object.values(this.playerMap)
-      .filter(player => player !== ignorePlayer && player.props.get(PlayerPropEnum.PROP_PLAYER_MP_SETTING_TYPE) !== MpSettingTypeEnum.MP_SETTING_NO_ENTER)
+    const playerList = Object.values(this.playerMap).filter(
+      (player) =>
+        player !== ignorePlayer &&
+        player.props.get(PlayerPropEnum.PROP_PLAYER_MP_SETTING_TYPE) !== MpSettingTypeEnum.MP_SETTING_NO_ENTER
+    )
 
     const selectedUid: number[] = []
     const onlinePlayerList: OnlinePlayerInfo[] = []

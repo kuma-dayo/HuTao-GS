@@ -1,5 +1,5 @@
-import { AbilityAttachedModifier, AbilityString, ModifierProperty } from '.'
-import { ModifierActionEnum } from './enum'
+import { AbilityAttachedModifier, AbilityString, ModifierProperty } from "."
+import { ModifierActionEnum } from "./enum"
 
 export interface AbilityMetaModifierChange {
   action: ModifierActionEnum

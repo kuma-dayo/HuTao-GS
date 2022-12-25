@@ -1,21 +1,21 @@
-import KcpServer from '#/.'
-import Player from '$/player'
-import Server from '@/server'
-import { TTY } from '@/tty'
-import CLI from '..'
-import accountCommands from './accountCommands'
-import avatarCommands from './avatarCommands'
-import configCommands from './configCommands'
-import entityCommands from './entityCommands'
-import inventoryCommands from './inventoryCommands'
-import playerCommands from './playerCommands'
-import serverCommands from './serverCommands'
-import toolsCommands from './toolsCommands'
-import worldCommands from './worldCommands'
+import KcpServer from "#/."
+import Player from "$/player"
+import Server from "@/server"
+import { TTY } from "@/tty"
+import CLI from ".."
+import accountCommands from "./accountCommands"
+import avatarCommands from "./avatarCommands"
+import configCommands from "./configCommands"
+import entityCommands from "./entityCommands"
+import inventoryCommands from "./inventoryCommands"
+import playerCommands from "./playerCommands"
+import serverCommands from "./serverCommands"
+import toolsCommands from "./toolsCommands"
+import worldCommands from "./worldCommands"
 
 export interface ArgumentDefinition {
   name: string
-  type?: 'str' | 'flt' | 'int' | 'num' | 'b64' | 'hex'
+  type?: "str" | "flt" | "int" | "num" | "b64" | "hex"
   values?: (string | number)[]
   optional?: boolean
   dynamic?: boolean
@@ -54,6 +54,6 @@ export function registerBuiltInCommands() {
     ...entityCommands,
     ...avatarCommands,
     ...playerCommands,
-    ...inventoryCommands
+    ...inventoryCommands,
   ])
 }

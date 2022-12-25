@@ -1,5 +1,5 @@
-import { VectorInfo } from '.'
-import { MotionStateEnum } from './enum'
+import { VectorInfo } from "."
+import { MotionStateEnum } from "./enum"
 
 export interface MotionInfo {
   pos: VectorInfo

@@ -1,5 +1,5 @@
-import { SceneTagData } from '@/types/gameData/SceneData'
-import Scene from '.'
+import { SceneTagData } from "@/types/gameData/SceneData"
+import Scene from "."
 
 export default class SceneTag {
   scene: Scene
@@ -7,7 +7,7 @@ export default class SceneTag {
   id: number
   name: string
   conds: {
-    type: string,
+    type: string
     params: number[]
   }[]
   isDefault: boolean
@@ -17,9 +17,9 @@ export default class SceneTag {
 
     this.id = data.Id
     this.name = data.Name
-    this.conds = data.Cond.map(cond => ({
+    this.conds = data.Cond.map((cond) => ({
       type: cond.CondType,
-      params: [cond.Param1, cond.Param2].filter(param => param != null)
+      params: [cond.Param1, cond.Param2].filter((param) => param != null),
     }))
     this.isDefault = !!data.IsDefaultValid
   }

@@ -1,14 +1,14 @@
-import config from '@/config'
-import { patchGame, unpatchGame } from '@/tools/patcher'
-import translate from '@/translate'
-import { CommandDefinition } from '..'
+import config from "@/config"
+import { patchGame, unpatchGame } from "@/tools/patcher"
+import translate from "@/translate"
+import { CommandDefinition } from ".."
 
 const gpatchCommand: CommandDefinition = {
-  name: 'gpatch',
+  name: "gpatch",
   usage: 4,
   args: [
-    { name: 'mode', type: 'str', values: ['patch', 'unpatch'] },
-    { name: 'gameDir', type: 'str', optional: true }
+    { name: "mode", type: "str", values: ["patch", "unpatch"] },
+    { name: "gameDir", type: "str", optional: true },
   ],
   exec: async (cmdInfo) => {
     const { args, cli } = cmdInfo
@@ -17,18 +17,18 @@ const gpatchCommand: CommandDefinition = {
     const [mode, gameDir] = args
     try {
       switch (mode) {
-        case 'patch':
+        case "patch":
           await patchGame(gameDir || config.gameDir)
           break
-        case 'unpatch':
+        case "unpatch":
           await unpatchGame(gameDir || config.gameDir)
           break
       }
-      print(translate('cli.commands.gpatch.info.success'))
+      print(translate("cli.commands.gpatch.info.success"))
     } catch (err) {
       printError((<Error>err).message || err)
     }
-  }
+  },
 }
 
 export default gpatchCommand

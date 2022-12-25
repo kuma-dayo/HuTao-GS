@@ -1,4 +1,4 @@
-import { CmdIds } from '@/types/kcp'
+import { CmdIds } from "@/types/kcp"
 
 const ver2_6: CmdIds = {
   GmTalkNotify: 3,
@@ -1506,7 +1506,7 @@ const ver2_6: CmdIds = {
   LunaRiteTakeSacrificeRewardReq: 8987,
   ClearRoguelikeCurseNotify: 8997,
   SumoSelectTeamAndEnterDungeonRsp: 8998,
-  BuoyantCombatSettleNotify: 9000
+  BuoyantCombatSettleNotify: 9000,
 }
 
 export default ver2_6

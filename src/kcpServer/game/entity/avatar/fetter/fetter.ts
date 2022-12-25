@@ -1,8 +1,8 @@
-import { PlayerPropEnum } from '@/types/enum'
-import FetterConfig from '@/types/gameData/ExcelBinOutput/Common/FetterConfig'
-import { FetterInfo } from '@/types/proto'
-import { FetterStateEnum } from '@/types/proto/enum'
-import FetterList from './fetterList'
+import { PlayerPropEnum } from "@/types/enum"
+import FetterConfig from "@/types/gameData/ExcelBinOutput/Common/FetterConfig"
+import { FetterInfo } from "@/types/proto"
+import { FetterStateEnum } from "@/types/proto/enum"
+import FetterList from "./fetterList"
 
 export default class Fetter {
   fetterList: FetterList
@@ -32,14 +32,14 @@ export default class Fetter {
       if (CondType == null) continue
 
       switch (CondType) {
-        case 'FETTER_COND_AVATAR_PROMOTE_LEVEL':
+        case "FETTER_COND_AVATAR_PROMOTE_LEVEL":
           condMatch = fetterInfo.avatar.props.get(PlayerPropEnum.PROP_BREAK_LEVEL) >= ParamList[0]
           break
-        case 'FETTER_COND_FETTER_LEVEL':
+        case "FETTER_COND_FETTER_LEVEL":
           condMatch = fetterInfo.expLevel >= ParamList[0]
           break
-        case 'FETTER_COND_UNLOCK_TRANS_POINT':
-        case 'FETTER_COND_PLAYER_BIRTHDAY':
+        case "FETTER_COND_UNLOCK_TRANS_POINT":
+        case "FETTER_COND_PLAYER_BIRTHDAY":
           condMatch = true
           break
         default:
@@ -57,7 +57,7 @@ export default class Fetter {
 
     return {
       fetterId: id,
-      fetterState: state
+      fetterState: state,
     }
   }
 }

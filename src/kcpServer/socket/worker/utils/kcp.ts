@@ -1,4 +1,4 @@
-import Denque from 'denque'
+import Denque from "denque"
 
 type u8 = number
 type u16 = number
@@ -305,7 +305,7 @@ export class Kcp {
 
     // Merge fragment
     let seg: KcpSegment
-    while (seg = this.rcvQueue.shift()) {
+    while ((seg = this.rcvQueue.shift())) {
       seg.data.copy(buf, offset)
       offset += seg.data.length
 
@@ -351,7 +351,7 @@ export class Kcp {
       }
     }
 
-    const count = buf.length <= this.mss ? 1 : (((buf.length + this.mss - 1) / this.mss) >>> 0)
+    const count = buf.length <= this.mss ? 1 : ((buf.length + this.mss - 1) / this.mss) >>> 0
 
     if (count >= KCP_WND_RCV) return -2
 
@@ -363,7 +363,7 @@ export class Kcp {
       const newSegment = createSegment(lf)
       buf = rt
 
-      newSegment.frg = this.stream ? 0 : (((count - i - 1) << 24) >>> 24)
+      newSegment.frg = this.stream ? 0 : ((count - i - 1) << 24) >>> 24
 
       this.sndQueue.push(newSegment)
       sentSize += size
@@ -490,16 +490,22 @@ export class Kcp {
     this.moveBuf()
   }
 
-  inputCmd(cmd: number, buf: Buffer, data: {
-    conv: number
-    token: number
-    frg: number
-    wnd: number
-    ts: number
-    sn: number
-    una: number
-    len: number
-  }, flag: boolean, maxAck: number) {
+  inputCmd(
+    cmd: number,
+    buf: Buffer,
+    data: {
+      conv: number
+      token: number
+      frg: number
+      wnd: number
+      ts: number
+      sn: number
+      una: number
+      len: number
+    },
+    flag: boolean,
+    maxAck: number
+  ) {
     const { conv, token, frg, wnd, ts, sn, una, len } = data
 
     switch (cmd) {
@@ -612,7 +618,7 @@ export class Kcp {
     const readResult = this.readInputBuffer(buf)
     if (!isNaN(readResult as number)) return readResult
 
-    const { totalRead, flag, maxAck } = readResult as { totalRead: number, flag: boolean, maxAck: number }
+    const { totalRead, flag, maxAck } = readResult as { totalRead: number; flag: boolean; maxAck: number }
 
     if (flag) this.parseFastAck(maxAck)
 
@@ -670,10 +676,7 @@ export class Kcp {
         this.probeWait = KCP_PROBE_INIT
         this.tsProbe = this.current + this.probeWait
       } else {
-        if (
-          this.current - this.tsProbe >= 0 &&
-          this.probeWait < KCP_PROBE_INIT
-        ) {
+        if (this.current - this.tsProbe >= 0 && this.probeWait < KCP_PROBE_INIT) {
           this.probeWait = KCP_PROBE_INIT
         }
         this.probeWait += (this.probeWait / 2) >>> 0
@@ -782,20 +785,20 @@ export class Kcp {
       const sndSegment = this.sndBuf.peekAt(i)!
 
       switch (true) {
-        case (sndSegment.xmit === 0): {
+        case sndSegment.xmit === 0: {
           sndSegment.xmit += 1
           sndSegment.rto = this.rxRto
           sndSegment.resendTs = this.current + sndSegment.rto + rtoMin
           break
         }
-        case (this.current - sndSegment.resendTs >= 0): {
+        case this.current - sndSegment.resendTs >= 0: {
           sndSegment.xmit += 1
-          sndSegment.rto += this.nodelay ? ((this.rxRto / 2) >>> 0) : this.rxRto
+          sndSegment.rto += this.nodelay ? (this.rxRto / 2) >>> 0 : this.rxRto
           sndSegment.resendTs = this.current + sndSegment.rto
           lost = true
           break
         }
-        case (sndSegment.fastAck >= resent): {
+        case sndSegment.fastAck >= resent: {
           sndSegment.xmit += 1
           sndSegment.fastAck = 0
           sndSegment.resendTs = this.current + sndSegment.rto

@@ -1,6 +1,6 @@
 export interface SocketContext {
   address: string
-  port: number,
+  port: number
   clientID: string
 }
 

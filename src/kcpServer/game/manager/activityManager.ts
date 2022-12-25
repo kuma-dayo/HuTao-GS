@@ -1,11 +1,11 @@
-import { PacketContext } from '#/packet'
-import ActivityInfoPacket from '#/packets/ActivityInfo'
-import Activity from '$/activity'
-import MusicGameActivity from '$/activity/musicGameActivity'
-import Player from '$/player'
-import { ActivityInfo, ActivityScheduleInfo } from '@/types/proto'
-import { getTimeSeconds } from '@/utils/time'
-import Game from '..'
+import { PacketContext } from "#/packet"
+import ActivityInfoPacket from "#/packets/ActivityInfo"
+import Activity from "$/activity"
+import MusicGameActivity from "$/activity/musicGameActivity"
+import Player from "$/player"
+import { ActivityInfo, ActivityScheduleInfo } from "@/types/proto"
+import { getTimeSeconds } from "@/utils/time"
+import Game from ".."
 
 export default class ActivityManager {
   game: Game
@@ -17,9 +17,7 @@ export default class ActivityManager {
   constructor(game: Game) {
     this.game = game
 
-    this.activityList = [
-      new MusicGameActivity(this, 1, 1655085600e3, 2444004000e3)
-    ]
+    this.activityList = [new MusicGameActivity(this, 1, 1655085600e3, 2444004000e3)]
 
     this.startDate = new Date(1655064000e3)
   }
@@ -34,14 +32,14 @@ export default class ActivityManager {
   }
 
   exportActivityInfo(player: Player, id: number): ActivityInfo {
-    return this.activityList.find(activity => activity.id === id)?.exportActivityInfo(player) || null
+    return this.activityList.find((activity) => activity.id === id)?.exportActivityInfo(player) || null
   }
 
   exportActivityInfoList(player: Player, idList: number[]): ActivityInfo[] {
-    return idList.map(id => this.exportActivityInfo(player, id)).filter(info => info != null)
+    return idList.map((id) => this.exportActivityInfo(player, id)).filter((info) => info != null)
   }
 
   exportActivityScheduleInfoList(): ActivityScheduleInfo[] {
-    return this.activityList.map(activity => activity.exportActivityScheduleInfo())
+    return this.activityList.map((activity) => activity.exportActivityScheduleInfo())
   }
 }

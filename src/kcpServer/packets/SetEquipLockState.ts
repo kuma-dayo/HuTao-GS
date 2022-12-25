@@ -1,7 +1,7 @@
-import Packet, { PacketInterface, PacketContext } from '#/packet'
-import { RetcodeEnum } from '@/types/proto/enum'
-import { ClientStateEnum } from '@/types/enum'
-import StoreItemChange from './StoreItemChange'
+import Packet, { PacketInterface, PacketContext } from "#/packet"
+import { RetcodeEnum } from "@/types/proto/enum"
+import { ClientStateEnum } from "@/types/enum"
+import StoreItemChange from "./StoreItemChange"
 
 export interface SetEquipLockStateReq {
   targetEquipGuid: string
@@ -16,9 +16,9 @@ export interface SetEquipLockStateRsp {
 
 class SetEquipLockStatePacket extends Packet implements PacketInterface {
   constructor() {
-    super('SetEquipLockState', {
+    super("SetEquipLockState", {
       reqState: ClientStateEnum.IN_GAME,
-      reqStatePass: true
+      reqStatePass: true,
     })
   }
 
@@ -39,7 +39,7 @@ class SetEquipLockStatePacket extends Packet implements PacketInterface {
     await this.response(context, {
       retcode: RetcodeEnum.RET_SUCC,
       targetEquipGuid,
-      isLocked
+      isLocked,
     })
   }
 
@@ -49,4 +49,4 @@ class SetEquipLockStatePacket extends Packet implements PacketInterface {
 }
 
 let packet: SetEquipLockStatePacket
-export default (() => packet = packet || new SetEquipLockStatePacket())()
+export default (() => (packet = packet || new SetEquipLockStatePacket()))()

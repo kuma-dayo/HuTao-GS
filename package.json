@@ -10,9 +10,10 @@
     "build-dev": "node ./build -mode:dev",
     "build-rel": "node ./build -mode:rel",
     "build": "node ./build",
+    "pack-exe": "pkg . -o \"dist/HuTao-GS.exe\" --build",
     "start": "node ./buildDev/entry/mainEntry.js",
     "start:dev": "node ./build -mode:dev & node ./buildDev/entry/mainEntry.js",
-    "pack-exe": "pkg . -o \"dist/HuTao-GS.exe\" --build"
+    "lint-fix": "eslint --fix \"./src/**/*.ts\""
   },
   "pkg": {
     "assets": [
@@ -25,7 +26,7 @@
       "node16-win"
     ]
   },
-  "author": "NotArandomGUY",
+  "author": "kumadayo",
   "license": "AGPL-3.0",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -45,8 +46,14 @@
     "@types/node": "^18.0.0",
     "@types/verror": "^1.10.5",
     "@types/yieldable-json": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "javascript-obfuscator": "^4.0.0",
     "pkg": "^5.8.0",
+    "prettier": "^2.8.1",
     "resedit": "^1.6.0",
     "typescript": "^4.8.3",
     "webpack": "^5.72.0",

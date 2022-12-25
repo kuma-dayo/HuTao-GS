@@ -1,7 +1,13 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import Gadget from '$/entity/gadget'
-import { ClientStateEnum } from '@/types/enum'
-import { InteractTypeEnum, InterOpTypeEnum, ProtEntityTypeEnum, ResinCostTypeEnum, RetcodeEnum } from '@/types/proto/enum'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import Gadget from "$/entity/gadget"
+import { ClientStateEnum } from "@/types/enum"
+import {
+  InteractTypeEnum,
+  InterOpTypeEnum,
+  ProtEntityTypeEnum,
+  ResinCostTypeEnum,
+  RetcodeEnum,
+} from "@/types/proto/enum"
 
 export interface GadgetInteractReq {
   gadgetEntityId: number
@@ -21,9 +27,9 @@ export interface GadgetInteractRsp {
 
 class GadgetInteractPacket extends Packet implements PacketInterface {
   constructor() {
-    super('GadgetInteract', {
+    super("GadgetInteract", {
       reqState: ClientStateEnum.IN_GAME,
-      reqStatePass: true
+      reqStatePass: true,
     })
   }
 
@@ -48,4 +54,4 @@ class GadgetInteractPacket extends Packet implements PacketInterface {
 }
 
 let packet: GadgetInteractPacket
-export default (() => packet = packet || new GadgetInteractPacket())()
+export default (() => (packet = packet || new GadgetInteractPacket()))()

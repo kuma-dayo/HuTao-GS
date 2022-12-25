@@ -1,11 +1,11 @@
-import Loader from '$/gameData/loader'
-import WeatherDataList, { WeatherData } from '@/types/gameData/WeatherData'
+import Loader from "$/gameData/loader"
+import WeatherDataList, { WeatherData } from "@/types/gameData/WeatherData"
 
 class WeatherDataLoader extends Loader {
   declare data: WeatherDataList
 
   constructor() {
-    super('WeatherData')
+    super("WeatherData")
   }
 
   async getData(): Promise<WeatherDataList> {
@@ -13,9 +13,9 @@ class WeatherDataLoader extends Loader {
   }
 
   async getWeatherData(areaId: number): Promise<WeatherData> {
-    return (await this.getData()).find(data => data.AreaID === areaId)
+    return (await this.getData()).find((data) => data.AreaID === areaId)
   }
 }
 
 let loader: WeatherDataLoader
-export default (() => loader = loader || new WeatherDataLoader())()
+export default (() => (loader = loader || new WeatherDataLoader()))()

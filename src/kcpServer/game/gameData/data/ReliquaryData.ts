@@ -1,11 +1,17 @@
-import Loader from '$/gameData/loader'
-import ReliquaryDataGroup, { ReliquaryAffixData, ReliquaryData, ReliquaryLevelData, ReliquaryMainPropData, ReliquarySetData } from '@/types/gameData/ReliquaryData'
+import Loader from "$/gameData/loader"
+import ReliquaryDataGroup, {
+  ReliquaryAffixData,
+  ReliquaryData,
+  ReliquaryLevelData,
+  ReliquaryMainPropData,
+  ReliquarySetData,
+} from "@/types/gameData/ReliquaryData"
 
 class ReliquaryDataLoader extends Loader {
   declare data: ReliquaryDataGroup
 
   constructor() {
-    super('ReliquaryData')
+    super("ReliquaryData")
   }
 
   async getData(): Promise<ReliquaryDataGroup> {
@@ -13,7 +19,7 @@ class ReliquaryDataLoader extends Loader {
   }
 
   async getReliquary(id: number): Promise<ReliquaryData> {
-    return (await this.getReliquaryList()).find(data => data.Id === id)
+    return (await this.getReliquaryList()).find((data) => data.Id === id)
   }
 
   async getReliquaryList(): Promise<ReliquaryData[]> {
@@ -21,11 +27,11 @@ class ReliquaryDataLoader extends Loader {
   }
 
   async getMainProp(id: number): Promise<ReliquaryMainPropData> {
-    return (await this.getMainPropList()).find(data => data.Id === id)
+    return (await this.getMainPropList()).find((data) => data.Id === id)
   }
 
   async getMainPropsByDepot(depotId: number): Promise<ReliquaryMainPropData[]> {
-    return (await this.getMainPropList()).filter(data => data.PropDepotId === depotId)
+    return (await this.getMainPropList()).filter((data) => data.PropDepotId === depotId)
   }
 
   async getMainPropList(): Promise<ReliquaryMainPropData[]> {
@@ -33,11 +39,11 @@ class ReliquaryDataLoader extends Loader {
   }
 
   async getAffix(id: number): Promise<ReliquaryAffixData> {
-    return (await this.getAffixList()).find(data => data.Id === id)
+    return (await this.getAffixList()).find((data) => data.Id === id)
   }
 
   async getAffixsByDepot(depotId: number): Promise<ReliquaryAffixData[]> {
-    return (await this.getAffixList()).filter(data => data.DepotId === depotId)
+    return (await this.getAffixList()).filter((data) => data.DepotId === depotId)
   }
 
   async getAffixList(): Promise<ReliquaryAffixData[]> {
@@ -45,7 +51,7 @@ class ReliquaryDataLoader extends Loader {
   }
 
   async getLevel(level: number, rank: number): Promise<ReliquaryLevelData> {
-    return (await this.getLevelList()).find(data => data.Level === level && (data.Rank || 0) === rank)
+    return (await this.getLevelList()).find((data) => data.Level === level && (data.Rank || 0) === rank)
   }
 
   async getLevelList(): Promise<ReliquaryLevelData[]> {
@@ -53,7 +59,7 @@ class ReliquaryDataLoader extends Loader {
   }
 
   async getSet(id: number): Promise<ReliquarySetData> {
-    return (await this.getSetList()).find(data => data.Id === id)
+    return (await this.getSetList()).find((data) => data.Id === id)
   }
 
   async getSetList(): Promise<ReliquarySetData[]> {
@@ -62,4 +68,4 @@ class ReliquaryDataLoader extends Loader {
 }
 
 let loader: ReliquaryDataLoader
-export default (() => loader = loader || new ReliquaryDataLoader())()
+export default (() => (loader = loader || new ReliquaryDataLoader()))()

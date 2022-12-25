@@ -1,34 +1,34 @@
-import AvatarChangeCostume from '#/packets/AvatarChangeCostume'
-import AvatarEquipChange, { AvatarEquipChangeNotify } from '#/packets/AvatarEquipChange'
-import AvatarFlycloakChange from '#/packets/AvatarFlycloakChange'
-import AvatarLifeStateChange from '#/packets/AvatarLifeStateChange'
-import Entity from '$/entity'
-import Equip from '$/equip'
-import Reliquary from '$/equip/reliquary'
-import Weapon from '$/equip/weapon'
-import AvatarData from '$/gameData/data/AvatarData'
-import GrowCurveData from '$/gameData/data/GrowCurveData'
-import SkillManager from '$/manager/skillManager'
-import StaminaManager from '$/manager/staminaManager'
-import TalentManager from '$/manager/talentManager'
-import Player from '$/player'
-import { EntityTypeEnum, EquipTypeEnum, PlayerPropEnum } from '@/types/enum'
-import { AvatarEnterSceneInfo, AvatarInfo, AvatarSatiationData, SceneAvatarInfo, SceneTeamAvatar } from '@/types/proto'
-import { AvatarTypeEnum, ProtEntityTypeEnum, RetcodeEnum } from '@/types/proto/enum'
-import AvatarUserData from '@/types/user/AvatarUserData'
-import { getTimeSeconds } from '@/utils/time'
-import ExcelInfo from './excelInfo'
-import FetterList from './fetter/fetterList'
+import AvatarChangeCostume from "#/packets/AvatarChangeCostume"
+import AvatarEquipChange, { AvatarEquipChangeNotify } from "#/packets/AvatarEquipChange"
+import AvatarFlycloakChange from "#/packets/AvatarFlycloakChange"
+import AvatarLifeStateChange from "#/packets/AvatarLifeStateChange"
+import Entity from "$/entity"
+import Equip from "$/equip"
+import Reliquary from "$/equip/reliquary"
+import Weapon from "$/equip/weapon"
+import AvatarData from "$/gameData/data/AvatarData"
+import GrowCurveData from "$/gameData/data/GrowCurveData"
+import SkillManager from "$/manager/skillManager"
+import StaminaManager from "$/manager/staminaManager"
+import TalentManager from "$/manager/talentManager"
+import Player from "$/player"
+import { EntityTypeEnum, EquipTypeEnum, PlayerPropEnum } from "@/types/enum"
+import { AvatarEnterSceneInfo, AvatarInfo, AvatarSatiationData, SceneAvatarInfo, SceneTeamAvatar } from "@/types/proto"
+import { AvatarTypeEnum, ProtEntityTypeEnum, RetcodeEnum } from "@/types/proto/enum"
+import AvatarUserData from "@/types/user/AvatarUserData"
+import { getTimeSeconds } from "@/utils/time"
+import ExcelInfo from "./excelInfo"
+import FetterList from "./fetter/fetterList"
 
 const AvatarDefaultAbilities = [
-  'Avatar_DefaultAbility_VisionReplaceDieInvincible',
-  'Avatar_DefaultAbility_AvartarInShaderChange',
-  'Avatar_SprintBS_Invincible',
-  'Avatar_Freeze_Duration_Reducer',
-  'Avatar_Attack_ReviveEnergy',
-  'Avatar_Component_Initializer',
-  'Avatar_FallAnthem_Achievement_Listener',
-  'GrapplingHookSkill_Ability'
+  "Avatar_DefaultAbility_VisionReplaceDieInvincible",
+  "Avatar_DefaultAbility_AvartarInShaderChange",
+  "Avatar_SprintBS_Invincible",
+  "Avatar_Freeze_Duration_Reducer",
+  "Avatar_Attack_ReviveEnergy",
+  "Avatar_Component_Initializer",
+  "Avatar_FallAnthem_Achievement_Listener",
+  "GrapplingHookSkill_Ability",
 ]
 
 export default class Avatar extends Entity {
@@ -75,7 +75,7 @@ export default class Avatar extends Entity {
     const { avatarId, abilityManager } = this
 
     this.config = await AvatarData.getFightPropConfig(avatarId)
-    this.growCurve = await GrowCurveData.getGrowCurve('Avatar')
+    this.growCurve = await GrowCurveData.getGrowCurve("Avatar")
 
     const avatarData = await AvatarData.getAvatar(avatarId)
     if (!avatarData) return
@@ -89,18 +89,8 @@ export default class Avatar extends Entity {
   async init(userData: AvatarUserData) {
     const { player, avatarId, talentManager, skillManager, fetterList, excelInfo, motion } = this
     const { inventory } = player
-    const {
-      id,
-      type,
-      talentData,
-      skillsData,
-      fettersData,
-      weaponGuid,
-      equipGuidList,
-      flycloak,
-      costume,
-      bornTime
-    } = userData
+    const { id, type, talentData, skillsData, fettersData, weaponGuid, equipGuidList, flycloak, costume, bornTime } =
+      userData
     if (avatarId !== id) return this.initNew(undefined, false)
 
     await this.loadAvatarData()
@@ -130,7 +120,7 @@ export default class Avatar extends Entity {
     super.init(userData)
   }
 
-  async initNew(avatarType: AvatarTypeEnum = AvatarTypeEnum.FORMAL, notify: boolean = true): Promise<void> {
+  async initNew(avatarType: AvatarTypeEnum = AvatarTypeEnum.FORMAL, notify = true): Promise<void> {
     const { player, avatarId, skillManager, fetterList, excelInfo, motion } = this
 
     await this.loadAvatarData()
@@ -158,7 +148,7 @@ export default class Avatar extends Entity {
     return <Weapon>this.equipMap[EquipTypeEnum.EQUIP_WEAPON] || null
   }
 
-  async equip(equip: Equip, notify: boolean = true): Promise<void> {
+  async equip(equip: Equip, notify = true): Promise<void> {
     const { manager, player, fightProps, equipMap } = this
     const { currentScene, context } = player
     const { type, equipped: equipOwner } = equip
@@ -184,7 +174,7 @@ export default class Avatar extends Entity {
     await fightProps.update(notify)
   }
 
-  async unequip(equip: Equip, notify: boolean = true): Promise<void> {
+  async unequip(equip: Equip, notify = true): Promise<void> {
     if (equip.equipped !== this) return
 
     const { manager, player, fightProps, equipMap } = this
@@ -253,7 +243,7 @@ export default class Avatar extends Entity {
       avatarAbilityInfo: {},
       weaponGuid: weapon.guid.toString(),
       weaponEntityId: weapon.entity.entityId,
-      weaponAbilityInfo: {}
+      weaponAbilityInfo: {},
     }
   }
 
@@ -263,7 +253,7 @@ export default class Avatar extends Entity {
 
     const equipChange: AvatarEquipChangeNotify = {
       avatarGuid: guid.toString(),
-      equipType
+      equipType,
     }
 
     if (equip == null) return equipChange
@@ -278,7 +268,20 @@ export default class Avatar extends Entity {
   }
 
   exportAvatarInfo(): AvatarInfo {
-    const { avatarId, guid, props, fightProps, skillManager, talentManager, fetterList, /*excelInfo,*/ avatarType, lifeState, wearingFlycloakId, costumeId, bornTime } = this
+    const {
+      avatarId,
+      guid,
+      props,
+      fightProps,
+      skillManager,
+      talentManager,
+      fetterList,
+      /*excelInfo,*/ avatarType,
+      lifeState,
+      wearingFlycloakId,
+      costumeId,
+      bornTime,
+    } = this
     const { skillDepotId, inherentProudSkillList, skillLevelMap, proudSkillExtraLevelMap } = skillManager.export() || {}
 
     return {
@@ -286,7 +289,7 @@ export default class Avatar extends Entity {
       guid: guid.toString(),
       propMap: props.exportPropMap(),
       lifeState,
-      equipGuidList: this.exportEquipList().map(e => e.guid.toString()),
+      equipGuidList: this.exportEquipList().map((e) => e.guid.toString()),
       talentIdList: talentManager.exportIdList(),
       fightPropMap: fightProps.propMap,
       skillDepotId,
@@ -302,11 +305,12 @@ export default class Avatar extends Entity {
     }
   }
 
-  exportEquipList(reliquaryOnly: boolean = false): Equip[] {
+  exportEquipList(reliquaryOnly = false): Equip[] {
     const { equipMap } = this
-    return Object.values(equipMap).filter(equip =>
-      equip != null &&
-      (!reliquaryOnly || (equip.type > EquipTypeEnum.EQUIP_NONE && equip.type < EquipTypeEnum.EQUIP_WEAPON))
+    return Object.values(equipMap).filter(
+      (equip) =>
+        equip != null &&
+        (!reliquaryOnly || (equip.type > EquipTypeEnum.EQUIP_NONE && equip.type < EquipTypeEnum.EQUIP_WEAPON))
     )
   }
 
@@ -316,12 +320,22 @@ export default class Avatar extends Entity {
     return {
       avatarGuid: guid.toString(),
       finishTime: 0,
-      penaltyFinishTime: props.get(PlayerPropEnum.PROP_SATIATION_PENALTY_TIME)
+      penaltyFinishTime: props.get(PlayerPropEnum.PROP_SATIATION_PENALTY_TIME),
     }
   }
 
   exportSceneAvatarInfo(): SceneAvatarInfo {
-    const { player, avatarId, guid, weapon, skillManager, talentManager, /*excelInfo,*/ wearingFlycloakId, costumeId, bornTime } = this
+    const {
+      player,
+      avatarId,
+      guid,
+      weapon,
+      skillManager,
+      talentManager,
+      /*excelInfo,*/ wearingFlycloakId,
+      costumeId,
+      bornTime,
+    } = this
     const { uid, peerId } = player
     const { skillDepotId, inherentProudSkillList, skillLevelMap } = skillManager.export() || {}
 
@@ -330,16 +344,14 @@ export default class Avatar extends Entity {
       avatarId,
       guid: guid.toString(),
       peerId,
-      equipIdList: this.exportEquipList().map(e => e.itemId),
+      equipIdList: this.exportEquipList().map((e) => e.itemId),
       skillDepotId,
       weapon: weapon.exportSceneWeaponInfo(),
-      reliquaryList: (<Reliquary[]>this.exportEquipList(true)).map(reliquary => reliquary.exportSceneReliquaryInfo()),
+      reliquaryList: (<Reliquary[]>this.exportEquipList(true)).map((reliquary) => reliquary.exportSceneReliquaryInfo()),
       inherentProudSkillList,
       skillLevelMap,
       talentIdList: talentManager.exportIdList(),
-      teamResonanceList: [
-        10801
-      ],
+      teamResonanceList: [10801],
       wearingFlycloakId,
       bornTime,
       costumeId,
@@ -364,10 +376,10 @@ export default class Avatar extends Entity {
       weaponEntityId: weapon.entity.entityId,
       weaponAbilityInfo: {},
       abilityControlBlock: {
-        abilityEmbryoList: abilityManager.exportEmbryoList()
+        abilityEmbryoList: abilityManager.exportEmbryoList(),
       },
-      isPlayerCurAvatar: (currentAvatar === this),
-      isOnScene
+      isPlayerCurAvatar: currentAvatar === this,
+      isOnScene,
     }
 
     if (player.isInMp()) data.avatarInfo = this.exportAvatarInfo()
@@ -385,21 +397,24 @@ export default class Avatar extends Entity {
       fetterList,
       wearingFlycloakId,
       costumeId,
-      bornTime
+      bornTime,
     } = this
 
-    return Object.assign({
-      guid: guid.toString(),
-      id: avatarId,
-      type: avatarType,
-      talentData: talentManager.exportUserData(),
-      skillsData: skillManager.exportUserData(),
-      fettersData: fetterList.exportUserData(),
-      equipGuidList: this.exportEquipList().map(equip => equip.guid.toString()),
-      flycloak: wearingFlycloakId,
-      costume: costumeId,
-      bornTime
-    }, super.exportUserData())
+    return Object.assign(
+      {
+        guid: guid.toString(),
+        id: avatarId,
+        type: avatarType,
+        talentData: talentManager.exportUserData(),
+        skillsData: skillManager.exportUserData(),
+        fettersData: fetterList.exportUserData(),
+        equipGuidList: this.exportEquipList().map((equip) => equip.guid.toString()),
+        flycloak: wearingFlycloakId,
+        costume: costumeId,
+        bornTime,
+      },
+      super.exportUserData()
+    )
   }
 
   /**Events**/

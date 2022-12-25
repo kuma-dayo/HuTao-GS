@@ -1,7 +1,14 @@
-import Packet, { PacketContext, PacketInterface } from '#/packet'
-import { ClientStateEnum } from '@/types/enum'
-import { ClientCollectorData, OneoffGatherPointDetectorData, WidgetCameraInfo, WidgetCreateLocationInfo, WidgetCreatorInfo, WidgetThunderBirdFeatherInfo } from '@/types/proto'
-import { RetcodeEnum } from '@/types/proto/enum'
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import { ClientStateEnum } from "@/types/enum"
+import {
+  ClientCollectorData,
+  OneoffGatherPointDetectorData,
+  WidgetCameraInfo,
+  WidgetCreateLocationInfo,
+  WidgetCreatorInfo,
+  WidgetThunderBirdFeatherInfo,
+} from "@/types/proto"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface QuickUseWidgetReq {
   locationInfo?: WidgetCreateLocationInfo
@@ -19,9 +26,9 @@ export interface QuickUseWidgetRsp {
 
 class QuickUseWidgetPacket extends Packet implements PacketInterface {
   constructor() {
-    super('QuickUseWidget', {
+    super("QuickUseWidget", {
       reqState: ClientStateEnum.IN_GAME,
-      reqStatePass: true
+      reqStatePass: true,
     })
   }
 
@@ -36,4 +43,4 @@ class QuickUseWidgetPacket extends Packet implements PacketInterface {
 }
 
 let packet: QuickUseWidgetPacket
-export default (() => packet = packet || new QuickUseWidgetPacket())()
+export default (() => (packet = packet || new QuickUseWidgetPacket()))()

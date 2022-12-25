@@ -1,5 +1,5 @@
-import { WidgetDataUserData } from '@/types/user/WidgetUserData'
-import Widget from '.'
+import { WidgetDataUserData } from "@/types/user/WidgetUserData"
+import Widget from "."
 
 export default class WidgetData {
   widget: Widget
@@ -18,7 +18,9 @@ export default class WidgetData {
     this.coolDown = []
   }
 
-  init(_userData: WidgetDataUserData) { return }
+  init(_userData: WidgetDataUserData) {
+    return
+  }
 
   exportUserData(): WidgetDataUserData {
     return {}
