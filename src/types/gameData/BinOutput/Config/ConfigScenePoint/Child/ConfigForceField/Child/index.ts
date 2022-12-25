@@ -1,3 +1,3 @@
 import ConfigBaseScenePoint from "../../"
 
-export default type ConfigBaseForceField = ConfigBaseScenePoint
+export default interface ConfigBaseForceField extends ConfigBaseScenePoint {}

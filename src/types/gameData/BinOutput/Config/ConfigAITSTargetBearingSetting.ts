@@ -1,3 +1,3 @@
 import ConfigAIThreatScoreBaseSetting from "./ConfigAIThreatScoreBaseSetting"
 
-export default type ConfigAITSTargetBearingSetting = ConfigAIThreatScoreBaseSetting
+export default interface ConfigAITSTargetBearingSetting extends ConfigAIThreatScoreBaseSetting {}
