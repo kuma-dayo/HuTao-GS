@@ -118,9 +118,6 @@ export default class Game {
 
     const player = new Player(this, client)
 
-    // get all weapons
-    player.getAllWeapons()
-
     playerMap[auid] = player
     client.player = player
 

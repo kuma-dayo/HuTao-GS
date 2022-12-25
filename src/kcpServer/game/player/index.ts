@@ -39,6 +39,7 @@ import Profile from './profile'
 import Widget from './widget'
 import Weapon from '$/equip/weapon'
 import WeaponData from '$/gameData/data/WeaponData'
+import InventoryUserData from '@/types/user/InventoryUserData'
 
 export default class Player extends BaseClass {
   game: Game
@@ -276,6 +277,9 @@ export default class Player extends BaseClass {
     // Unlock all widgets
     await this.unlockAllWidgets()
 
+    // Unlock all new weapon
+    await this.unlockAllWeapons(userData.inventoryData)
+    
     // Unlock all new avatars
     await this.unlockAllAvatars()
 
@@ -317,6 +321,9 @@ export default class Player extends BaseClass {
 
     // Unlock all widgets
     await this.unlockAllWidgets()
+
+    // Unlock all weapon
+    await this.unlockAllWeapons()
 
     // Add main avatar
     const mainAvatar = new Avatar(this, avatarId)
@@ -367,15 +374,20 @@ export default class Player extends BaseClass {
     }
   }
 
-  async getAllWeapons() {
+  async unlockAllWeapons(inventoryData?: InventoryUserData) {
     const { inventory } = this
     const weaponList = await WeaponData.getWeaponList()
+    
 
     for (const weaponData of weaponList) {
       const { Id } = weaponData
       const weapon = new Weapon(Id, this)
       await weapon.initNew()
-      await inventory.add(weapon)
+      if (!(inventoryData == null)) {
+        if(inventoryData.itemDataList.find(item => item.itemId == Id) == null) await inventory.add(weapon)
+      } else { // new login user
+        await inventory.add(weapon)
+      }
     }
   }
 
