@@ -3,6 +3,7 @@ import EntityFightPropChangeReason, { EntityFightPropChangeReasonNotify } from "
 import EntityFightPropUpdate from "#/packets/EntityFightPropUpdate"
 import Reliquary from "$/equip/reliquary"
 import Weapon from "$/equip/weapon"
+import Logger from "@/logger"
 import { CurveArithEnum, ElemTypeEnum, FightPropEnum } from "@/types/enum"
 import { EntityFightPropConfig } from "@/types/game"
 import { CurveExcelConfig } from "@/types/gameData/ExcelBinOutput/Common/CurveExcelConfig"
@@ -12,6 +13,8 @@ import PropsUserData from "@/types/user/PropsUserData"
 import Entity from "."
 import Avatar from "./avatar"
 import Monster from "./monster"
+
+const logger = new Logger("FIGHTPROP", 0xf5c242)
 
 const ElemTypeFightPropMaxEnergyMap = {
   [ElemTypeEnum.FIRE]: FightPropEnum.FIGHT_PROP_MAX_FIRE_ENERGY,
@@ -172,6 +175,16 @@ export default class FightProp {
     const costElemType = this.getCostElemType()
     const maxEnergy = this.getCostElemVal()
     const energyPercent = this.getMaxEnergy() > 0 ? this.getCurEnergy() / this.getMaxEnergy() : 1
+
+    logger.debug("updateEnergyStats: ", costElemType, maxEnergy, energyPercent, this.entity.name)
+    if (costElemType == 0 && maxEnergy == 0)
+      logger.warn(
+        "updateEnergyStats: Skill Data not enough: ",
+        costElemType,
+        maxEnergy,
+        energyPercent,
+        this.entity.name
+      )
 
     // Max energy
     this.set(ElemTypeFightPropMaxEnergyMap[costElemType], maxEnergy)

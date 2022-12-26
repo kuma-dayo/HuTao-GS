@@ -1,6 +1,6 @@
 import { CmdIds } from "@/types/kcp"
 
-const ver3_3_0: CmdIds = {
+const ver3_3: CmdIds = {
   AbilityChangeNotify: 1127,
   AbilityInvocationFailNotify: 1200,
   AbilityInvocationFixedNotify: 1179,
@@ -2125,4 +2125,4 @@ const ver3_3_0: CmdIds = {
   WorldRoutineTypeRefreshNotify: 3522,
 }
 
-export default ver3_3_0
+export default ver3_3
