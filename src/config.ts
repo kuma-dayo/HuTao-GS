@@ -71,7 +71,7 @@ export const DEFAULT_CONFIG: Config = {
   dispatchHost: null,
   dispatchSeed: null,
   dispatchRegion: "OSREL",
-  dispatchKeyId: 3,
+  dispatchKeyId: 5,
   autoPatch: false,
 
   usePassword: false,
