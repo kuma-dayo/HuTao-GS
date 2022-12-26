@@ -13,6 +13,9 @@ import PropsUserData from "@/types/user/PropsUserData"
 import Entity from "."
 import Avatar from "./avatar"
 import Monster from "./monster"
+import Config from "@/config"
+
+const logger = new Logger("fightProp", 0xf5c242)
 
 const ElemTypeFightPropMaxEnergyMap = {
   [ElemTypeEnum.FIRE]: FightPropEnum.FIGHT_PROP_MAX_FIRE_ENERGY,
@@ -170,10 +173,31 @@ export default class FightProp {
   }
 
   private updateEnergyStats() {
-    const costElemType = this.getCostElemType()
-    const maxEnergy = this.getCostElemVal()
-    const energyPercent = this.getMaxEnergy() > 0 ? this.getCurEnergy() / this.getMaxEnergy() : 1
+    let costElemType = this.getCostElemType()
+    let maxEnergy = this.getCostElemVal()
+    let energyPercent = this.getMaxEnergy() > 0 ? this.getCurEnergy() / this.getMaxEnergy() : 1
+    const { res_developer_mode, res_developer } = Config
 
+    logger.debug("updateEnergyStats: ", costElemType, maxEnergy, energyPercent, this.entity.name)
+
+    if (res_developer_mode == true && costElemType == 0 && maxEnergy == 0) {
+      for (const data in res_developer) {
+        if (this.entity.name.toUpperCase() == data.toUpperCase()) {
+          logger.debug(data, res_developer, res_developer[data])
+          costElemType = res_developer[data]
+          maxEnergy = 1
+          energyPercent = 1
+        }
+      }
+    }
+    if (costElemType == 0 && maxEnergy == 0)
+      logger.warn(
+        "updateEnergyStats: Skill Data not enough: ",
+        costElemType,
+        maxEnergy,
+        energyPercent,
+        this.entity.name
+      )
     // Max energy
     this.set(ElemTypeFightPropMaxEnergyMap[costElemType], maxEnergy)
 

@@ -49,6 +49,8 @@ interface Config {
     nickName: string
     signature: string
   }
+  res_developer_mode: boolean
+  res_developer: { [data: string]: number }
   // host file
   hosts: string[] | null // host list
 }
@@ -82,6 +84,13 @@ export const DEFAULT_CONFIG: Config = {
   recorderPort: 8888,
   kcpPort: 22102,
 
+  domains: {
+    "yuanshen.com": null,
+    "mihoyo.com": null,
+    "hoyoverse.com": null,
+  },
+  nameservers: ["1.1.1.1", "1.0.0.1"],
+
   serverAccount: {
     avatarId: 10000046,
     nameCardId: 210059,
@@ -90,12 +99,18 @@ export const DEFAULT_CONFIG: Config = {
     signature: "Welcome to HuTao-GS!",
   },
 
-  domains: {
-    "yuanshen.com": null,
-    "mihoyo.com": null,
-    "hoyoverse.com": null,
+  res_developer_mode: false,
+  res_developer: {
+    // FIRE = 1
+    // WATER = 2
+    // GRASS = 3
+    // ELECTRIC = 4
+    // ICE = 5
+    // FROZEN = 6
+    // WIND = 7
+    // ROCK = 8
+    // ANTIFIRE = 9
   },
-  nameservers: ["1.1.1.1", "1.0.0.1"],
 
   hosts: null,
 }
