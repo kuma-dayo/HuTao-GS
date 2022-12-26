@@ -6,6 +6,7 @@ import { getTTY, TTY } from "./tty"
 import { cRGB, noColor } from "./tty/utils"
 import parseArgs from "./utils/parseArgs"
 import { getTimestamp } from "./utils/time"
+import config from "./config"
 const { appendFile } = fs.promises
 
 export enum LogLevel {
@@ -23,7 +24,7 @@ export enum LogLevel {
 const args = parseArgs(process.argv)
 
 let logLevel = args.ll
-if (typeof logLevel !== "number") logLevel = LogLevel.INFO
+if (typeof logLevel !== "number") logLevel = LogLevel.DEBUG
 
 let logFileName = null
 let logHistory: string[] = null

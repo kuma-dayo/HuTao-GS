@@ -178,7 +178,7 @@ export default class FightProp {
     let energyPercent = this.getMaxEnergy() > 0 ? this.getCurEnergy() / this.getMaxEnergy() : 1
     const { res_developer_mode, res_developer } = Config
 
-    logger.debug("updateEnergyStats: ", costElemType, maxEnergy, energyPercent, this.entity.name)
+    logger.debug("updateEnergyStats:", costElemType, maxEnergy, energyPercent, this.entity.name)
 
     if (res_developer_mode == true && costElemType == 0 && maxEnergy == 0) {
       for (const data in res_developer) {
@@ -190,14 +190,7 @@ export default class FightProp {
         }
       }
     }
-    if (costElemType == 0 && maxEnergy == 0)
-      logger.warn(
-        "updateEnergyStats: Skill Data not enough: ",
-        costElemType,
-        maxEnergy,
-        energyPercent,
-        this.entity.name
-      )
+    if (costElemType == 0 && maxEnergy == 0) logger.warn("updateEnergyStats: Skill Data not enough:", this.entity.name)
     // Max energy
     this.set(ElemTypeFightPropMaxEnergyMap[costElemType], maxEnergy)
 
