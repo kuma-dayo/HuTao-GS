@@ -1,6 +1,22 @@
 # HuTao-GS
 Supported version: 1.4.50 - 3.3.53
 
+## Requirements
+
+* [Node-Js](https://nodejs.org/en/)
+* [Openssl](https://slproweb.com/products/Win32OpenSSL.html)
+* [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+* [Typescript](https://www.npmjs.com/package/typescript)
+* [Tsc-Alias](https://www.npmjs.com/package/tsc-alias)
+
+
+## Setup
+```shell
+git clone https://github.com/kuma-dayo/HuTao-GS.git
+cd HuTao-GS
+npm i
+npm run start:dev
+```
 # Fidder Script
 ```
 import System;
