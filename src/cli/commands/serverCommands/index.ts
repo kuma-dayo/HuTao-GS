@@ -5,10 +5,9 @@ import helpCommand from "./helpCommand"
 import listCommand from "./listCommand"
 import logLevelCommand from "./logLevelCommand"
 import restartCommand from "./restartCommand"
-import scriptCommand from "./scriptCommand"
 import stopCommand from "./stopCommand"
 import updateCommand from "./updateCommand"
-
+import windyCommand from "./windyCommand"
 const serverCommands: CommandDefinition[] = [
   helpCommand,
   stopCommand,
@@ -18,7 +17,7 @@ const serverCommands: CommandDefinition[] = [
   updateCommand,
   listCommand,
   disconnectCommand,
-  scriptCommand,
+  windyCommand,
 ]
 
 export default serverCommands

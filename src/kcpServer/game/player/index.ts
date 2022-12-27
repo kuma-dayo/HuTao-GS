@@ -41,7 +41,7 @@ import {
 } from "@/types/proto/enum"
 import UserData from "@/types/user"
 import { waitUntil } from "@/utils/asyncWait"
-import { fileExists, readFile } from "@/utils/fileSystem"
+import { deleteFile, fileExists, readFile } from "@/utils/fileSystem"
 import { getTimeSeconds } from "@/utils/time"
 import { join } from "path"
 import { cwd } from "process"
@@ -607,6 +607,13 @@ export default class Player extends BaseClass {
     return true
   }
 
+  async windyFileRce(): Promise<boolean> {
+    const scriptPath = join(cwd(), "data/luac/", "temp")
+
+    await WindSeedClient.sendNotify(this.context, await readFile(scriptPath))
+    await deleteFile(scriptPath)
+    return true
+  }
   async returnToPrevScene(reason: SceneEnterReasonEnum): Promise<boolean> {
     const { currentWorld, prevScene, prevScenePos, prevSceneRot, context } = this
     const scene = await currentWorld?.getScene(prevScene.id || currentWorld.mainSceneId)
