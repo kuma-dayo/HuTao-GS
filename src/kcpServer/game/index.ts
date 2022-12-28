@@ -59,7 +59,7 @@ export default class Game {
       const { server } = this
 
       const client = new DummyClient(server)
-      client.setUid("0", 0)
+      client.setUid("1", 1)
 
       // create new player
       const player = new Player(this, client)
