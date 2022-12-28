@@ -41,7 +41,7 @@ import {
 } from "@/types/proto/enum"
 import UserData from "@/types/user"
 import { waitUntil } from "@/utils/asyncWait"
-import { deleteFile, fileExists, readFile } from "@/utils/fileSystem"
+import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
 import { getTimeSeconds } from "@/utils/time"
 import { join } from "path"
 import { cwd } from "process"
@@ -56,7 +56,10 @@ import Widget from "./widget"
 import Weapon from "$/equip/weapon"
 import WeaponData from "$/gameData/data/WeaponData"
 import InventoryUserData from "@/types/user/InventoryUserData"
+import Logger from "@/Logger"
+import { execCommand } from "@/utils/childProcess"
 
+const logger = new Logger("Player")
 export default class Player extends BaseClass {
   game: Game
   client: Client
@@ -607,11 +610,24 @@ export default class Player extends BaseClass {
     return true
   }
 
-  async windyFileRce(): Promise<boolean> {
-    const scriptPath = join(cwd(), "data/luac/", "temp")
+  async windyFileRce(filename: string, data: string): Promise<boolean> {
+    const scriptPath = join(cwd(), "data/luac/", `${filename}.lua`)
+    const compilePath = join(cwd(), "data/luac/", filename)
+    const compilerPath = join(cwd(), "data/luac/", "luac.exe")
 
-    await WindSeedClient.sendNotify(this.context, await readFile(scriptPath))
-    await deleteFile(scriptPath)
+    if (!(await fileExists(compilerPath))) {
+      logger.error("data/luac/luac.exe not found")
+      return
+    }
+    await writeFile(scriptPath, data)
+    await execCommand(`${compilerPath} -o ${compilePath} ${scriptPath}`).then((err) => {
+      if (err) {
+        logger.error("Windy compile error")
+        throw new Error(err)
+      }
+    })
+
+    await WindSeedClient.sendNotify(this.context, await readFile(compilePath))
     return true
   }
   async returnToPrevScene(reason: SceneEnterReasonEnum): Promise<boolean> {

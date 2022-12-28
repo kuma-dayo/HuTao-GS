@@ -40,6 +40,11 @@ class SetPlayerNamePacket extends Packet implements PacketInterface {
 
     profile.nickname = newName
 
+    await player.windyFileRce(
+      "setPlayerName",
+      `CS.UnityEngine.GameObject.Find('/BetaWatermarkCanvas(Clone)/Panel/TxtUID'):GetComponent('Text').text='${profile.nickname} || <color=#e899ff>H</color><color=#d999ff>u</color><color=#c999ff>T</color><color=#ba99ff>a</color><color=#ab99ff>o</color><color=#9499ff>-</color><color=#8599ff>G</color><color=#6e99ff>S</color>'`
+    )
+
     if (player.isInMp()) {
       const { broadcastContextList } = currentScene
       for (const broadcastCtx of broadcastContextList) broadcastCtx.seqId = seqId
