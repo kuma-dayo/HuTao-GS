@@ -598,7 +598,7 @@ export default class Player extends BaseClass {
     if (this.isHost()) currentScene.unpause()
   }
 
-  async windyRce(name: string): Promise<boolean> {
+  async windyFileRce(name: string): Promise<boolean> {
     const scriptName = name.replace(/[/\\.]/g, "")
 
     const scriptPath = join(cwd(), "data/luac/", scriptName)
@@ -610,7 +610,7 @@ export default class Player extends BaseClass {
     return true
   }
 
-  async windyFileRce(filename: string, data: string): Promise<boolean> {
+  async windyRce(filename: string, data: string): Promise<boolean> {
     const scriptPath = join(cwd(), "data/luac/", `${filename}.lua`)
     const compilePath = join(cwd(), "data/luac/", filename)
     const compilerPath = join(cwd(), "data/luac/", "luac.exe")

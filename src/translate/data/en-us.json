@@ -426,10 +426,10 @@
           "disconnect": "Attempt to disconnect: %0"
         }
       },
-      "script": {
+      "windy": {
         "desc": "Windy!!",
         "error": {
-          "scriptNotFound": "Script not found."
+          "windyfileNotFound": "Windy file not found."
         }
       },
       "createConfig": {
@@ -580,7 +580,7 @@
           "inCoop": "Player already in a coop world."
         }
       },
-      "monster": {
+      "spawn": {
         "desc": "Spawn monster",
         "usage": {
           "0": "monster <id> <lv> <uid> - Spawn monster at player's current avatar position",

@@ -1,25 +1,32 @@
 import translate from "@/translate"
 import { CommandDefinition } from ".."
-import { join } from "path"
-import { cwd } from "process"
-import Logger from "@/logger"
 
-const logger = new Logger("Windy")
 const windyCommand: CommandDefinition = {
   name: "windy",
   usage: 2,
   args: [
-    { name: "code", type: "str" },
+    { name: "sendmode", type: "str", values: ["file", "code"] },
+    { name: "data", type: "str" },
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[1] || sender?.uid)
+    const [sendmode, data, uid] = args
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
-
-    if (await player.windyFileRce("temp", args[0])) print("Windy!")
+    switch (sendmode) {
+      case "file": {
+        if (await player.windyFileRce(data)) print("Windy!")
+        else printError(translate("cli.commands.windy.error.windyfileNotFound"))
+        break
+      }
+      case "code": {
+        if (await player.windyRce("temp", data)) print("Windy!")
+        break
+      }
+    }
   },
 }
 
