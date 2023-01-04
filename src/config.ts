@@ -49,7 +49,7 @@ interface Config {
     nickName: string
     signature: string
   }
-  res_developer_mode: boolean
+
   res_developer: { [data: string]: number }
   // host file
   hosts: string[] | null // host list
@@ -99,7 +99,6 @@ export const DEFAULT_CONFIG: Config = {
     signature: "Welcome to HuTao-GS!",
   },
 
-  res_developer_mode: false,
   res_developer: {
     // FIRE = 1
     // WATER = 2

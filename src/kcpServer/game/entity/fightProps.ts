@@ -176,11 +176,11 @@ export default class FightProp {
     let costElemType = this.getCostElemType()
     let maxEnergy = this.getCostElemVal()
     let energyPercent = this.getMaxEnergy() > 0 ? this.getCurEnergy() / this.getMaxEnergy() : 1
-    const { res_developer_mode, res_developer } = Config
+    const { res_developer } = Config
 
     logger.debug("updateEnergyStats:", costElemType, maxEnergy, energyPercent, this.entity.name)
 
-    if (res_developer_mode == true && costElemType == 0 && maxEnergy == 0) {
+    if (costElemType == 0 && maxEnergy == 0) {
       for (const data in res_developer) {
         if (this.entity.name.toUpperCase() == data.toUpperCase()) {
           logger.debug(data, res_developer, res_developer[data])
