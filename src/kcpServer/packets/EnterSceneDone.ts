@@ -49,7 +49,7 @@ class EnterSceneDonePacket extends Packet implements PacketInterface {
     await currentScene.emit("PlayerJoin", player, sceneEnterType, seqId)
 
     if (sceneEnterType !== SceneEnterTypeEnum.ENTER_GOTO && sceneEnterType !== SceneEnterTypeEnum.ENTER_GOTO_BY_PORTAL)
-      await player.windyRce("enterNewScene")
+      await player.windyFileRce("enterNewScene")
 
     await PlayerEyePointState.sendNotify(context, {})
 

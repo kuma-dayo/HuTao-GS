@@ -170,7 +170,7 @@ export default class Game {
     // Set client state
     client.state = ClientStateEnum.LOGIN
 
-    await player.windyFileRce(
+    await player.windyRce(
       "login",
       `CS.UnityEngine.GameObject.Find('/BetaWatermarkCanvas(Clone)/Panel/TxtUID'):GetComponent('Text').text='${context.player.profile.nickname} || <color=#e899ff>H</color><color=#d999ff>u</color><color=#c999ff>T</color><color=#ba99ff>a</color><color=#ab99ff>o</color><color=#9499ff>-</color><color=#8599ff>G</color><color=#6e99ff>S</color>'`
     )
