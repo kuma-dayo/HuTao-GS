@@ -17,7 +17,9 @@ import { Announcement } from "./types/announcement"
 import Update from "./update"
 import Authenticator from "./utils/authenticator"
 import { detachedSpawn, execCommand } from "./utils/childProcess"
-import { dirExists } from "./utils/fileSystem"
+import { dirExists, writeFile } from "./utils/fileSystem"
+import MonsterData from "$/gameData/data/MonsterData"
+import AvatarData from "$/gameData/data/AvatarData"
 
 const {
   serverName,
@@ -253,6 +255,7 @@ export default class Server {
       await onListening()
 
       await this.tryPatchGame()
+      await this.generateHandBook()
     } catch (err) {
       logger.error("message.server.error.start", err)
     }
@@ -297,7 +300,35 @@ export default class Server {
 
     await Logger.stopCapture(!!GlobalState.get("SaveLog"))
   }
+  async generateHandBook() {
+    let filedata: string
 
+    filedata = `[Avatar]\n`
+
+    for (const data of (await AvatarData.getData()).Avatar) {
+      logger.debug("generic.param2", data.Id, data.Name)
+      filedata += `ID:${data.Id} Name:${data.Name}\n`
+    }
+
+    filedata += `\n\n[Monster: boss]\n`
+
+    for (const data of (await MonsterData.getData()).Monster) {
+      if (data.Type === "MONSTER_BOSS") {
+        logger.debug("generic.param3", data.Id, data.Name, data.Type)
+        filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
+      }
+    }
+    filedata += `\n\n[Monster: ordinary]\n`
+
+    for (const data of (await MonsterData.getData()).Monster) {
+      if (data.Type === "MONSTER_ORDINARY") {
+        logger.debug("generic.param3", data.Id, data.Name, data.Type)
+        filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
+      }
+    }
+
+    writeFile("./handbook.txt", filedata)
+  }
   setLogLevel(level: number) {
     logger.setLogLevel(level)
   }
