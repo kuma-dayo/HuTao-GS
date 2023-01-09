@@ -50,7 +50,7 @@ interface Config {
     signature: string
   }
 
-  res_developer: { [data: string]: number }
+  res_developer: { [data: string]: [costElemType: number, maxEnergy?: number, energyPercent?: number] }
   // host file
   hosts: string[] | null // host list
 }

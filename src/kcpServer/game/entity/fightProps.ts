@@ -184,9 +184,9 @@ export default class FightProp {
       for (const data in res_developer) {
         if (this.entity.name.toUpperCase() == data.toUpperCase()) {
           logger.debug(data, res_developer, res_developer[data])
-          costElemType = res_developer[data]
-          maxEnergy = 1
-          energyPercent = 1
+          costElemType = res_developer[data][0]
+          maxEnergy = res_developer[data][1] || 1
+          energyPercent = res_developer[data][2] || 1
         }
       }
     }
