@@ -301,26 +301,27 @@ export default class Server {
     await Logger.stopCapture(!!GlobalState.get("SaveLog"))
   }
   async generateHandBook() {
-    let filedata: string
+    let filedata = `//Game version ${config.version}\n\n\n[Avatar]\n`
 
-    filedata = `[Avatar]\n`
-
-    for (const data of (await AvatarData.getData()).Avatar) {
+    const avatarData = await AvatarData.getData()
+    for (const data of avatarData.Avatar) {
       logger.debug("generic.param2", data.Id, data.Name)
       filedata += `ID:${data.Id} Name:${data.Name}\n`
     }
 
     filedata += `\n\n[Monster: boss]\n`
 
-    for (const data of (await MonsterData.getData()).Monster) {
+    const monsterData = await MonsterData.getData()
+    for (const data of monsterData.Monster) {
       if (data.Type === "MONSTER_BOSS") {
         logger.debug("generic.param3", data.Id, data.Name, data.Type)
         filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
       }
     }
+
     filedata += `\n\n[Monster: ordinary]\n`
 
-    for (const data of (await MonsterData.getData()).Monster) {
+    for (const data of monsterData.Monster) {
       if (data.Type === "MONSTER_ORDINARY") {
         logger.debug("generic.param3", data.Id, data.Name, data.Type)
         filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
