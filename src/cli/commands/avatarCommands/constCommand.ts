@@ -1,8 +1,8 @@
 import translate from "@/translate"
 import { CommandDefinition } from ".."
 
-const talentCommand: CommandDefinition = {
-  name: "talent",
+const constCommand: CommandDefinition = {
+  name: "const",
   usage: 6,
   args: [
     { name: "mode", type: "str", values: ["unlock", "lock", "list"] },
@@ -25,14 +25,14 @@ const talentCommand: CommandDefinition = {
     switch (mode) {
       case "unlock": {
         const talent = await talentManager.unlockTalent()
-        if (talent) print(translate("cli.commands.talent.info.unlocked", talent.id))
-        else printError(translate("cli.commands.talent.error.talentNotFound"))
+        if (talent) print(translate("cli.commands.const.info.unlocked", talent.id))
+        else printError(translate("cli.commands.const.error.constNotFound"))
         break
       }
       case "lock": {
         const talent = await talentManager.lockTalent()
-        if (talent) print(translate("cli.commands.talent.info.locked", talent.id))
-        else printError(translate("cli.commands.talent.error.talentNotFound"))
+        if (talent) print(translate("cli.commands.const.info.locked", talent.id))
+        else printError(translate("cli.commands.const.error.constNotFound"))
         break
       }
       case "list": {
@@ -43,4 +43,4 @@ const talentCommand: CommandDefinition = {
   },
 }
 
-export default talentCommand
+export default constCommand

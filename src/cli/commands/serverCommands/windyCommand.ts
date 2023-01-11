@@ -3,7 +3,6 @@ import { CommandDefinition } from ".."
 
 const windyCommand: CommandDefinition = {
   name: "windy",
-  usage: 2,
   args: [
     { name: "sendmode", type: "str", values: ["file", "code"] },
     { name: "data", type: "str" },

@@ -703,7 +703,7 @@
           "invalidFightProp": "Invalid fight prop."
         }
       },
-      "talent": {
+      "const": {
         "desc": "Edit/List current avatar talents",
         "usage": {
           "0": "talent unlock <uid> - Unlock talent for player's current avatar",

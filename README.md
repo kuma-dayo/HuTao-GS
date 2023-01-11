@@ -1,5 +1,5 @@
 # HuTao-GS
-Supported version: 1.4.50 - 3.3.53
+Supported version: 1.4.50 - 3.3.54
 
 ## Requirements
 
