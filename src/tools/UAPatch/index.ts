@@ -1,4 +1,3 @@
-import config from "@/config"
 import TError from "@/translate/terror"
 import DispatchKey from "@/utils/dispatchKey"
 import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
@@ -119,7 +118,7 @@ export const UAPatch = async (src: string, dst: string): Promise<void> => {
   const key = (await listKeys(buf)).find((k) => !k.data.includes("<P>"))
   if (key == null) throw new TError("message.tools.ua.error.noServerPublicKey")
 
-  const serverKey = await DispatchKey.getServerKeyPair(config.dispatchKeyId)
+  const serverKey = await DispatchKey.getServerKeyPair()
   writeKey(buf, key.offset, Buffer.from(serverKey.public.xml))
 
   await writeFile(dst, buf)

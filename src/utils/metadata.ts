@@ -70,6 +70,7 @@ export function replaceStringLiteral(data: Buffer, pointer: StringLiteralPointer
   const stringLiteralOffset = header.readUInt32LE(getFieldOffset(mHeaderFields, "stringLiteralOffset"))
   const stringLiteralDataCount = header.readUint32LE(getFieldOffset(mHeaderFields, "stringLiteralDataCount"))
   const stringLiteralDataOffset = header.readUint32LE(getFieldOffset(mHeaderFields, "stringLiteralDataOffset"))
+
   if (stringLiteralCount + stringLiteralOffset > len) {
     throw new Error("file trimmed or string literal offset/count field invalid")
   }
@@ -81,12 +82,12 @@ export function replaceStringLiteral(data: Buffer, pointer: StringLiteralPointer
   header.writeUint32LE(stringLiteralDataCount + diff, getFieldOffset(mHeaderFields, "stringLiteralDataCount"))
 
   // change header offsets
-  for (let i = 0; i < mHeaderFields.length; i++) {
-    if (i % 2 !== 0) continue
+  for (let i = 0; i < mHeaderFields.length; i += 2) {
     const [fname] = mHeaderFields[i]
 
     const foffset = getFieldOffset(mHeaderFields, fname)
     const fval = header.readUint32LE(foffset)
+
     if (fval <= stringLiteralDataOffset) continue
 
     header.writeUint32LE(fval + diff, foffset)

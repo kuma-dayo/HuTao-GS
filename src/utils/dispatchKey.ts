@@ -12,14 +12,14 @@ export default class DispatchKey {
     return OpenSSL.getKeyPair(join(cwd(), `data/key/${keyId}`), "client")
   }
 
-  static async getServerKeyPair(keyId: number = dispatchKeyId): Promise<RSAKeyPair> {
-    return OpenSSL.getKeyPair(join(cwd(), `data/key/${keyId}`), "server", Math.min(serverKeySize, 2048)) // 3.0.5+ ua patch limit
+  static async getServerKeyPair(): Promise<RSAKeyPair> {
+    return OpenSSL.getKeyPair(join(cwd(), `data/key`), "server", Math.min(serverKeySize, 2048)) // 3.0.5+ ua patch limit
   }
 
   static async getKeyPairs(keyId: number = dispatchKeyId): Promise<{ client: RSAKeyPair; server: RSAKeyPair }> {
     return {
       client: await DispatchKey.getClientKeyPair(keyId),
-      server: await DispatchKey.getServerKeyPair(keyId),
+      server: await DispatchKey.getServerKeyPair(),
     }
   }
 
