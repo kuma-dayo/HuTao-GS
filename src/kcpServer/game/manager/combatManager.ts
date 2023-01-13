@@ -41,6 +41,7 @@ const protoLookupTable = {
   COMBAT_FIXED_RUSH_MOVE: "EvtFixedRushMove",
   COMBAT_SYNC_TRANSFORM: "EvtSyncTransform",
   COMBAT_LIGHT_CORE_MOVE: "EvtLightCoreMove",
+  COMBAT_BEING_HEALED_NOTIFY: "EvtBeingHealedNotify",
 }
 
 const logger = new TLogger("COMBAT", 0xff1010)
