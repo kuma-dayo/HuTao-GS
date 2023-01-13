@@ -8,28 +8,31 @@ const spawnCommand: CommandDefinition = {
   args: [
     { name: "id", type: "int" },
     { name: "lv", type: "int" },
+    { name: "amount", type: "int" },
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[2] || sender?.uid)
+    const player = kcpServer.game.getPlayerByUid(args[3] || sender?.uid)
 
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const { currentScene, pos } = player
     if (!currentScene || !pos) return printError(translate("generic.playerNoPos"))
 
-    print(translate("cli.commands.monster.info.spawn", args[0]))
+    print(translate("cli.commands.spawn.info.spawn", args[0]))
 
-    const entity = new Monster(args[0], player)
+    for (let i = 0; i < args[2]; i++) {
+      let entity = new Monster(args[0], player)
 
-    entity.motion.pos.copy(pos)
-    entity.bornPos.copy(pos)
+      entity.motion.pos.copy(pos)
+      entity.bornPos.copy(pos)
 
-    await entity.initNew(args[1])
-    await currentScene.entityManager.add(entity)
+      await entity.initNew(args[1])
+      await currentScene.entityManager.add(entity)
+    }
   },
 }
 
