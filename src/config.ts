@@ -50,6 +50,8 @@ interface Config {
     signature: string
   }
 
+  eventlist: number[]
+
   res_developer: { [data: string]: [costElemType: number, maxEnergy?: number, energyPercent?: number] }
   // host file
   hosts: string[] | null // host list
@@ -98,6 +100,8 @@ export const DEFAULT_CONFIG: Config = {
     nickName: "HuTao-GS",
     signature: "Welcome to HuTao-GS!",
   },
+
+  eventlist: [],
 
   res_developer: {
     // FIRE = 1
