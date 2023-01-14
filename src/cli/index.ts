@@ -105,7 +105,7 @@ export default class CLI {
 
     try {
       cmdName = input.split(" ")[0]
-      args = splitArgs(input.split(" ").slice(1).join(" "))
+      args = splitArgs(input.split(" ").slice(1).join(" "), cmdName === "windy")
     } catch (err) {
       return translate("cli.error.parseFail", err)
     }

@@ -110,7 +110,7 @@ export function parseCLIArgs(args: string[], cmdDef: CommandDefinition): ParseCL
   return ctx
 }
 
-export function splitArgs(str: string): string[] {
+export function splitArgs(str: string, GRPskip?: boolean): string[] {
   const args: string[] = []
 
   str = str.trim()
@@ -120,7 +120,7 @@ export function splitArgs(str: string): string[] {
     const char = str[i]
 
     const { type } = ARGS_CTYPES.find((ct) => ct.list.find((c) => c === char)) || {}
-    const isGrp = type === "GRP"
+    const isGrp = GRPskip ? false : type === "GRP"
     const isSep = type === "SEP"
 
     // Start group
