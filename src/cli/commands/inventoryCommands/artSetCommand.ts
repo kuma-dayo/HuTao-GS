@@ -15,19 +15,17 @@ const artSetCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[2] || sender?.uid)
+    const [id, count, uid] = args
 
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
-    const setId = args[0]
-    const count = args[1] || 1
-
-    const artIdList = (await ReliquaryData.getSet(setId))?.ContainsList
+    const artIdList = (await ReliquaryData.getSet(id))?.ContainsList
     if (artIdList == null) return printError(translate("cli.commands.artSet.error.setNotFound"))
 
-    print(translate("cli.commands.artSet.info.give", setId, count))
+    print(translate("cli.commands.artSet.info.give", id, count || 1))
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count || 1; i++) {
       for (const id of artIdList) {
         const reliquary = new Reliquary(id, player)
         await reliquary.initNew()

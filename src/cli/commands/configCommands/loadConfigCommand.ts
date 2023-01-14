@@ -21,8 +21,9 @@ const loadConfigCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, cli, server } = cmdInfo as { args: string[]; cli: CLI; server: Server }
     const { print, printError } = cli
+    const [name] = args
 
-    const configName = args[0] || "default"
+    const configName = name || "default"
     const allConfigs = getJson("config.json", {})
 
     if (configName === "current") return printError(translate("cli.commands.loadConfig.error.invalidName", configName))

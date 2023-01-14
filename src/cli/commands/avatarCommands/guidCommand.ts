@@ -10,7 +10,9 @@ const guidCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[0] || sender?.uid)
+    const [uid] = args
+
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
 
     if (!player) return printError(translate("generic.playerNotFound"))
 

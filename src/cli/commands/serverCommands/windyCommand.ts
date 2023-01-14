@@ -13,8 +13,10 @@ const windyCommand: CommandDefinition = {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
     const [sendmode, data, uid] = args
+
     const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
+
     switch (sendmode) {
       case "file": {
         if (await player.windyFileRce(data)) print("Windy!")

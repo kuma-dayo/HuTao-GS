@@ -6,6 +6,7 @@ const restartCommand: CommandDefinition = {
   name: "restart",
   exec: async (cmdInfo) => {
     const { cli, server } = cmdInfo as { cli: CLI; server: Server }
+
     cli.stop()
     await server.restart()
   },

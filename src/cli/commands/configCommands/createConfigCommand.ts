@@ -10,8 +10,9 @@ const createConfigCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, cli } = cmdInfo
     const { print, printError } = cli
+    const [name] = args
 
-    const configName = args[0] || "default"
+    const configName = name || "default"
     const allConfigs = getJson("config.json", {})
 
     if (configName === "current")

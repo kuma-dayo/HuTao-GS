@@ -7,8 +7,9 @@ const lightningCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[0])
+    const [uid] = args
 
+    const player = kcpServer.game.getPlayerByUid(uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
     player.thunderTarget = !player.thunderTarget

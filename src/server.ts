@@ -305,7 +305,7 @@ export default class Server {
 
     const avatarData = await AvatarData.getData()
     for (const data of avatarData.Avatar) {
-      logger.debug("generic.param2", data.Id, data.Name)
+      logger.verbose("generic.param2", data.Id, data.Name)
       filedata += `ID:${data.Id} Name:${data.Name}\n`
     }
 
@@ -314,7 +314,7 @@ export default class Server {
     const monsterData = await MonsterData.getData()
     for (const data of monsterData.Monster) {
       if (data.Type === "MONSTER_BOSS") {
-        logger.debug("generic.param3", data.Id, data.Name, data.Type)
+        logger.verbose("generic.param3", data.Id, data.Name, data.Type)
         filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
       }
     }
@@ -323,7 +323,7 @@ export default class Server {
 
     for (const data of monsterData.Monster) {
       if (data.Type === "MONSTER_ORDINARY") {
-        logger.debug("generic.param3", data.Id, data.Name, data.Type)
+        logger.verbose("generic.param3", data.Id, data.Name, data.Type)
         filedata += `ID:${data.Id} Name:${data.Name} Type:${data.Type}\n`
       }
     }

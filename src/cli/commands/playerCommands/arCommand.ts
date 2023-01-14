@@ -12,11 +12,12 @@ const arCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[1] || sender?.uid)
+    const [level, uid] = args
 
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
-    await player.setLevel(args[0])
+    await player.setLevel(level)
     print(translate("cli.commands.ar.info.setAR", player.level))
   },
 }

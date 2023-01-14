@@ -12,18 +12,20 @@ const equipCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[1] || sender?.uid)
+    const [guid, uid] = args
+
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
 
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const { currentAvatar } = player
     if (!currentAvatar) return printError(translate("generic.playerNoCurAvatar"))
 
-    const equip = player.getEquip(BigInt(args[0] || 0))
+    const equip = player.getEquip(BigInt(guid || 0))
     if (!equip) return printError(translate("cli.commands.equip.error.noEquip"))
 
     await currentAvatar.equip(equip)
-    print(translate("cli.commands.equip.info.equip", args[0]))
+    print(translate("cli.commands.equip.info.equip", guid))
   },
 }
 

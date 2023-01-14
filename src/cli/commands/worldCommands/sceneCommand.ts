@@ -15,15 +15,16 @@ const sceneCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[1] || sender?.uid)
+    const [id, uid] = args
 
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const { currentWorld, currentScene, context } = player
     if (!currentWorld) return printError(translate("generic.notInWorld"))
 
-    const scene = await currentWorld.getScene(args[0])
-    const sceneData = await SceneData.getScene(args[0])
+    const scene = await currentWorld.getScene(id)
+    const sceneData = await SceneData.getScene(id)
     if (!scene || !sceneData) return printError(translate("cli.commands.scene.error.sceneNotFound"))
     if (currentScene === scene) return printError(translate("cli.commands.scene.error.sameScene"))
 

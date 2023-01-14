@@ -15,22 +15,23 @@ const spawnCommand: CommandDefinition = {
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const player = kcpServer.game.getPlayerByUid(args[3] || sender?.uid)
+    const [id, vl, amount, uid] = args
 
+    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const { currentScene, pos } = player
     if (!currentScene || !pos) return printError(translate("generic.playerNoPos"))
 
-    print(translate("cli.commands.spawn.info.spawn", args[0]))
+    print(translate("cli.commands.spawn.info.spawn", id))
 
-    for (let i = 0; i < args[2]; i++) {
-      let entity = new Monster(args[0], player)
+    for (let i = 0; i < amount; i++) {
+      let entity = new Monster(id, player)
 
       entity.motion.pos.copy(pos)
       entity.bornPos.copy(pos)
 
-      await entity.initNew(args[1])
+      await entity.initNew(vl)
       await currentScene.entityManager.add(entity)
     }
   },
