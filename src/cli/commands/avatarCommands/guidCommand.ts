@@ -13,7 +13,6 @@ const guidCommand: CommandDefinition = {
     const [uid] = args
 
     const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
-
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const { currentAvatar } = player
