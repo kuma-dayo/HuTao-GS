@@ -55,3 +55,13 @@ start()
 CS.UnityEngine.GameObject.Find("/UICamera"):SetActive(false)
 ```
 ![](image/HideUI.png)
+
+## FPS Change
+```lua
+CS.UnityEngine.Application.targetFrameRate=240
+```
+
+## No Fog
+```lua
+CS.UnityEngine.RenderSettings.fog=false
+```
