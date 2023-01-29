@@ -96,7 +96,7 @@ export default class Scene extends BaseClass {
 
     this.playerList = []
 
-    this.dieY = 0
+    this.dieY = -1000
 
     super.initHandlers(this)
   }
@@ -110,7 +110,7 @@ export default class Scene extends BaseClass {
     this.sceneTagList = sceneData?.Tag?.map((tagData) => new SceneTag(this, tagData)) || []
     this.sceneBlockList = Object.keys(sceneData?.Block || {}).map((e) => new SceneBlock(this, parseInt(e)))
 
-    this.dieY = sceneData?.DieY || 0
+    this.dieY = sceneData?.DieY || -1000
     this.isLocked = !!sceneData?.IsLocked
   }
 

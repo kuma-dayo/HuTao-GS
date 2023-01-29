@@ -69,8 +69,8 @@ export default class Game {
       client.player = player
 
       // set player data
-      await player.initNew(config.serverAccount.avatarId, config.serverAccount.nickName)
-      await player.setLevel(config.serverAccount.adventureRank, false)
+      await player.initNew(config.game.serverAccount.avatarId, config.game.serverAccount.nickName)
+      await player.setLevel(config.game.serverAccount.adventureRank, false)
 
       player.noAuthority = true
 
@@ -84,11 +84,11 @@ export default class Game {
       // set profile data
       props.set(PlayerPropEnum.PROP_PLAYER_MP_SETTING_TYPE, MpSettingTypeEnum.MP_SETTING_ENTER_FREELY)
 
-      profile.signature = config.serverAccount.signature
+      profile.signature = config.game.serverAccount.signature
       profile.birthday = { month: 7, day: 15 }
-      profile.unlockedNameCardIdList = [config.serverAccount.nameCardId]
-      profile.nameCardId = config.serverAccount.nameCardId
-      profile.showNameCardIdList = [config.serverAccount.nameCardId]
+      profile.unlockedNameCardIdList = [config.game.serverAccount.nameCardId]
+      profile.nameCardId = config.game.serverAccount.nameCardId
+      profile.showNameCardIdList = [config.game.serverAccount.nameCardId]
 
       // login
       await this.playerLogin(player.context)

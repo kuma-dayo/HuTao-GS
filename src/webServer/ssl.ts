@@ -6,7 +6,7 @@ import { join, resolve } from "path"
 
 const logger = new TLogger("SSLGEN", 0xa0ff00)
 
-const domains = Object.keys(config.domains)
+const domains = Object.keys(config.dns.domains)
 
 const caCnfData = [
   "[req]",
@@ -34,7 +34,7 @@ const srvCnfData = [
   "subjectAltName = @alt_names",
   "extendedKeyUsage = 1.3.6.1.5.5.7.3.1",
   "[alt_names]",
-  "IP.1=" + config.hostIp,
+  "IP.1=" + config.game.hostIp,
   ...domains.map((d, i) => `DNS.${i + 1}=${d}`),
   ...domains.map((d, i) => `DNS.${domains.length + i + 1}=*.${d}`),
 ].join("\n")
@@ -59,7 +59,7 @@ export default class SSL {
   keyPath: string
 
   constructor() {
-    this.workDir = resolve(config.sslDir)
+    this.workDir = resolve(config.game.sslDir)
     this.caPath = join(this.workDir, caFiles.caCrt)
     this.certPath = join(this.workDir, srvFiles.srvCrt)
     this.keyPath = join(this.workDir, srvFiles.srvKey)

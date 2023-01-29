@@ -3,7 +3,7 @@ import TLogger from "@/translate/tlogger"
 import { waitUntil } from "@/utils/asyncWait"
 import { getJsonAsync, hasJsonAsync } from "@/utils/json"
 
-const DATA_DIR = "data/game/" + config.version
+const DATA_DIR = "data/game/" + config.game.version
 
 const logger = new TLogger("LOADER", 0x34fa69)
 

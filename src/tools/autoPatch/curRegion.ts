@@ -15,7 +15,9 @@ import { join } from "path"
 import { cwd } from "process"
 const { Resolver } = dns.promises
 
-const { version, nameservers, dispatchRegion, dispatchSeed, dispatchKeyId } = config
+const { version } = config.game
+const { dispatchRegion, dispatchSeed, dispatchKeyId } = config.dispatch
+const { nameservers } = config.dns
 const hostMap = {
   OSREL: "osasiadispatch",
   CNCB: "cnbeta01dispatch",

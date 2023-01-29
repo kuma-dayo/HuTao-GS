@@ -17,7 +17,9 @@ import { cwd } from "process"
 
 const logger = new TLogger("DIPREQ", 0xffaa00)
 
-const { serverName, version, hostIp, dispatchHost, dispatchRegion, autoPatch, kcpPort } = config
+const { kcpPort } = config
+const { serverName, version, hostIp } = config.game
+const { dispatchHost, dispatchRegion, autoPatch } = config.dispatch
 
 const clientCustomConfig = {
   sdkenv: dispatchRegion.slice(0, 2) === "CN" ? "9" : "2",

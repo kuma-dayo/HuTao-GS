@@ -21,20 +21,9 @@ import { dirExists, writeFile } from "./utils/fileSystem"
 import MonsterData from "$/gameData/data/MonsterData"
 import AvatarData from "$/gameData/data/AvatarData"
 
-const {
-  serverName,
-  version,
-  autoGamePatch,
-  gameDir,
-  dispatchRegion,
-  dispatchSeed,
-  dispatchKeyId,
-  autoPatch,
-  httpPort,
-  httpsPort,
-  recorderPort,
-  hosts,
-} = config
+const { game, dispatch, httpPort, httpsPort, recorderPort } = config
+const { autoGamePatch, gameDir, version, serverName, hosts } = game
+const { dispatchKeyId, dispatchRegion, dispatchSeed, autoPatch } = dispatch
 
 const requiredDirs = [
   // game resource
@@ -301,7 +290,7 @@ export default class Server {
     await Logger.stopCapture(!!GlobalState.get("SaveLog"))
   }
   async generateHandBook() {
-    let filedata = `//Game version ${config.version}\n\n\n[Avatar]\n`
+    let filedata = `//Game version ${config.game.version}\n\n\n[Avatar]\n`
 
     const avatarData = await AvatarData.getData()
     for (const data of avatarData.Avatar) {

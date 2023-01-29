@@ -11,7 +11,7 @@ import { ActivityIdEnum } from "@/types/enum"
 
 import config from "@/config"
 import MusicGameActivity from "$/activity/musicGameActivity"
-const eventlist = config.eventlist
+const eventlist = config.game.eventlist
 
 export default class ActivityManager {
   game: Game

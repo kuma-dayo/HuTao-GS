@@ -19,7 +19,8 @@ import { AcceptTypes, decodeDataList } from "../utils/data"
 import { Handshake } from "../utils/handshake"
 import { Kcp } from "../utils/kcp"
 
-const { version, autoPatch } = config
+const { version } = config.game
+const { autoPatch } = config.dispatch
 
 const skipWaitPackets = ["AbilityInvocationsNotify", "CombatInvocationsNotify", "UnionCmdNotify"]
 

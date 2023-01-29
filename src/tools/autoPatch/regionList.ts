@@ -13,15 +13,15 @@ import { join } from "path"
 import { cwd } from "process"
 const { Resolver } = dns.promises
 
-const host = `dispatch${config.dispatchRegion.slice(0, 2).toLowerCase()}global.yuanshen.com`
+const host = `dispatch${config.dispatch.dispatchRegion.slice(0, 2).toLowerCase()}global.yuanshen.com`
 const protoPath = join(cwd(), `data/proto/QueryRegionListHttpRsp.proto`)
-const binFilePath = join(cwd(), `data/bin/${config.version}/QueryRegionListHttpRsp.bin`)
+const binFilePath = join(cwd(), `data/bin/${config.game.version}/QueryRegionListHttpRsp.bin`)
 
 const logger = new TLogger("APATCH")
 
 function query(ip: string) {
   return new Promise<void>((resolve, reject) => {
-    const path = `/query_region_list?version=${config.dispatchRegion}Win${config.version}&lang=3&platform=3&binary=1&time=543&channel_id=1&sub_channel_id=0`
+    const path = `/query_region_list?version=${config.dispatch.dispatchRegion}Win${config.game.version}&lang=3&platform=3&binary=1&time=543&channel_id=1&sub_channel_id=0`
     logger.debug("message.tools.autoPatch.debug.reqInfo", "QueryRegionList", host, path)
     get(
       `https://${ip}${path}`,
@@ -82,7 +82,7 @@ export const update = async (): Promise<boolean> => {
 
     const r = new Resolver()
 
-    r.setServers(config.nameservers)
+    r.setServers(config.dns.nameservers)
 
     const ip = (await r.resolve4(host))?.[0]
     logger.debug("message.tools.autoPatch.debug.resolve", "QueryRegionList", ip)

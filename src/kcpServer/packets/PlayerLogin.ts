@@ -108,8 +108,8 @@ class PlayerLoginPacket extends Packet implements PacketInterface {
   async response(context: PacketContext): Promise<void> {
     let curRegionData: QueryCurrRegionHttpRsp = { retcode: 0, regionInfo: {} }
 
-    if (config.autoPatch) {
-      const binPath = join(cwd(), `data/bin/${config.version}/QueryCurrRegionHttpRsp.bin`)
+    if (config.dispatch.autoPatch) {
+      const binPath = join(cwd(), `data/bin/${config.game.version}/QueryCurrRegionHttpRsp.bin`)
       if (!(await fileExists(binPath))) return
 
       curRegionData = await dataToProtobuffer(await readFile(binPath), "QueryCurrRegionHttpRsp", true)

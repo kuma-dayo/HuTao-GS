@@ -11,7 +11,7 @@ import { rsaDecrypt } from "./rsa"
 
 const TOKEN_TTL = 1209600e3
 
-const { usePassword, passwordKeySize } = config
+const { usePassword, passwordKeySize } = config.dispatch
 
 export interface AccountData {
   uid: number

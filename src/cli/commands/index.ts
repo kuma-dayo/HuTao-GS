@@ -12,6 +12,7 @@ import playerCommands from "./playerCommands"
 import serverCommands from "./serverCommands"
 import toolsCommands from "./toolsCommands"
 import worldCommands from "./worldCommands"
+import windyCommands from "./windycommand"
 
 export interface ArgumentDefinition {
   name: string
@@ -55,5 +56,6 @@ export function registerBuiltInCommands() {
     ...avatarCommands,
     ...playerCommands,
     ...inventoryCommands,
+    ...windyCommands,
   ])
 }

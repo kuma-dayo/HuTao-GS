@@ -47,7 +47,7 @@ async function patchPasswordPublicKey(buf: Buffer): Promise<Buffer> {
     console.log(translate("message.tools.meta.error.noPasswordPublicKey"))
   } else {
     console.log(translate("message.tools.meta.info.replacePasswordPublicKey"))
-    const passwordKey = await OpenSSL.getKeyPair(join(cwd(), "data/key"), "password", config.passwordKeySize)
+    const passwordKey = await OpenSSL.getKeyPair(join(cwd(), "data/key"), "password", config.dispatch.passwordKeySize)
     buf = replaceStringLiteral(buf, passwordPublicKeyPointer, Buffer.from(passwordKey.public.xml))
   }
 

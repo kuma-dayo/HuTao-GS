@@ -44,8 +44,7 @@ class MarkMapPacket extends Packet implements PacketInterface {
 
       player.lastTpReq = Date.now()
 
-      let posY = parseInt(name.split(":")[1])
-      if (isNaN(posY)) posY = 512
+      let posY = parseInt(name) || 512
 
       await scene.join(
         context,

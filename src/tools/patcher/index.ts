@@ -26,7 +26,7 @@ export async function patchGame(gameDir: string) {
 
   tryPatchMetadata: try {
     // NOSONAR
-    if (versionStrToNum(config.version) >= 0x030132) break tryPatchMetadata
+    if (versionStrToNum(config.game.version) >= 0x030132) break tryPatchMetadata
 
     console.log(translate("message.tools.patcher.info.patchMeta"))
 
@@ -37,7 +37,7 @@ export async function patchGame(gameDir: string) {
 
   tryPatchUA: try {
     // NOSONAR
-    if (versionStrToNum(config.version) < 0x030032) break tryPatchUA
+    if (versionStrToNum(config.game.version) < 0x030032) break tryPatchUA
 
     console.log(translate("message.tools.patcher.info.patchUA"))
 
@@ -65,7 +65,7 @@ export async function unpatchGame(gameDir: string) {
 
   tryUnpatchMetadata: try {
     // NOSONAR
-    if (versionStrToNum(config.version) >= 0x030132) break tryUnpatchMetadata
+    if (versionStrToNum(config.game.version) >= 0x030132) break tryUnpatchMetadata
 
     console.log(translate("message.tools.patcher.info.unpatchMeta"))
 
@@ -76,7 +76,7 @@ export async function unpatchGame(gameDir: string) {
 
   tryUnpatchUA: try {
     // NOSONAR
-    if (versionStrToNum(config.version) < 0x030032) break tryUnpatchUA
+    if (versionStrToNum(config.game.version) < 0x030032) break tryUnpatchUA
 
     console.log(translate("message.tools.patcher.info.unpatchUA"))
 

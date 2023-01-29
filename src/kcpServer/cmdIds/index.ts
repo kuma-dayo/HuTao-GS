@@ -41,12 +41,10 @@ const versionMap: { [version: string]: CmdIds } = {
   "3.3.52": ver3_3,
   "3.3.53": ver3_3,
   "3.3.54": ver3_3,
-  //It does not work because there is no cmdid.
   "3.4.0": ver3_4,
-  "3.4.50": ver3_4,
 }
 
-export const cmdIds: CmdIds = versionMap[config.version] || versionMap[DEFAULT_CONFIG.version] || {}
+export const cmdIds: CmdIds = versionMap[config.game.version] || versionMap[DEFAULT_CONFIG.game.version] || {}
 export const switchedCmdIds = Object.fromEntries(Object.entries(cmdIds).map((e) => [e[1], e[0]]))
 
 export const PACKET_HEAD = 0xffff

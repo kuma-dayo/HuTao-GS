@@ -33,7 +33,7 @@ export const getProtoType = async (proto: string, common = false): Promise<proto
   const cache = protoTypeCache[cacheId]
   if (cache) return cache
 
-  const protoPath = join(cwd(), `data/proto${common ? "" : "/" + config.version}/${proto}.proto`)
+  const protoPath = join(cwd(), `data/proto${common ? "" : "/" + config.game.version}/${proto}.proto`)
   if (!(await fileExists(protoPath))) return null
 
   const root = await protobuf.load(protoPath)

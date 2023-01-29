@@ -56,7 +56,7 @@ import Widget from "./widget"
 import Weapon from "$/equip/weapon"
 import WeaponData from "$/gameData/data/WeaponData"
 import InventoryUserData from "@/types/user/InventoryUserData"
-import Logger from "@/Logger"
+import Logger from "@/logger"
 import { execCommand } from "@/utils/childProcess"
 
 const logger = new Logger("Player")

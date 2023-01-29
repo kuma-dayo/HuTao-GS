@@ -15,7 +15,8 @@ import { ConnectionInfo } from "./worker/recvWorker"
 import RecvWorkerInterface from "./worker/recvWorker/recvWorkerInterface"
 import WorkerInterface from "./worker/workerInterface"
 
-const { kcpPort, packetsToDump } = config
+const { kcpPort } = config
+const { packetsToDump } = config.game
 
 const logger = new Logger("SOCKET", 0x3449eb)
 

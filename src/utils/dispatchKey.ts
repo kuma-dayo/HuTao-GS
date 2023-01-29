@@ -5,7 +5,8 @@ import { fileExists, readFile, writeFile } from "./fileSystem"
 import { genEc2b, getEc2bKey } from "./mhyCrypto/ec2b"
 import OpenSSL, { RSAKeyPair } from "./openssl"
 
-const { version, dispatchKeyId, serverKeySize } = config
+const { version } = config.game
+const { dispatchKeyId, serverKeySize } = config.dispatch
 
 export default class DispatchKey {
   static async getClientKeyPair(keyId: number = dispatchKeyId): Promise<RSAKeyPair> {

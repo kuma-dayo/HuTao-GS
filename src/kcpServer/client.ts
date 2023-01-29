@@ -103,7 +103,7 @@ export default class Client extends BaseClass {
     const worker = socket.getWorker<KcpWorkerInterface>(workerId)
     if (!worker) return
 
-    const doubleInit = versionStrToNum(config.version) >= 0x010500
+    const doubleInit = versionStrToNum(config.game.version) >= 0x010500
     logger.debug("message.client.debug.seed", seed, doubleInit)
 
     const mt = new MT19937()

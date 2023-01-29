@@ -18,10 +18,10 @@ const gpatchCommand: CommandDefinition = {
     try {
       switch (mode) {
         case "patch":
-          await patchGame(gameDir || config.gameDir)
+          await patchGame(gameDir || config.game.gameDir)
           break
         case "unpatch":
-          await unpatchGame(gameDir || config.gameDir)
+          await unpatchGame(gameDir || config.game.gameDir)
           break
       }
       print(translate("cli.commands.gpatch.info.success"))

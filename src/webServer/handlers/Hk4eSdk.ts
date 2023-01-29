@@ -42,7 +42,7 @@ class Hk4eSdkHandler extends Handler {
     const { body } = req
 
     let major: number
-    switch (config.version) {
+    switch (config.game.version) {
       case "2.6.0":
         major = 10
         break

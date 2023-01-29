@@ -4,118 +4,100 @@ import Logger from "./logger"
 const logger = new Logger("CONFIG", 0xcacaff)
 
 interface Config {
-  // server
-  serverName: string
-  hostIp: string
-  sslDir: string
-  version: string
-  packetsToDump: string[]
+  dispatch: {
+    autoPatch: boolean
+    dispatchHost: string | null
+    dispatchKeyId: number
+    dispatchRegion: string
+    dispatchSeed: string
+    passwordKeySize: number
+    serverKeySize: number
+    usePassword: boolean
+  }
 
-  // auto patcher
-  autoGamePatch: boolean
-  gameDir: string | null
+  dns: {
+    domains: { [domain: string]: string | null } // domain to ip map
+    nameservers: string[] // ip list
+  }
+
+  // server
+  game: {
+    autoGamePatch: boolean
+    serverName: string
+    version: string
+    eventlist: number[]
+    gameDir: string | null
+    hostIp: string
+    packetsToDump: string[]
+    sslDir: string
+    serverAccount: {
+      adventureRank: number
+      avatarId: number
+      nameCardId: number
+      nickName: string
+      signature: string
+    }
+    hosts: string[] | null
+  }
 
   // auto update
-  hostUpdate: boolean
   updateURL: string | null
-
-  // dispatch
-  dispatchHost: string | null
-  dispatchSeed: string
-  dispatchRegion: string
-  dispatchKeyId: number
-  autoPatch: boolean
-  usePassword: boolean
-
-  // RSA key
-  passwordKeySize: number
-  serverKeySize: number
+  hostUpdate: boolean
 
   // port binding
   dnsPort: number
   httpPort: number
   httpsPort: number
-  recorderPort: number
   kcpPort: number[] | number
-
-  // dns server
-  domains: { [domain: string]: string | null } // domain to ip map
-  nameservers: string[] // ip list
-
-  serverAccount: {
-    avatarId: number
-    nameCardId: number
-    adventureRank: number
-    nickName: string
-    signature: string
-  }
-
-  eventlist: number[]
-
+  recorderPort: number
   res_developer: { [data: string]: [costElemType: number, maxEnergy?: number, energyPercent?: number] }
-  // host file
-  hosts: string[] | null // host list
 }
 
 export const DEFAULT_CONFIG: Config = {
-  serverName: "HuTao GS",
-  hostIp: "127.0.0.1",
-  sslDir: "./ssl",
-  version: "3.3.0",
-  packetsToDump: [],
-
-  autoGamePatch: false,
-  gameDir: null,
-
-  hostUpdate: false,
+  dispatch: {
+    autoPatch: false,
+    dispatchHost: null,
+    dispatchKeyId: 5,
+    dispatchRegion: "OSREL",
+    dispatchSeed: null,
+    passwordKeySize: 4096,
+    serverKeySize: 2048,
+    usePassword: false,
+  },
+  dns: {
+    domains: {
+      "hoyoverse.com": null,
+      "mihoyo.com": null,
+      "yuanshen.com": null,
+    },
+    nameservers: ["1.1.1.1", "1.0.0.1"],
+  },
+  game: {
+    autoGamePatch: false,
+    serverName: "HuTao-GS",
+    version: "3.3.0",
+    eventlist: [],
+    gameDir: null,
+    hostIp: "127.0.0.1",
+    sslDir: "./ssl",
+    packetsToDump: [],
+    serverAccount: {
+      adventureRank: 60,
+      avatarId: 10000046,
+      nameCardId: 210059,
+      nickName: "HuTao-GS",
+      signature: "Welcome to HuTao-GS!",
+    },
+    hosts: null,
+  },
   updateURL: null,
-
-  dispatchHost: null,
-  dispatchSeed: null,
-  dispatchRegion: "OSREL",
-  dispatchKeyId: 5,
-  autoPatch: false,
-
-  usePassword: false,
-  passwordKeySize: 4096,
-  serverKeySize: 2048,
-
+  hostUpdate: false,
   dnsPort: 53,
   httpPort: 80,
   httpsPort: 443,
-  recorderPort: 8888,
   kcpPort: 22102,
-
-  domains: {
-    "yuanshen.com": null,
-    "mihoyo.com": null,
-    "hoyoverse.com": null,
-  },
-  nameservers: ["1.1.1.1", "1.0.0.1"],
-
-  serverAccount: {
-    avatarId: 10000046,
-    nameCardId: 210059,
-    adventureRank: 60,
-    nickName: "HuTao-GS",
-    signature: "Welcome to HuTao-GS!",
-  },
-
-  eventlist: [],
-
-  res_developer: {
-    // FIRE = 1
-    // WATER = 2
-    // GRASS = 3
-    // ELECTRIC = 4
-    // ICE = 5
-    // FROZEN = 6
-    // WIND = 7
-    // ROCK = 8
-    // ANTIFIRE = 9
-  },
-
-  hosts: null,
+  recorderPort: 8888,
+  res_developer: {},
 }
 
 export const SUPPORT_REGIONS = ["OSREL", "OSCB", "CNCB"]

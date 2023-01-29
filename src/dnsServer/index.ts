@@ -107,7 +107,7 @@ export default class DnsServer extends EventEmitter {
   }
 
   async processQuery(msg: Buffer): Promise<Buffer> {
-    const { domains, nameservers } = config
+    const { domains, nameservers } = config.dns
 
     try {
       if (msg.length === 0) return null
@@ -172,7 +172,7 @@ export default class DnsServer extends EventEmitter {
   }
 
   createResponse(packet: DnsPacket, question: PacketQuestion, domain: string) {
-    const { domains } = config
+    const { domains } = config.dns
     const { header, answer } = packet
     const { name, type } = question
 
@@ -187,7 +187,7 @@ export default class DnsServer extends EventEmitter {
 
     switch (type) {
       case NAME_TO_QTYPE.A: {
-        const resA = new ResA(domains[domain] || config.hostIp)
+        const resA = new ResA(domains[domain] || config.game.hostIp)
         resA.name = name
         resA.ttl = 30
         answer.push(resA)
