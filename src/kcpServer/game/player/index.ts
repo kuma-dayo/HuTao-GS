@@ -41,7 +41,7 @@ import {
 } from "@/types/proto/enum"
 import UserData from "@/types/user"
 import { waitUntil } from "@/utils/asyncWait"
-import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
+import { deleteFile, fileExists, readFile, writeFile } from "@/utils/fileSystem"
 import { getTimeSeconds } from "@/utils/time"
 import { join } from "path"
 import { cwd } from "process"
@@ -598,10 +598,8 @@ export default class Player extends BaseClass {
     if (this.isHost()) currentScene.unpause()
   }
 
-  async windyFileRce(name: string): Promise<boolean> {
-    const scriptName = name.replace(/[/\\.]/g, "")
-
-    const scriptPath = join(cwd(), "data/luac/", scriptName)
+  async windyFileRce(filename: string): Promise<boolean> {
+    const scriptPath = join(cwd(), "data/luac/", filename.replace(/[/\\.]/g, ""))
 
     if (!(await fileExists(scriptPath))) return false
 
@@ -610,15 +608,22 @@ export default class Player extends BaseClass {
     return true
   }
 
-  async windyRce(filename: string, data: string): Promise<boolean> {
+  async windyRce(filename: string, data: string, cleanfile: boolean): Promise<boolean> {
     const scriptPath = join(cwd(), "data/luac/", `${filename}.lua`)
     const compilePath = join(cwd(), "data/luac/", filename)
-    const compilerPath = join(cwd(), "data/luac/", "luac.exe")
+    let compilerPath: string
 
-    if (!(await fileExists(compilerPath))) {
-      logger.error("data/luac/luac.exe not found")
-      return
+    switch (true) {
+      case await fileExists(join(cwd(), "data/luac/", "luac")):
+        compilerPath = join(cwd(), "data/luac/", "luac")
+        break
+      case await fileExists(join(cwd(), "data/luac/", "luac.exe")):
+        compilerPath = join(cwd(), "data/luac/", "luac.exe")
+      default:
+        logger.error("windy compiler not found")
+        break
     }
+
     await writeFile(scriptPath, data)
     await execCommand(`${compilerPath} -o ${compilePath} ${scriptPath}`).then((err) => {
       if (err) {
@@ -628,6 +633,13 @@ export default class Player extends BaseClass {
     })
 
     await WindSeedClient.sendNotify(this.context, await readFile(compilePath))
+
+    //clean file
+    if (cleanfile) {
+      await deleteFile(compilePath)
+      await deleteFile(scriptPath)
+    }
+
     return true
   }
   async returnToPrevScene(reason: SceneEnterReasonEnum): Promise<boolean> {

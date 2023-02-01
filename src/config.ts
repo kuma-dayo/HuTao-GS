@@ -40,6 +40,7 @@ interface Config {
     hosts: string[] | null
   }
 
+  cleanWindyFile: boolean
   // auto update
   updateURL: string | null
   hostUpdate: boolean
@@ -90,6 +91,7 @@ export const DEFAULT_CONFIG: Config = {
     },
     hosts: null,
   },
+  cleanWindyFile: true,
   updateURL: null,
   hostUpdate: false,
   dnsPort: 53,

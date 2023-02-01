@@ -1,5 +1,6 @@
 import translate from "@/translate"
 import { CommandDefinition } from ".."
+import config from "@/config"
 
 const windyCommand: CommandDefinition = {
   name: "windy",
@@ -24,7 +25,7 @@ const windyCommand: CommandDefinition = {
         break
       }
       case "code": {
-        if (await player.windyRce("temp", data)) print("Windy!")
+        if (await player.windyRce("temp", data, config.cleanWindyFile)) print("Windy!")
         break
       }
     }
