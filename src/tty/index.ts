@@ -234,8 +234,9 @@ export class TTY extends EventEmitter {
         this.emit("exit")
         break
       }
-      case "\x08": {
-        // backspace
+      case "\x08":
+      case "\x7f": {
+        // backspace delete
         if (buffer.length <= 0 || cursor <= 0) break
 
         buffer.splice(cursor - 1, 1)

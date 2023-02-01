@@ -11,7 +11,7 @@
     "build": "node ./build",
     "pack-exe": "pkg . -o \"dist/HuTao-GS.exe\" --build",
     "start": "node ./buildDev/entry/mainEntry.js",
-    "start:dev": "node ./build -mode:dev & node ./buildDev/entry/mainEntry.js",
+    "start:dev": "node ./build -mode:dev && node ./buildDev/entry/mainEntry.js",
     "lint-fix": "eslint --fix \"./src/**/*.ts\""
   },
   "pkg": {
