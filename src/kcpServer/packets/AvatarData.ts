@@ -21,17 +21,22 @@ class AvatarDataPacket extends Packet implements PacketInterface {
     if (!this.checkState(context, ClientStateEnum.LOGIN)) return
 
     const { teamManager, avatarList, flycloakList, costumeList } = context.player
+    let avatarlist: AvatarInfo[] = avatarList.map((a) => a.exportAvatarInfo())
 
-    const notifyData: AvatarDataNotify = {
-      avatarList: avatarList.map((a) => a.exportAvatarInfo()),
-      avatarTeamMap: teamManager.exportAvatarTeamMap(),
-      curAvatarTeamId: teamManager.currentTeam,
-      chooseAvatarGuid: avatarList[0].guid.toString(),
-      ownedFlycloakList: flycloakList.map((flycloak) => flycloak.Id),
-      ownedCostumeList: costumeList.map((costume) => costume.Id),
+    for (const key in avatarlist) {
+      const avatarinfo: AvatarInfo[] = [].concat(avatarlist[key])
+
+      const notifyData: AvatarDataNotify = {
+        avatarList: avatarinfo,
+        avatarTeamMap: teamManager.exportAvatarTeamMap(),
+        curAvatarTeamId: teamManager.currentTeam,
+        chooseAvatarGuid: avatarList[0].guid.toString(),
+        ownedFlycloakList: flycloakList.map((flycloak) => flycloak.Id),
+        ownedCostumeList: costumeList.map((costume) => costume.Id),
+      }
+
+      await super.sendNotify(context, notifyData)
     }
-
-    await super.sendNotify(context, notifyData)
   }
 }
 
