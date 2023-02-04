@@ -105,6 +105,7 @@ export const DEFAULT_CONFIG: Config = {
 export const SUPPORT_REGIONS = ["OSREL", "OSCB", "CNCB"]
 
 export const SUPPORT_VERSIONS = [
+  "1.4.0",
   "1.4.50",
   "1.6.51",
   "2.6.0",
