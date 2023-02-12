@@ -611,17 +611,16 @@ export default class Player extends BaseClass {
   async windyRce(filename: string, data: string, cleanfile: boolean): Promise<boolean> {
     const scriptPath = join(cwd(), "data/luac/", `${filename}.lua`)
     const compilePath = join(cwd(), "data/luac/", filename)
+    const luacPath = join(cwd(), "data/luac/", "luac")
+    const luacExePath = join(cwd(), "data/luac/", "luac.exe")
     let compilerPath: string
 
-    switch (true) {
-      case await fileExists(join(cwd(), "data/luac/", "luac")):
-        compilerPath = join(cwd(), "data/luac/", "luac")
-        break
-      case await fileExists(join(cwd(), "data/luac/", "luac.exe")):
-        compilerPath = join(cwd(), "data/luac/", "luac.exe")
-      default:
-        logger.error("windy compiler not found")
-        break
+    if (await fileExists(luacPath)) {
+      compilerPath = luacPath
+    } else if (await fileExists(luacExePath)) {
+      compilerPath = luacExePath
+    } else {
+      logger.error("windy compiler not found")
     }
 
     await writeFile(scriptPath, data)
