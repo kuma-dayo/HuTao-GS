@@ -552,6 +552,9 @@
         "info": {
           "changeScene": "Change scene to: %0"
         },
+        "warn": {
+          "noData":"No scene data"
+        },
         "error": {
           "sceneNotFound": "Scene not found.",
           "sameScene": "Same scene."
