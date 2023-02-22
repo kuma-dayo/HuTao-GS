@@ -6,7 +6,7 @@ import { ansiToHTML } from "@/tty/utils"
 import { Announcement } from "@/types/announcement"
 import { escapeHtml } from "@/utils/escape"
 import { CmdInfo, CommandDefinition } from "./commands"
-import { getCommandInfo } from "./commands/serverCommands/helpCommand"
+import { getCommandInfo, getCommandInfoAlias } from "./commands/serverCommands/helpCommand"
 import { parseCLIArgs, splitArgs } from "./utils"
 
 const commandsAnnouncement: Announcement = {
@@ -54,6 +54,9 @@ export default class CLI {
       if (!cmd.allowPlayer) continue
       commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
         escapeHtml(getCommandInfo(cmd, CLI.prefix, true))
+      )}</p>`
+      commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
+        escapeHtml(getCommandInfoAlias(cmd, CLI.prefix, true))
       )}</p>`
     }
   }
@@ -110,7 +113,7 @@ export default class CLI {
       return translate("cli.error.parseFail", err)
     }
 
-    const cmdDef = CLI.commands.find((cmd) => cmd.name === cmdName)
+    const cmdDef = CLI.commands.find((cmd) => cmd.name === cmdName || cmd.alias === cmdName)
     if (!cmdDef) return translate("cli.error.unknownCommand", cmdName)
 
     if (!cmdDef.allowPlayer && cmdInfo.sender != null) return translate("cli.error.consoleOnly")

@@ -21,6 +21,14 @@ export function getCommandInfo(command: CommandDefinition, prefix = "", showDesc
   return `${cmdName}${cmdArgs}${cmdDesc}`
 }
 
+export function getCommandInfoAlias(command: CommandDefinition, prefix = "", showDesc = false) {
+  const { name, args, alias } = command
+  const cmdName = cRGB(0xffffff, prefix + alias)
+  const cmdArgs = cRGB(0xffb71c, args != null && args.length > 0 ? " " + args.map(getArgumentInfo).join(" ") : "")
+  const cmdDesc = showDesc ? " - " + translate(`cli.commands.${name}.desc`) : ""
+  return `${cmdName}${cmdArgs}${cmdDesc}`
+}
+
 function consoleHelpPage(cli: CLILike) {
   const { print } = cli
 
@@ -42,12 +50,12 @@ function commandHelpPage(cli: CLILike, commandName?: string) {
 
   if (commandName == null) return commandListHelpPage(cli)
 
-  const command = CLI.commands.find((c) => c.name === commandName)
+  const command = CLI.commands.find((c) => c.name === commandName || c.alias === commandName)
   if (command == null) return printError("Command not found:", commandName)
 
   print(translate("cli.commands.help.page.commandInfo.title"))
   print(" " + translate("cli.commands.help.page.commandInfo.syntax", getCommandInfo(command)))
-  print(" " + translate("cli.commands.help.page.commandInfo.desc", translate(`cli.commands.${commandName}.desc`)))
+  print(" " + translate("cli.commands.help.page.commandInfo.desc", translate(`cli.commands.${command.name}.desc`)))
 
   if (command.usage == null) return
 
@@ -56,7 +64,7 @@ function commandHelpPage(cli: CLILike, commandName?: string) {
   if (Array.isArray(command.usage)) {
     for (const usage of command.usage) print(`  ${usage}`)
   } else {
-    for (let i = 0; i < command.usage; i++) print("  " + translate(`cli.commands.${commandName}.usage.${i}`))
+    for (let i = 0; i < command.usage; i++) print("  " + translate(`cli.commands.${command.name}.usage.${i}`))
   }
 }
 
@@ -69,7 +77,7 @@ const helpCommand: CommandDefinition = {
       name: "command",
       type: "str",
       get values() {
-        return CLI.commands.map((c) => c.name)
+        return CLI.commands.flatMap((c) => [c.alias, c.name].filter(Boolean))
       },
       optional: true,
     },

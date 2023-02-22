@@ -24,6 +24,7 @@ export interface ArgumentDefinition {
 
 export interface CommandDefinition {
   name: string
+  alias?: string
   usage?: number | string[]
   args?: ArgumentDefinition[]
   allowPlayer?: boolean
