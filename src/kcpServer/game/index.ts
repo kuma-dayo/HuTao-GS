@@ -221,6 +221,8 @@ export default class Game {
     const player = this.getPlayer(auid)
     if (!player) return
 
+    await this.save(client)
+
     // Remove public chat of host world
     chatManager.removePublicChat(player.hostWorld)
 
