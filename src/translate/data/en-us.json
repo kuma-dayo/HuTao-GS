@@ -46,21 +46,21 @@
         "desc": "Fetch autopatch data"
       },
       "const": {
-        "desc": "Edit/List current avatar talents",
+        "desc": "Edit/List current avatar consts",
         "error": {
-          "talentNotFound": "Talent not found."
+          "constNotFound": "const not found."
         },
         "info": {
-          "locked": "Locked talent: %0",
-          "unlocked": "Unlocked talent: %0"
+          "locked": "Locked const: %0",
+          "unlocked": "Unlocked const: %0"
         },
         "usage": {
-          "0": "talent unlock <uid> - Unlock talent for player's current avatar",
-          "1": "talent unlock       - (In game) Unlock talent for current avatar",
-          "2": "talent lock <uid>   - Lock talent for player's current avatar",
-          "3": "talent lock         - (In game) Lock talent for current avatar",
-          "4": "talent list <uid>   - List unlocked talents of player's current avatar",
-          "5": "talent list         - (In game) List unlocked talents of current avatar"
+          "0": "const unlock <uid> - Unlock const for player's current avatar",
+          "1": "const unlock       - (In game) Unlock const for current avatar",
+          "2": "const lock <uid>   - Lock const for player's current avatar",
+          "3": "const lock         - (In game) Lock const for current avatar",
+          "4": "const list <uid>   - List unlocked consts of player's current avatar",
+          "5": "const list         - (In game) List unlocked consts of current avatar"
         }
       },
       "coop": {

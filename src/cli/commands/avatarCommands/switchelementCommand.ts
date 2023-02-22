@@ -39,7 +39,7 @@ const switchelementCommand: CommandDefinition = {
       case "anemo":
       case "wind":
       case "air":
-        elementname = "anemos"
+        elementname = "anemo"
         break
       case "cryo":
       case "ice":
