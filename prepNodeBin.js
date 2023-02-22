@@ -84,7 +84,7 @@ module.exports = async () => {
   for (let target of targets) {
     const { nodeVersion, fetchedPath, builtPath, url } = target
 
-    const versionSegments = `${packageconfig.game.version.replace("-", ".")}`.split(".").map((v) => parseInt(v))
+    const versionSegments = `${packageConfig.version.replace("-", ".")}`.split(".").map((v) => parseInt(v))
     while (versionSegments.length < 4) versionSegments.push(0)
 
     console.log("Target:", nodeVersion)
