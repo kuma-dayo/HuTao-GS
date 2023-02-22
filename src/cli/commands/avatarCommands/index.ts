@@ -7,6 +7,7 @@ import rechargeCommand from "./rechargeCommand"
 import setcsCommand from "./setcsCommand"
 import setfpCommand from "./setfpCommand"
 import constCommand from "./constCommand"
+import switchelementCommand from "./switchelementCommand"
 
 const avatarCommands: CommandDefinition[] = [
   godCommand,
@@ -17,6 +18,7 @@ const avatarCommands: CommandDefinition[] = [
   setcsCommand,
   setfpCommand,
   constCommand,
+  switchelementCommand,
 ]
 
 export default avatarCommands
