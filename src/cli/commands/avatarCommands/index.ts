@@ -8,6 +8,7 @@ import setcsCommand from "./setcsCommand"
 import setfpCommand from "./setfpCommand"
 import constCommand from "./constCommand"
 import switchelementCommand from "./switchelementCommand"
+import nocdCommand from "./nocdCommand"
 
 const avatarCommands: CommandDefinition[] = [
   godCommand,
@@ -19,6 +20,7 @@ const avatarCommands: CommandDefinition[] = [
   setfpCommand,
   constCommand,
   switchelementCommand,
+  nocdCommand,
 ]
 
 export default avatarCommands

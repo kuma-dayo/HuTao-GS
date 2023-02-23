@@ -309,6 +309,17 @@
           "3": "meta enc <input file> <output file>   - Encrypt metadata"
         }
       },
+      "nocd": {
+        "desc": "Toggle nocd",
+        "info": {
+          "disable": "nocd disabled.",
+          "enable": "nocd enabled."
+        },
+        "usage": {
+          "0": "nocd <uid> - Toggle nocd for player",
+          "1": "nocd       - (In game) Toggle nocd for yourself"
+        }
+      },
       "pos": {
         "desc": "Print current position",
         "info": {
