@@ -2,6 +2,7 @@ import Packet, { PacketContext, PacketInterface } from "#/packet"
 import { ClientStateEnum } from "@/types/enum"
 import { GachaInfo } from "@/types/proto"
 import { RetcodeEnum } from "@/types/proto/enum"
+import { getJson } from "@/utils/json"
 
 export interface GetGachaInfoReq {}
 
@@ -20,7 +21,12 @@ class GetGachaInfoPacket extends Packet implements PacketInterface {
   }
 
   async request(context: PacketContext, _data: GetGachaInfoReq): Promise<void> {
-    await this.response(context, { retcode: RetcodeEnum.RET_GACHA_INAVAILABLE })
+    const notifydata: GetGachaInfoRsp = {
+      retcode: RetcodeEnum.RET_SUCC,
+      gachaInfoList: getJson("data/gachaInfo.json", []),
+      gachaRandom: 1,
+    }
+    await this.response(context, notifydata)
   }
 
   async response(context: PacketContext, data: GetGachaInfoRsp): Promise<void> {

@@ -30,8 +30,6 @@ export default class OpenState {
 
       this.openStateMap[OpenStateEnum[key]] = true
     }
-
-    this.set(OpenStateEnum.OPEN_STATE_GACHA, false)
   }
 
   async set(key: number, val: number | boolean, notify = false): Promise<void> {
