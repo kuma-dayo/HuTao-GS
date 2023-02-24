@@ -26,14 +26,17 @@ class SceneEntityAppearPacket extends Packet implements PacketInterface {
   ): Promise<void> {
     await this.waitState(context, ClientStateEnum.ENTER_SCENE | ClientStateEnum.PRE_ENTER_SCENE_DONE, true, 0xf0ff)
 
-    const notifyData: SceneEntityAppearNotify = {
-      entityList: entityList.filter((entity) => !entity.isDead()).map((entity) => entity.exportSceneEntityInfo()),
-      appearType,
+    for (const entity of entityList) {
+      if (!entity.isDead()) {
+        const notifyData: SceneEntityAppearNotify = {
+          entityList: [entity.exportSceneEntityInfo()],
+          appearType,
+        }
+        if (param != null) notifyData.param = param
+
+        await super.sendNotify(context, notifyData)
+      }
     }
-
-    if (param != null) notifyData.param = param
-
-    await super.sendNotify(context, notifyData)
 
     const npcList = entityList.filter((entity) => entity.entityType === EntityTypeEnum.NPC)
     if (npcList.length > 0) await GroupSuite.sendNotify(context, <Npc[]>npcList)
