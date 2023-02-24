@@ -341,8 +341,13 @@ export default class Player extends BaseClass {
     // Set initial level
     await this.setLevel(60)
 
-    inventory.add(await Material.create(this, 221, 1000000), false)
-    inventory.add(await Material.create(this, 222, 1000000), false)
+    inventory.add(await Material.create(this, 201, 1000000, true), false)
+    inventory.add(await Material.create(this, 202, 1000000, true), false)
+    inventory.add(await Material.create(this, 203, 1000000, true), false)
+    inventory.add(await Material.create(this, 221, 1000000, true), false)
+    inventory.add(await Material.create(this, 222, 1000000, true), false)
+    inventory.add(await Material.create(this, 223, 1000000, true), false)
+    inventory.add(await Material.create(this, 224, 1000000, true), false)
 
     // Unlock all widgets
     await this.unlockAllWidgets()
@@ -544,6 +549,16 @@ export default class Player extends BaseClass {
 
   async addGenesisCrystal(v: number, notify = true) {
     await this.setGenesisCrystal(this.genesisCrystal + v, notify)
+  }
+
+  async removeMora(v: number, notify = true) {
+    await this.setMora(this.mora - v, notify)
+  }
+  async removePrimogen(v: number, notify = true) {
+    await this.setPrimogem(this.primogem - v, notify)
+  }
+  async removeGenesisCrystal(v: number, notify = true) {
+    await this.setGenesisCrystal(this.genesisCrystal - v, notify)
   }
 
   async setLevel(v: number, notify = true) {

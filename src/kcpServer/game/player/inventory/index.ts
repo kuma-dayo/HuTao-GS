@@ -124,18 +124,16 @@ export default class Inventory {
     }
   }
 
-  async add(obj: Material | Equip, notify = true, forceAdd = false): Promise<boolean> {
-    return this.addItem(new Item(obj), notify, forceAdd)
+  async add(obj: Material | Equip, notify = true): Promise<boolean> {
+    return this.addItem(new Item(obj), notify)
   }
 
-  async addItem(item: Item, notify = true, forceAdd = false): Promise<boolean> {
+  async addItem(item: Item, notify = true): Promise<boolean> {
     const { player, itemList } = this
     const { itemType, material } = item
 
     if (material?.useOnGain) return this.useItem(item)
     if (itemType === ItemTypeEnum.ITEM_VIRTUAL && (await this.addVirtualItem(item))) return true
-
-    if (!forceAdd && this.isFull(item)) return false
 
     const changedItemList = []
 

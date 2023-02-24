@@ -44,9 +44,9 @@ export default class Material {
     this.useOnGain = !!materialData?.UseOnGain
   }
 
-  static async create(player: Player, itemId: number, count = 1): Promise<Material> {
+  static async create(player: Player, itemId: number, count = 1, forceAdd = false): Promise<Material> {
     const material = new Material(player, itemId)
-    await material.initNew(count)
+    await material.initNew(count, forceAdd)
     return material
   }
 
@@ -62,13 +62,13 @@ export default class Material {
     this.count = Math.min(stackLimit, count || 1)
   }
 
-  async initNew(count = 1) {
+  async initNew(count = 1, forceAdd = false) {
     await this.loadMaterialData()
 
     const { player, stackLimit } = this
 
     this.guid = player.guidManager.getGuid()
-    this.count = Math.min(stackLimit, count)
+    this.count = forceAdd ? count : Math.min(stackLimit, count)
   }
 
   stack(material: Material): boolean {

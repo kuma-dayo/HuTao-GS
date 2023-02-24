@@ -134,7 +134,7 @@ export default class Avatar extends Entity {
     const weapon = new Weapon((await AvatarData.getAvatar(avatarId))?.InitialWeapon, player)
     await weapon.initNew()
 
-    await player.inventory.add(weapon, notify, true)
+    await player.inventory.add(weapon, notify)
     await this.equip(weapon, notify)
 
     this.wearingFlycloakId = 140001
