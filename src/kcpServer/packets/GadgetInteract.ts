@@ -1,13 +1,19 @@
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import Gadget from "$/entity/gadget"
-import { ClientStateEnum } from "@/types/enum"
+import { ClientStateEnum, EntityTypeEnum, GadgetStateEnum } from "@/types/enum"
 import {
   InteractTypeEnum,
   InterOpTypeEnum,
+  LifeStateEnum,
   ProtEntityTypeEnum,
   ResinCostTypeEnum,
   RetcodeEnum,
+  VisionTypeEnum,
 } from "@/types/proto/enum"
+import WorldChestOpen from "./WorldChestOpen"
+import GadgetState from "./GadgetState"
+import LifeStateChange from "./LifeStateChange"
+import SceneEntityDisappear from "./SceneEntityDisappear"
 
 export interface GadgetInteractReq {
   gadgetEntityId: number
@@ -45,7 +51,27 @@ class GadgetInteractPacket extends Packet implements PacketInterface {
       return
     }
 
-    await this.response(context, await entity.interact(player, opType, gadgetId, !!isUseCondenseResin, resinCostType))
+    switch (entity.entityType) {
+      case EntityTypeEnum.Chest: {
+        WorldChestOpen.sendNotify(context, entity)
+        GadgetState.sendNotify(context, entity, GadgetStateEnum.ChestOpened) //
+        LifeStateChange.sendNotify(context, entity, LifeStateEnum.LIFE_DEAD)
+        SceneEntityDisappear.sendNotify(context, [entity.entityId], VisionTypeEnum.VISION_DIE)
+
+        await this.response(context, {
+          retcode: RetcodeEnum.RET_SUCC,
+          gadgetEntityId: entity.entityId,
+          gadgetId: entity.gadgetId,
+          interactType: InteractTypeEnum.INTERACT_TYPE_OPEN_CHEST,
+        })
+      }
+      default: {
+        await this.response(
+          context,
+          await entity.interact(player, opType, gadgetId, !!isUseCondenseResin, resinCostType)
+        )
+      }
+    }
   }
 
   async response(context: PacketContext, data: GadgetInteractRsp): Promise<void> {

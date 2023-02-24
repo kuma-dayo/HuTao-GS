@@ -13,14 +13,13 @@ class GadgetStatePacket extends Packet implements PacketInterface {
     super("GadgetState")
   }
 
-  async sendNotify(context: PacketContext, gadget: Gadget): Promise<void> {
+  async sendNotify(context: PacketContext, gadget: Gadget, gadgetstate?: GadgetStateEnum): Promise<void> {
     const { entityId, gadgetState, interactId } = gadget
     const notifyData: GadgetStateNotify = {
       gadgetEntityId: entityId,
-      gadgetState,
+      gadgetState: gadgetstate ? gadgetstate : gadgetState,
       isEnableInteract: interactId != null,
     }
-
     await super.sendNotify(context, notifyData)
   }
 

@@ -19,14 +19,14 @@ class LifeStateChangePacket extends Packet implements PacketInterface {
     super("LifeStateChange")
   }
 
-  async sendNotify(context: PacketContext, targetEntity: Entity): Promise<void> {
+  async sendNotify(context: PacketContext, targetEntity: Entity, lifestate?: LifeStateEnum): Promise<void> {
     if (!this.checkState(context, ClientStateEnum.ENTER_SCENE | ClientStateEnum.ENTER_SCENE_DONE, true, 0xf0ff)) return
 
     const { entityId, lifeState, dieType, attackerId, motion } = targetEntity
 
     const notifyData: LifeStateChangeNotify = {
       entityId,
-      lifeState,
+      lifeState: lifestate ? lifestate : lifeState,
       sourceEntityId: attackerId,
       dieType,
       moveReliableSeq: motion.reliableSeq,
