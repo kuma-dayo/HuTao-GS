@@ -14,6 +14,7 @@ class Hk4eSdkHandler extends Handler {
       /\/hk4e_.*?\/mdk\/shield\/api\/login/,
       /\/hk4e_.*?\/mdk\/shield\/api\/verify/,
       /\/hk4e_.*?\/mdk\/shopwindow\/shopwindow\/listPriceTier/,
+      /\/hk4e_.*?\/mdk\/shopwindow\/shopwindow\/listPriceTierV2/,
     ])
   }
 
@@ -32,6 +33,7 @@ class Hk4eSdkHandler extends Handler {
       case "verify":
         return this.tokenLogin(req)
       case "listPriceTier":
+      case "listPriceTierV2":
         return this.listPriceTier(req)
       default:
         return new HttpResponse("404 page not found", 404)
