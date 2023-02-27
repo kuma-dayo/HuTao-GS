@@ -8,6 +8,7 @@ import ver2_8 from "./ver2_8"
 import ver2_8_50 from "./ver2_8_50"
 import ver3_3 from "./ver3_3"
 import ver3_4 from "./ver3_4"
+import ver3_5 from "./ver3_5"
 
 const versionMap: { [version: string]: CmdIds } = {
   "1.4.0": ver1_4,
@@ -43,6 +44,7 @@ const versionMap: { [version: string]: CmdIds } = {
   "3.3.53": ver3_3,
   "3.3.54": ver3_3,
   "3.4.0": ver3_4,
+  "3.5.0": ver3_5,
 }
 
 export const cmdIds: CmdIds = versionMap[config.game.version] || versionMap[DEFAULT_CONFIG.game.version] || {}

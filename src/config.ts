@@ -138,7 +138,7 @@ export const SUPPORT_VERSIONS = [
   "3.3.53",
   "3.3.54",
   "3.4.0",
-  "3.4.50",
+  "3.5.0",
 ]
 
 logger.info("Loading config...")
