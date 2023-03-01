@@ -33,8 +33,6 @@ export interface MonsterData {
   ControllerPathRemoteHashSuffix: number
   ControllerPathRemoteHashPre: number
 
-  Config: ConfigMonster
-
   IsInvisibleReset: boolean
   IsAIHashCheck: boolean
   SafetyCheck: boolean

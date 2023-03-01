@@ -608,7 +608,6 @@
       },
       "monsterData": {
         "warn": {
-          "noConfig": "Missing config for monster: %0",
           "noData": "No data for monster: %0",
           "noFightPropConfig": "Unable to get fight prop config for monster: %0"
         }

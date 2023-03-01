@@ -75,8 +75,6 @@ export default class Monster extends Entity {
       this.titleId = describeData.TitleID || 0
       this.specialNameId = (await MonsterData.getSpecialName(describeData.SpecialNameLabID))?.Id || 0
     }
-
-    this.loadAbilities(monsterData?.Config?.Abilities, true)
   }
 
   async init(userData: EntityUserData): Promise<void> {

@@ -22,7 +22,6 @@ class MonsterDataLoader extends Loader {
     const data = (await this.getMonsterList()).find((data) => data.Id === id)
     if (!silent) {
       if (data == null) this.warn("message.loader.monsterData.warn.noData", id)
-      else if (data.Config == null) this.warn("message.loader.monsterData.warn.noConfig", id)
     }
     return data
   }
