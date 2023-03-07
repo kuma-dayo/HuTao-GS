@@ -124,7 +124,7 @@ export default class CombatManager extends BaseClass {
   async handleCombatEvtBeingHit(context: PacketContext, data: EvtBeingHitInfo) {
     const { player, seqId } = context
     const { currentScene } = player
-    if (!currentScene) return
+    if (!currentScene || !data?.attackResult) return
 
     const { entityManager } = currentScene
     const { attackResult } = data
