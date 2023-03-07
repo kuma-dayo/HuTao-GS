@@ -15,6 +15,7 @@ import {
 import { VisionTypeEnum } from "@/types/proto/enum"
 import { WaitOnBlock } from "@/utils/asyncWait"
 import SceneBlock from "./sceneBlock"
+import { GadgetStateEnum } from "@/types/enum"
 
 export default class SceneGroup {
   block: SceneBlock
@@ -133,13 +134,14 @@ export default class SceneGroup {
     if (await this.reloadList(gadgetList)) return
 
     for (const gadget of gadgets) {
-      const { GadgetId, ConfigId, Level, Pos, Rot, InteractId } = gadget
+      const { GadgetId, ConfigId, Level, Pos, Rot, InteractId, State } = gadget
       const entity = new Gadget(GadgetId)
 
       entity.groupId = groupId
       entity.configId = ConfigId || 0
       entity.blockId = blockId
       entity.interactId = InteractId || null
+      entity.gadgetState = State || GadgetStateEnum.Default
 
       const { motion, bornPos } = entity
       const { pos, rot } = motion
@@ -181,12 +183,25 @@ export default class SceneGroup {
     Logger.mark(grpLoadPerfMark)
 
     await wob.waitTick()
-    await this.loadMonsters(Object.values(groupData.Monsters || {}))
+
+    await this.loadMonsters(
+      Object.values(
+        groupData.Monsters?.filter((monster) =>
+          groupData.Suites?.[groupData?.InitConfig?.[0] - 1]?.Monsters?.includes(monster.ConfigId)
+        ) || {}
+      )
+    )
+
     await wob.waitTick()
     await this.loadNpcs(Object.values(groupData.Npcs || {}), Object.values(groupData.Suites || {}))
     await wob.waitTick()
-    await this.loadGadgets(Object.values(groupData.Gadgets || {}))
-
+    await this.loadGadgets(
+      Object.values(
+        groupData.Gadgets?.filter((gadget) =>
+          groupData.Suites?.[groupData?.InitConfig?.[0] - 1]?.Gadgets?.includes(gadget.ConfigId)
+        ) || {}
+      )
+    )
     Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)
   }

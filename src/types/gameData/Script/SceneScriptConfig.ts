@@ -1,3 +1,4 @@
+import { GadgetStateEnum } from "@/types/enum"
 import { DynamicVector } from "../BinOutput/Common/DynamicNumber"
 
 export interface SceneGroupScriptConfig {
@@ -48,6 +49,7 @@ export interface SceneGadgetScriptConfig {
   Rot: DynamicVector
   Level: number
   DropTag: string
+  State?: GadgetStateEnum
   IsOneoff?: boolean
   Persistent?: boolean
   InteractId?: number
