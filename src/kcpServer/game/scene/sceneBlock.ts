@@ -104,15 +104,19 @@ export default class SceneBlock extends BaseClass {
     const { playerList, entityManager } = scene
 
     for (const group of groupList) {
-      const { pos, dynamicLoad, loaded } = group
-      if (dynamicLoad) continue
+      try {
+        const { pos, dynamicLoad, loaded } = group
+        if (dynamicLoad) continue
 
-      const canLoad =
-        playerList.find((player) => player.pos != null && pos.distanceTo2D(player.pos) <= NON_DYNAMIC_LOAD_DISTANCE) !=
-        null
+        const canLoad =
+          playerList.find(
+            (player) => player.pos != null && pos.distanceTo2D(player.pos) <= NON_DYNAMIC_LOAD_DISTANCE
+          ) != null
 
-      if (!loaded && canLoad) await group.load(wob)
-      if (loaded && !canLoad) await group.unload()
+        if (!loaded && canLoad) await group.load(wob)
+        if (loaded && !canLoad) await group.unload()
+      } finally {
+      }
     }
 
     await entityManager.flushAll()

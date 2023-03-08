@@ -11,6 +11,7 @@ import {
   SceneMonsterScriptConfig,
   SceneNpcScriptConfig,
   SceneSuiteScriptConfig,
+  SceneTriggerScriptConfig,
 } from "@/types/gameData/Script/SceneScriptConfig"
 import { VisionTypeEnum } from "@/types/proto/enum"
 import { WaitOnBlock } from "@/utils/asyncWait"
@@ -30,6 +31,8 @@ export default class SceneGroup {
 
   loaded: boolean
 
+  trigger: SceneTriggerScriptConfig[]
+
   constructor(block: SceneBlock, id: number, pos: Vector, dynamicLoad: boolean) {
     this.block = block
 
@@ -41,7 +44,13 @@ export default class SceneGroup {
     this.npcList = []
     this.gadgetList = []
 
+    this.trigger = []
+
     this.loaded = false
+  }
+
+  get aliveMonsterCount(): number {
+    return this.monsterList.filter((monster) => monster.isAlive()).length
   }
 
   private async reloadList(entityList: Entity[]) {
@@ -202,6 +211,9 @@ export default class SceneGroup {
         ) || {}
       )
     )
+
+    this.trigger = groupData.Triggers
+
     Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)
   }

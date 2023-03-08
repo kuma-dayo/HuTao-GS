@@ -4,7 +4,8 @@ import AbilityManager from "$/manager/abilityManager"
 import EntityManager from "$/manager/entityManager"
 import Vector from "$/utils/vector"
 import ConfigEntityAbilityEntry from "$DT/BinOutput/Config/ConfigEntityAbilityEntry"
-import { EntityTypeEnum, FightPropEnum, PlayerPropEnum } from "@/types/enum"
+import ConfigGlobalValue from "$DT/BinOutput/Config/ConfigGlobalValue"
+import { EntityTypeEnum, EventTypeEnum, FightPropEnum, GadgetStateEnum, PlayerPropEnum } from "@/types/enum"
 import { EntityFightPropConfig } from "@/types/game"
 import { CurveExcelConfig } from "@/types/gameData/ExcelBinOutput/Common/CurveExcelConfig"
 import {
@@ -16,6 +17,7 @@ import {
   SceneNpcInfo,
 } from "@/types/proto"
 import {
+  AbilityScalarTypeEnum,
   ChangeEnergyReasonEnum,
   ChangeHpReasonEnum,
   LifeStateEnum,
@@ -24,6 +26,7 @@ import {
   VisionTypeEnum,
 } from "@/types/proto/enum"
 import EntityUserData from "@/types/user/EntityUserData"
+import { getStringHash } from "@/utils/hash"
 import EntityProps from "./entityProps"
 import FightProp, { FightPropChangeReason } from "./fightProps"
 import Motion from "./motion"
@@ -100,6 +103,25 @@ export default class Entity extends BaseClass {
     if (init) abilityManager.initFromEmbryos()
   }
 
+  protected loadGlobalValue(globalValue: ConfigGlobalValue) {
+    const { abilityManager } = this
+    if (abilityManager == null) return
+
+    const { sgvDynamicValueMapContainer } = abilityManager
+    if (sgvDynamicValueMapContainer == null) return
+
+    const { ServerGlobalValues, InitServerGlobalValues } = globalValue || {}
+    if (!Array.isArray(ServerGlobalValues)) return
+
+    sgvDynamicValueMapContainer.setValues(
+      ServerGlobalValues.map((name) => ({
+        key: { hash: getStringHash(name), str: name },
+        valueType: AbilityScalarTypeEnum.FLOAT,
+        floatValue: InitServerGlobalValues?.[name] || 0,
+      }))
+    )
+  }
+
   async init(userData: EntityUserData) {
     const { props, fightProps } = this
     const { lifeState, propsData, fightPropsData } = userData
@@ -112,7 +134,7 @@ export default class Entity extends BaseClass {
     await fightProps.update()
   }
 
-  async initNew(level = 90) {
+  async initNew(level = 1) {
     const { props, fightProps } = this
 
     this.lifeState = LifeStateEnum.LIFE_ALIVE
@@ -404,6 +426,19 @@ export default class Entity extends BaseClass {
     // Broadcast life state change if on scene
     if (!manager) return
 
+    const sceneBlock = manager.scene.sceneBlockList.filter((block) => block.id === this.blockId)
+    const sceneGroup = sceneBlock[0]?.groupList.filter((group) => group.id === this.groupId)[0] //Entities can belong to only one group at most, so the array is always accessed from 0
+
+    if (sceneBlock[0]?.groupList && sceneGroup.aliveMonsterCount == 0) {
+      //The entity invoked by the command does not belong to a group, so calling grouplist will result in undefined.
+      sceneGroup.trigger.map((trigger) => {
+        if (trigger.Event == EventTypeEnum.EVENT_ANY_MONSTER_DIE) {
+          sceneGroup.gadgetList.map((gadget) => {
+            if (gadget.gadgetState == GadgetStateEnum.ChestLocked) gadget.setGadgetState(GadgetStateEnum.Default)
+          })
+        }
+      })
+    }
     await LifeStateChange.broadcastNotify(manager.scene.broadcastContextList, this)
     await manager.remove(this, VisionTypeEnum.VISION_DIE, seqId, batch)
   }

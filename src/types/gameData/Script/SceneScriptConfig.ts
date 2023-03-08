@@ -1,4 +1,4 @@
-import { GadgetStateEnum } from "@/types/enum"
+import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { DynamicVector } from "../BinOutput/Common/DynamicNumber"
 
 export interface SceneGroupScriptConfig {
@@ -71,7 +71,7 @@ export interface SceneRegionScriptConfig {
 export interface SceneTriggerScriptConfig {
   ConfigId: number
   Name: string
-  Event: {}
+  Event: EventTypeEnum
   Source: string
   Condition: string
   Action: string

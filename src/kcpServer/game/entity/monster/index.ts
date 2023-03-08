@@ -1,11 +1,14 @@
 import Entity from "$/entity"
 import Weapon from "$/equip/weapon"
+import AbilityData from "$/gameData/data/AbilityData"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
 import MonsterData from "$/gameData/data/MonsterData"
 import Player from "$/player"
-import { EntityTypeEnum, FightPropEnum } from "@/types/enum"
+import ConfigEntityAbilityEntry from "$DT/BinOutput/Config/ConfigEntityAbilityEntry"
+import ConfigGlobalValue from "$DT/BinOutput/Config/ConfigGlobalValue"
+import { EntityTypeEnum, FightPropEnum, MonsterTypeEnum } from "@/types/enum"
 import { SceneMonsterInfo } from "@/types/proto"
-import { ChangeHpReasonEnum, MonsterBornTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
+import { AbilityScalarTypeEnum, ChangeHpReasonEnum, MonsterBornTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
 import EntityUserData from "@/types/user/EntityUserData"
 
 export default class Monster extends Entity {
@@ -22,6 +25,7 @@ export default class Monster extends Entity {
   poseId: number
   isElite: boolean
 
+  monsterType: MonsterTypeEnum
   bornType: MonsterBornTypeEnum
 
   titleId: number
@@ -40,6 +44,7 @@ export default class Monster extends Entity {
     this.hpDropList = []
     this.killDropId = 0
 
+    this.monsterType = MonsterTypeEnum.MONSTER_NONE
     this.bornType = MonsterBornTypeEnum.MONSTER_BORN_DEFAULT
 
     this.poseId = 0
@@ -58,7 +63,9 @@ export default class Monster extends Entity {
     this.growCurve = await GrowCurveData.getGrowCurve("Monster")
 
     const monsterData = await MonsterData.getMonster(monsterId)
-    if (!monsterData) return
+    const abilityData = await AbilityData.getData()
+
+    if (!monsterData || !abilityData) return
 
     this.affixList = monsterData.Affix || []
     this.weaponList = monsterData.Equips.map((id) => Weapon.createByGadgetId(id, player, true))
@@ -70,11 +77,36 @@ export default class Monster extends Entity {
       .map((d) => ({ id: d.DropId || 0, hp: (d.HpPercent || 0) / 100 }))
     this.killDropId = monsterData.KillDropId || 0
 
+    this.monsterType = MonsterTypeEnum[monsterData.Type] || MonsterTypeEnum.MONSTER_NONE
+
     const describeData = await MonsterData.getDescribe(monsterData.DescribeId)
     if (describeData) {
       this.titleId = describeData.TitleID || 0
       this.specialNameId = (await MonsterData.getSpecialName(describeData.SpecialNameLabID))?.Id || 0
     }
+    const abilityList: ConfigEntityAbilityEntry[] = []
+    let globalValue: ConfigGlobalValue
+
+    abilityData.Monster[monsterData.Name]?.map((abilityData) => {
+      abilityData["default"]?.AbilityMixins.map((abilityMixin) => {
+        if (
+          abilityMixin.$type == "AttachModifierToSelfGlobalValueMixin" &&
+          abilityMixin.GlobalValueKey.includes("SGV_") //ConfigAbility has multiple serverGlobalValues, but to get the same values as ConfigMonster, only those with SGV_ in the value are taken.
+        ) {
+          globalValue.ServerGlobalValues.push(abilityMixin.GlobalValueKey)
+          globalValue.InitServerGlobalValues[abilityMixin.GlobalValueKey] = 0 //InitServerGlobalValues value is fixed at 0 to substitute ConfigMonster
+        }
+      })
+
+      if (abilityData["default"]?.AbilityName)
+        abilityList.push({
+          AbilityName: abilityData["default"].AbilityName,
+          AbilityID: undefined, //Sometimes AbilityName can be substituted. AbilityId may not exist, so set it to undefined.
+          AbilityOverride: undefined,
+        })
+    })
+    this.loadAbilities(abilityList, true)
+    this.loadGlobalValue(globalValue)
   }
 
   async init(userData: EntityUserData): Promise<void> {
@@ -85,6 +117,10 @@ export default class Monster extends Entity {
   async initNew(level?: number): Promise<void> {
     await this.loadMonsterData()
     await super.initNew(level)
+  }
+
+  isBoss(): boolean {
+    return this.monsterType === MonsterTypeEnum.MONSTER_BOSS
   }
 
   async takeDamage(
@@ -115,6 +151,7 @@ export default class Monster extends Entity {
       monsterId,
       groupId,
       configId,
+      affixList,
       weaponList,
       bornType,
       blockId,
@@ -128,6 +165,7 @@ export default class Monster extends Entity {
       monsterId,
       groupId,
       configId,
+      affixList,
       weaponList: weaponList.map((weapon) => weapon.exportSceneWeaponInfo()),
       authorityPeerId,
       bornType,
@@ -143,8 +181,27 @@ export default class Monster extends Entity {
 
   // Register
   async handleRegister() {
-    const { manager, weaponList } = this
+    const { manager, weaponList, abilityManager } = this
+    const { sgvDynamicValueMapContainer } = abilityManager
+
     for (const weapon of weaponList) await manager?.register(weapon.entity)
+
+    if (!this.isBoss()) return
+
+    setTimeout(() => {
+      const keys = sgvDynamicValueMapContainer.getKeys()
+      for (const key of keys) {
+        const { type, val } = sgvDynamicValueMapContainer.getValue(key)
+
+        if (type !== AbilityScalarTypeEnum.FLOAT || val !== 0) continue
+
+        sgvDynamicValueMapContainer.setValue({
+          key,
+          valueType: type,
+          floatValue: 1,
+        })
+      }
+    }, 5e3)
   }
 
   // Unregister
