@@ -141,7 +141,7 @@ export default class Avatar extends Entity {
     this.avatarType = avatarType
     this.bornTime = getTimeSeconds()
 
-    super.initNew()
+    super.initNew(90)
   }
 
   get weapon(): Weapon {

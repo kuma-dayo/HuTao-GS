@@ -21,7 +21,7 @@ export default class EntityProps {
     }
   }
 
-  initNew(level = 90) {
+  initNew(level = 1) {
     this.set(PlayerPropEnum.PROP_EXP, 0)
     this.set(PlayerPropEnum.PROP_BREAK_LEVEL, 6)
     this.set(PlayerPropEnum.PROP_SATIATION_VAL, 0)
