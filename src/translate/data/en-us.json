@@ -310,14 +310,14 @@
         }
       },
       "nocd": {
-        "desc": "Toggle nocd",
+        "desc": "set nocd",
         "info": {
           "disable": "nocd disabled.",
           "enable": "nocd enabled."
         },
         "usage": {
-          "0": "nocd <uid> - Toggle nocd for player",
-          "1": "nocd       - (In game) Toggle nocd for yourself"
+          "0": "nocd [true|false] <uid> - Toggle nocd for player",
+          "1": "nocd [true|false]       - (In game) Toggle nocd for yourself"
         }
       },
       "pos": {
@@ -416,8 +416,8 @@
           "spawn": "Spawning monster: %0"
         },
         "usage": {
-          "0": "monster <id> <lv> <uid> - Spawn monster at player's current avatar position",
-          "1": "monster <id> <lv>       - (In game) Spawn monster at current avatar position"
+          "0": "spawn <id> <lv> <uid> - Spawn monster at player's current avatar position",
+          "1": "spawn <id> <lv>       - (In game) Spawn monster at current avatar position"
         }
       },
       "stop": {
