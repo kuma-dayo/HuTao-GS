@@ -106,7 +106,7 @@ export default class Scene extends BaseClass {
 
     this.dieY = -1000
 
-    fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/3/scene3_block3001.lua`)).then((bool) => {
+    fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/Scene/3/scene3_block3001.lua`)).then((bool) => {
       this.enableScript = GlobalState.get("enableScript") ? bool : false
     })
 
