@@ -80,10 +80,12 @@ export default class Monster extends Entity {
     this.monsterType = MonsterTypeEnum[monsterData.Type] || MonsterTypeEnum.MONSTER_NONE
 
     const describeData = await MonsterData.getDescribe(monsterData.DescribeId)
+
     if (describeData) {
       this.titleId = describeData.TitleID || 0
       this.specialNameId = (await MonsterData.getSpecialName(describeData.SpecialNameLabID))?.Id || 0
     }
+
     const abilityList: ConfigEntityAbilityEntry[] = []
     let globalValue: ConfigGlobalValue
 
@@ -105,6 +107,7 @@ export default class Monster extends Entity {
           AbilityOverride: undefined,
         })
     })
+
     this.loadAbilities(abilityList, true)
     this.loadGlobalValue(globalValue)
   }
@@ -219,6 +222,11 @@ export default class Monster extends Entity {
   async handleDeath(seqId?: number, batch = false) {
     const { manager, motion, killDropId } = this
 
+    const currentGroup = this?.manager?.scene.sceneBlockList
+      .find((b) => b.id === this.blockId)
+      ?.groupList.find((g) => g.id === this.groupId)
+
+    if (manager.scene.enableScript) currentGroup.scriptManager.MonsterDeathTrigger()
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)
   }

@@ -36,6 +36,12 @@ import SceneUserData from "@/types/user/SceneUserData"
 import { getTimeSeconds } from "@/utils/time"
 import SceneBlock from "./sceneBlock"
 import SceneTag from "./sceneTag"
+import ScriptLoader from "$/script/scriptLoader"
+import { LuaFactory } from "wasmoon"
+import { fileExists, writeFile } from "@/utils/fileSystem"
+import { join } from "path"
+import { cwd } from "process"
+import config from "@/config"
 
 const HIT_TREE_CD = 86400e3 // 1 day
 
@@ -76,6 +82,8 @@ export default class Scene extends BaseClass {
   sceneBlockInit: boolean
   destroyed: boolean
 
+  enableScript: boolean
+
   constructor(world: World, sceneId: number) {
     super()
 
@@ -97,6 +105,10 @@ export default class Scene extends BaseClass {
     this.playerList = []
 
     this.dieY = -1000
+
+    fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/3/scene3_block3001.lua`)).then((bool) => {
+      this.enableScript = GlobalState.get("enableScript") ? bool : false
+    })
 
     super.initHandlers(this)
   }

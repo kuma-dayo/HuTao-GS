@@ -17,6 +17,7 @@ import { VisionTypeEnum } from "@/types/proto/enum"
 import { WaitOnBlock } from "@/utils/asyncWait"
 import SceneBlock from "./sceneBlock"
 import { GadgetStateEnum } from "@/types/enum"
+import scriptManager from "$/script/scriptManager"
 
 export default class SceneGroup {
   block: SceneBlock
@@ -32,6 +33,7 @@ export default class SceneGroup {
   loaded: boolean
 
   trigger: SceneTriggerScriptConfig[]
+  scriptManager: scriptManager
 
   constructor(block: SceneBlock, id: number, pos: Vector, dynamicLoad: boolean) {
     this.block = block
@@ -47,6 +49,8 @@ export default class SceneGroup {
     this.trigger = []
 
     this.loaded = false
+
+    this.scriptManager = new scriptManager(this)
   }
 
   get aliveMonsterCount(): number {

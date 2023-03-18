@@ -30,6 +30,7 @@ import { getStringHash } from "@/utils/hash"
 import EntityProps from "./entityProps"
 import FightProp, { FightPropChangeReason } from "./fightProps"
 import Motion from "./motion"
+import SceneGroup from "$/scene/sceneGroup"
 
 export default class Entity extends BaseClass {
   manager?: EntityManager
@@ -426,19 +427,6 @@ export default class Entity extends BaseClass {
     // Broadcast life state change if on scene
     if (!manager) return
 
-    const sceneBlock = manager.scene.sceneBlockList.filter((block) => block.id === this.blockId)
-    const sceneGroup = sceneBlock[0]?.groupList.filter((group) => group.id === this.groupId)[0] //Entities can belong to only one group at most, so the array is always accessed from 0
-
-    if (sceneBlock[0]?.groupList && sceneGroup.aliveMonsterCount == 0) {
-      //The entity invoked by the command does not belong to a group, so calling grouplist will result in undefined.
-      sceneGroup.trigger.map((trigger) => {
-        if (trigger.Event == EventTypeEnum.EVENT_ANY_MONSTER_DIE) {
-          sceneGroup.gadgetList.map((gadget) => {
-            if (gadget.gadgetState == GadgetStateEnum.ChestLocked) gadget.setGadgetState(GadgetStateEnum.Default)
-          })
-        }
-      })
-    }
     await LifeStateChange.broadcastNotify(manager.scene.broadcastContextList, this)
     await manager.remove(this, VisionTypeEnum.VISION_DIE, seqId, batch)
   }

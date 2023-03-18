@@ -36,6 +36,7 @@
     "protobufjs": "^7.1.2",
     "source-map-support": "^0.5.21",
     "verror": "^1.10.1",
+    "wasmoon": "^1.15.0",
     "yieldable-json": "^2.0.1"
   },
   "devDependencies": {
