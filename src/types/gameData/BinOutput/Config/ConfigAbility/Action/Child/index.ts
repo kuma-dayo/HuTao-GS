@@ -622,6 +622,8 @@ export interface HealHP extends ConfigBaseAbilityAction {
   AmountByCasterAttackRatio?: DynamicFloat
   MuteHealEffect?: boolean
   HealRatio?: number
+  Target?: string
+  CdRatio?: string
   IgnoreAbilityProperty?: boolean
 }
 
@@ -836,7 +838,7 @@ export interface ReviveDeadAvatar extends Omit<ReviveAvatar, "$type"> {
   $type: "ReviveDeadAvatar"
   IsReviveOtherPlayerAvatar: boolean
   SkillID: number
-  CdRatio: DynamicFloat
+  CdRatio: string
   Range: number
 }
 

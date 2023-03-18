@@ -11,6 +11,8 @@ import SelectTargetsByShape from "$DT/BinOutput/Config/SelectTargets/Child/Selec
 import { AbilityTargettingEnum, EntityTypeEnum, FightPropEnum, TargetTypeEnum } from "@/types/enum"
 import { getStringHash } from "@/utils/hash"
 import AppliedAbility from "./appliedAbility"
+import { abilityHeal } from "./abilityHeal"
+import AbilityData from "$/gameData/data/AbilityData"
 
 const MathOp = ["MUL", "ADD"]
 const creatureTypes = [EntityTypeEnum.Avatar, EntityTypeEnum.Monster]
@@ -81,12 +83,12 @@ export default class AbilityUtils {
     return Number(ability?.overrideMapContainer?.getValue({ hash: getStringHash(val), str: val })?.val || 0)
   }
 
-  calcAmount(
+  async calcAmount(
     ability: AppliedAbility,
     caster: Entity,
     target: Entity,
     config: HealHP | LoseHP | ReviveAvatar | ReviveDeadAvatar
-  ): number {
+  ): Promise<number> {
     const {
       Amount,
       AmountByCasterAttackRatio,
@@ -100,6 +102,28 @@ export default class AbilityUtils {
     amount += caster.getProp(FightPropEnum.FIGHT_PROP_CUR_ATTACK) * this.eval(ability, AmountByCasterAttackRatio)
     amount += target.getProp(FightPropEnum.FIGHT_PROP_MAX_HP) * this.eval(ability, AmountByTargetMaxHPRatio)
     amount += target.getProp(FightPropEnum.FIGHT_PROP_CUR_HP) * this.eval(ability, AmountByTargetCurrentHPRatio)
+
+    if (amount !== 0) {
+      return amount
+    }
+    const abilityName = await AbilityData.lookupString(ability.abilityName)
+    const healDataAvatarList = new abilityHeal().healDataAvatarList
+
+    if (config.$type == "HealHP") {
+      for (const healDataAvatar of healDataAvatarList) {
+        for (const healData of healDataAvatar.healdataList) {
+          if (healData.abilityName == abilityName && healData.cdRatioName.includes(config?.CdRatio)) {
+            switch (healDataAvatar.fightPropertyType) {
+              case 0:
+                amount += target.getProp(FightPropEnum.FIGHT_PROP_MAX_HP) * healData.HPRatio + healData.HPbase
+              case 1:
+              case 2:
+              //todo
+            }
+          }
+        }
+      }
+    }
 
     return amount
   }

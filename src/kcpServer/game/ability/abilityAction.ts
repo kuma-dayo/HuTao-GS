@@ -303,7 +303,7 @@ export default class AbilityAction extends BaseClass {
     const targetList = utils.getTargetList(ability, config, target)
     for (const targetEntity of targetList) {
       if (!predicate.checkAll(ability, config.Predicates, targetEntity)) continue
-      const amount = utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
+      const amount = await utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
       await targetEntity.heal(amount, true, ChangeHpReasonEnum.CHANGE_HP_ADD_ABILITY, context.seqId)
     }
   }
@@ -335,7 +335,7 @@ export default class AbilityAction extends BaseClass {
     const targetList = utils.getTargetList(ability, config, target)
 
     for (const targetEntity of targetList) {
-      const amount = utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
+      const amount = await utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
       if (targetEntity.getProp(FightPropEnum.FIGHT_PROP_CUR_HP) - amount <= 0 && !Lethal) continue
 
       await targetEntity.takeDamage(null, amount, true, ChangeHpReasonEnum.CHANGE_HP_SUB_ABILITY, context.seqId)
@@ -409,7 +409,7 @@ export default class AbilityAction extends BaseClass {
     for (const targetEntity of targetList) {
       if (!targetEntity.isDead()) continue
 
-      const amount = utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
+      const amount = await utils.calcAmount(ability, utils.getCaster(), targetEntity, config)
       await targetEntity.revive(amount)
     }
   }
@@ -450,7 +450,7 @@ export default class AbilityAction extends BaseClass {
       const distance = avatar.player.currentAvatar.distanceTo(entity)
       if (!avatar.isDead() || distance > range) continue
 
-      const amount = utils.calcAmount(ability, utils.getCaster(), avatar, config)
+      const amount = await utils.calcAmount(ability, utils.getCaster(), avatar, config)
       await avatar.revive(amount)
     }
   }
