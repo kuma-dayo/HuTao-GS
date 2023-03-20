@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 import { PlayerDieTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
-import { CommandDefinition } from ".."
 
 const killallCommand: CommandDefinition = {
   name: "killall",

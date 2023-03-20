@@ -1,5 +1,6 @@
-import { SceneTagData } from "@/types/gameData/SceneData"
 import Scene from "."
+
+import { SceneTagData } from "@/types/gameData/SceneData"
 
 export default class SceneTag {
   scene: Scene

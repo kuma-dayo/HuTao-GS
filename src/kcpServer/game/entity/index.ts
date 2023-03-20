@@ -1,3 +1,11 @@
+import Avatar from "./avatar"
+import EntityProps from "./entityProps"
+import FightProp, { FightPropChangeReason } from "./fightProps"
+import Gadget from "./gadget"
+import Monster from "./monster"
+import Motion from "./motion"
+import Npc from "./npc"
+
 import BaseClass from "#/baseClass"
 import LifeStateChange from "#/packets/LifeStateChange"
 import AbilityManager from "$/manager/abilityManager"
@@ -5,17 +13,10 @@ import EntityManager from "$/manager/entityManager"
 import Vector from "$/utils/vector"
 import ConfigEntityAbilityEntry from "$DT/BinOutput/Config/ConfigEntityAbilityEntry"
 import ConfigGlobalValue from "$DT/BinOutput/Config/ConfigGlobalValue"
-import { EntityTypeEnum, EventTypeEnum, FightPropEnum, GadgetStateEnum, PlayerPropEnum } from "@/types/enum"
+import { EntityTypeEnum, FightPropEnum, PlayerPropEnum } from "@/types/enum"
 import { EntityFightPropConfig } from "@/types/game"
 import { CurveExcelConfig } from "@/types/gameData/ExcelBinOutput/Common/CurveExcelConfig"
-import {
-  EntityAuthorityInfo,
-  SceneAvatarInfo,
-  SceneEntityInfo,
-  SceneGadgetInfo,
-  SceneMonsterInfo,
-  SceneNpcInfo,
-} from "@/types/proto"
+import { EntityAuthorityInfo, SceneEntityInfo } from "@/types/proto"
 import {
   AbilityScalarTypeEnum,
   ChangeEnergyReasonEnum,
@@ -27,13 +28,6 @@ import {
 } from "@/types/proto/enum"
 import EntityUserData from "@/types/user/EntityUserData"
 import { getStringHash } from "@/utils/hash"
-import EntityProps from "./entityProps"
-import FightProp, { FightPropChangeReason } from "./fightProps"
-import Motion from "./motion"
-import Gadget from "./gadget"
-import Avatar from "./avatar"
-import Monster from "./monster"
-import Npc from "./npc"
 
 export default class Entity extends BaseClass {
   manager?: EntityManager

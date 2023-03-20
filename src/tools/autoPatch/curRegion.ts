@@ -1,3 +1,9 @@
+import * as dns from "dns"
+import { existsSync, writeFileSync } from "fs"
+import { get } from "https"
+import { join } from "path"
+import { cwd } from "process"
+
 import config from "@/config"
 import translate from "@/translate"
 import TError from "@/translate/terror"
@@ -8,11 +14,6 @@ import DispatchKey from "@/utils/dispatchKey"
 import { fileExists } from "@/utils/fileSystem"
 import { dataToProtobuffer } from "@/utils/proto"
 import { rsaDecrypt } from "@/utils/rsa"
-import * as dns from "dns"
-import { existsSync, writeFileSync } from "fs"
-import { get } from "https"
-import { join } from "path"
-import { cwd } from "process"
 const { Resolver } = dns.promises
 
 const { version } = config.game

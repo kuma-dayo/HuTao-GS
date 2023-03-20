@@ -1,4 +1,5 @@
 import { Readable } from "stream"
+
 import DnsPacket, { PacketResource, ResA, ResAAAA, ResCNAME, ResSVCB } from "./packet"
 import { NAME_TO_QTYPE, QTYPE_TO_NAME } from "./packet/consts"
 

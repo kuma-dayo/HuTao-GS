@@ -1,4 +1,5 @@
 import EventEmitter from "promise-events"
+
 import { TTY } from ".."
 
 export default class TTYModule extends EventEmitter {

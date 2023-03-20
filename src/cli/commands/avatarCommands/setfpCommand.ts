@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 import { FightPropEnum } from "@/types/enum"
-import { CommandDefinition } from ".."
 
 const setfpCommand: CommandDefinition = {
   name: "setfp",

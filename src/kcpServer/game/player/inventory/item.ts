@@ -1,3 +1,5 @@
+import Player from ".."
+
 import Equip from "$/equip"
 import Reliquary from "$/equip/reliquary"
 import Weapon from "$/equip/weapon"
@@ -7,7 +9,6 @@ import { ItemInfo } from "@/types/proto"
 import EquipUserData from "@/types/user/EquipUserData"
 import { ItemDataTypeEnum, ItemUserData } from "@/types/user/InventoryUserData"
 import MaterialUserData from "@/types/user/MaterialUserData"
-import Player from ".."
 
 export default class Item {
   itemId: number

@@ -1,7 +1,8 @@
-import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { RetcodeEnum } from "@/types/proto/enum"
 import GuestPostEnterScene from "./GuestPostEnterScene"
+
+import Packet, { PacketInterface, PacketContext } from "#/packet"
 import { ClientStateEnum } from "@/types/enum"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface PostEnterSceneReq {
   enterSceneToken: number

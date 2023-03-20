@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import disconnectCommand from "./disconnectCommand"
 import gsCommand from "./gsCommand"
 import helpCommand from "./helpCommand"

@@ -1,3 +1,10 @@
+import KcpServer from ".."
+import hash from "../../utils/hash"
+
+import ActivityManager from "./manager/activityManager"
+import { ChatManager } from "./manager/chatManager"
+import ShopManager from "./manager/shopManager"
+
 import Client from "#/client"
 import DummyClient from "#/dummyClient"
 import { PacketContext } from "#/packet"
@@ -27,11 +34,6 @@ import { OnlinePlayerInfo } from "@/types/proto"
 import { ENetReasonEnum, MpSettingTypeEnum } from "@/types/proto/enum"
 import UserData from "@/types/user"
 import { getJsonAsync, setJsonAsync } from "@/utils/json"
-import KcpServer from ".."
-import hash from "../../utils/hash"
-import ActivityManager from "./manager/activityManager"
-import { ChatManager } from "./manager/chatManager"
-import ShopManager from "./manager/shopManager"
 
 export default class Game {
   server: KcpServer

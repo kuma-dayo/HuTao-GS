@@ -1,11 +1,12 @@
+import GroupSuite from "./GroupSuite"
+import SceneEntityMove from "./SceneEntityMove"
+
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import Entity from "$/entity"
 import Npc from "$/entity/npc"
 import { ClientStateEnum, EntityTypeEnum } from "@/types/enum"
 import { SceneEntityInfo } from "@/types/proto"
 import { VisionTypeEnum } from "@/types/proto/enum"
-import GroupSuite from "./GroupSuite"
-import SceneEntityMove from "./SceneEntityMove"
 
 export interface SceneEntityAppearNotify {
   entityList: SceneEntityInfo[]

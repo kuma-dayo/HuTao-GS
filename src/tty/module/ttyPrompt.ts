@@ -1,6 +1,7 @@
-import TTYModule from "."
 import { TTY } from ".."
 import { cRGB } from "../utils"
+
+import TTYModule from "."
 
 export default class TTYPrompt extends TTYModule {
   prompt: string

@@ -1,7 +1,8 @@
+import { CommandDefinition } from ".."
+
 import GlobalState, { DEFAULT_GSTATE } from "@/globalState"
 import LanguageData from "@/translate/data"
 import { getTTY } from "@/tty"
-import { CommandDefinition } from ".."
 
 function suggestValue(): (string | number)[] {
   const values = []

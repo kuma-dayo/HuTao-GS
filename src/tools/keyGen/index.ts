@@ -1,8 +1,9 @@
-import { getCmdIdByName } from "#/cmdIds"
-import TLogger from "@/translate/tlogger"
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
+
+import { getCmdIdByName } from "#/cmdIds"
+import TLogger from "@/translate/tlogger"
 
 const logger = new TLogger("KEYGEN", 0xfcba03)
 

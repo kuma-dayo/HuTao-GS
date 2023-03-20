@@ -1,8 +1,8 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
 import { GachaItem } from "@/types/proto"
+import { GachaInfo } from "@/types/proto"
 import { RetcodeEnum } from "@/types/proto/enum"
 import { getJson } from "@/utils/json"
-import { GachaInfo } from "@/types/proto"
 
 export interface DoGachaReq {
   gachaTag: string

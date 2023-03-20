@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Weapon from "$/equip/weapon"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const weaponCommand: CommandDefinition = {
   name: "weapon",

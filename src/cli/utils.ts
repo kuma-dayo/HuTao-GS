@@ -1,5 +1,6 @@
-import TError from "@/translate/terror"
 import { ArgumentDefinition, CommandDefinition } from "./commands"
+
+import TError from "@/translate/terror"
 
 type ParsedCLIArg = string | number | Buffer
 

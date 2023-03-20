@@ -1,3 +1,5 @@
+import AppliedAbility from "./appliedAbility"
+
 import BaseClass from "#/baseClass"
 import { PacketContext } from "#/packet"
 import Entity from "$/entity"
@@ -25,7 +27,6 @@ import { EntityTypeEnum, FightPropEnum, GadgetStateEnum } from "@/types/enum"
 import { AbilityActionGenerateElemBall } from "@/types/proto"
 import { ChangeHpReasonEnum, PlayerDieTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
 import { getStringHash } from "@/utils/hash"
-import AppliedAbility from "./appliedAbility"
 
 const MathOp = ["MUL", "ADD"]
 const creatureTypes = [EntityTypeEnum.Avatar, EntityTypeEnum.Monster]

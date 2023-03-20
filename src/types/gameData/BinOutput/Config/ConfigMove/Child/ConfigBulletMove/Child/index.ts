@@ -1,6 +1,7 @@
+import ConfigBaseMove from "../.."
+
 import ConfigBulletMoveAngle from "$DT/BinOutput/Config/ConfigBulletMoveAngle"
 import ConfigMoveStickToGround from "$DT/BinOutput/Config/ConfigMoveStickToGround"
-import ConfigBaseMove from "../.."
 
 export default interface ConfigBaseBulletMove extends ConfigBaseMove {
   Speed: number

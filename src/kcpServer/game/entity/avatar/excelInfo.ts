@@ -1,5 +1,6 @@
-import AvatarData from "$/gameData/data/AvatarData"
 import Avatar from "."
+
+import AvatarData from "$/gameData/data/AvatarData"
 
 class Hash {
   pre: bigint

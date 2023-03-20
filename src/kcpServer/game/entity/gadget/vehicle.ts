@@ -1,3 +1,5 @@
+import Gadget from "."
+
 import { PacketContext } from "#/packet"
 import VehicleInteract from "#/packets/VehicleInteract"
 import StaminaManager from "$/manager/staminaManager"
@@ -6,7 +8,6 @@ import Player from "$/player"
 import { FightPropEnum } from "@/types/enum"
 import { SceneGadgetInfo, VehicleLocationInfo, VehicleMember } from "@/types/proto"
 import { RetcodeEnum, VehicleInteractTypeEnum } from "@/types/proto/enum"
-import Gadget from "."
 
 export default class Vehicle extends Gadget {
   vehicleManager: VehicleManager

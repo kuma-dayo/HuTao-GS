@@ -1,10 +1,11 @@
+import ChatChannel from "./chatChannel"
+import CommandHandler from "./commandHandler"
+
 import PrivateChat, { PrivateChatReq } from "#/packets/PrivateChat"
 import { ChatManager } from "$/manager/chatManager"
 import Player from "$/player"
 import { ChatInfo } from "@/types/proto"
 import { getTimeSeconds } from "@/utils/time"
-import ChatChannel from "./chatChannel"
-import CommandHandler from "./commandHandler"
 
 export default class PrivateChatChannel extends ChatChannel {
   privateChatId: string

@@ -1,10 +1,11 @@
+import { join } from "path"
+import { cwd } from "process"
+
 import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import GlobalState from "@/globalState"
 import Logger from "@/logger"
 import { RecorderLog, RecorderLogData } from "@/types/log/recorder"
 import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
-import { join } from "path"
-import { cwd } from "process"
 
 const logger = new Logger("LOGREC", 0xa0ffa0)
 

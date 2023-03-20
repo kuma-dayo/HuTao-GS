@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
+
 import Logger from "./logger"
 import { DEFAULT_LANG } from "./translate/data"
 import { cRGB } from "./tty/utils"

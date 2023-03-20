@@ -1,5 +1,6 @@
-import keyGen from "@/tools/keyGen"
 import { CommandDefinition } from ".."
+
+import keyGen from "@/tools/keyGen"
 
 const keygenCommand: CommandDefinition = {
   name: "keygen",

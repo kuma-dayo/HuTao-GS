@@ -1,7 +1,8 @@
+import { CommandDefinition } from ".."
+
 import { DEFAULT_CONFIG } from "@/config"
 import translate from "@/translate"
 import { getJson, setJson } from "@/utils/json"
-import { CommandDefinition } from ".."
 
 const createConfigCommand: CommandDefinition = {
   name: "createConfig",

@@ -1,7 +1,8 @@
+import PlayerEyePointState from "./PlayerEyePointState"
+
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import { ClientStateEnum } from "@/types/enum"
 import { RetcodeEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
-import PlayerEyePointState from "./PlayerEyePointState"
 
 export interface EnterSceneDoneReq {
   enterSceneToken: number

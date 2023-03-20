@@ -1,6 +1,8 @@
-import EventEmitter from "promise-events"
 import { ReadStream, WriteStream } from "tty"
 import { formatWithOptions } from "util"
+
+import EventEmitter from "promise-events"
+
 import TTYInfo from "./module/ttyInfo"
 import TTYLog from "./module/ttyLog"
 import TTYPrompt from "./module/ttyPrompt"

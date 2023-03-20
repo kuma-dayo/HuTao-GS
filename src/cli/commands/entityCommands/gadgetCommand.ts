@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Gadget from "$/entity/gadget"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const gadgetCommand: CommandDefinition = {
   name: "gadget",

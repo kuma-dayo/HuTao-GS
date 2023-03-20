@@ -1,5 +1,6 @@
-import { DynamicFloat } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigBaseBornType from "."
+
+import { DynamicFloat } from "$DT/BinOutput/Common/DynamicNumber"
 
 export default interface ConfigBornByTargetLinearPoint extends ConfigBaseBornType {
   $type: "ConfigBornByTargetLinearPoint"

@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import autopatchCommand from "./autopatchCommand"
 import ec2bCommand from "./ec2bCommand"
 import gpatchCommand from "./gpatchCommand"

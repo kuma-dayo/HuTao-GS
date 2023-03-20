@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import artifactCommand from "./artifactCommand"
 import artSetCommand from "./artSetCommand"
 import materialCommand from "./materialCommand"

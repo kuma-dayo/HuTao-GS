@@ -1,3 +1,6 @@
+import ExcelInfo from "./excelInfo"
+import FetterList from "./fetter/fetterList"
+
 import AvatarChangeCostume from "#/packets/AvatarChangeCostume"
 import AvatarEquipChange, { AvatarEquipChangeNotify } from "#/packets/AvatarEquipChange"
 import AvatarFlycloakChange from "#/packets/AvatarFlycloakChange"
@@ -17,8 +20,6 @@ import { AvatarEnterSceneInfo, AvatarInfo, AvatarSatiationData, SceneAvatarInfo,
 import { AvatarTypeEnum, ProtEntityTypeEnum, RetcodeEnum } from "@/types/proto/enum"
 import AvatarUserData from "@/types/user/AvatarUserData"
 import { getTimeSeconds } from "@/utils/time"
-import ExcelInfo from "./excelInfo"
-import FetterList from "./fetter/fetterList"
 
 const AvatarDefaultAbilities = [
   "Avatar_DefaultAbility_VisionReplaceDieInvincible",

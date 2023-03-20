@@ -1,7 +1,9 @@
+import * as dgram from "dgram"
+
+import { AcceptTypes, encodeData } from "./worker/utils/data"
+
 import BaseClass from "#/baseClass"
 import { waitUntil } from "@/utils/asyncWait"
-import * as dgram from "dgram"
-import { AcceptTypes, encodeData } from "./worker/utils/data"
 
 const ISocketBufferTTL = 10e3 // 10 seconds
 const ISocketMessageChunkSize = 65280

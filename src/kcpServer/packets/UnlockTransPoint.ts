@@ -1,6 +1,7 @@
+import ScenePointUnlock from "./ScenePointUnlock"
+
 import Packet, { PacketInterface, PacketContext } from "#/packet"
 import { RetcodeEnum } from "@/types/proto/enum"
-import ScenePointUnlock from "./ScenePointUnlock"
 
 export interface UnlockTransPointReq {
   sceneId: number

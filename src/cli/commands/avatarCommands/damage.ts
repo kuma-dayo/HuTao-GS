@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 
 const damageCommand: CommandDefinition = {

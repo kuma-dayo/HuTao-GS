@@ -1,10 +1,11 @@
+import Player from "."
+
 import PlayerProp from "#/packets/PlayerProp"
 import PlayerPropChange from "#/packets/PlayerPropChange"
 import { PlayerPropEnum } from "@/types/enum"
 import { PropPair, PropValue } from "@/types/proto"
 import { MpSettingTypeEnum } from "@/types/proto/enum"
 import PropsUserData from "@/types/user/PropsUserData"
-import Player from "."
 
 export default class PlayerProps {
   player: Player

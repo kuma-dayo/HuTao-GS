@@ -1,10 +1,11 @@
+import Gadget from "."
+
 import { GadgetInteractRsp } from "#/packets/GadgetInteract"
 import GuidManager from "$/manager/guidManager"
 import Player from "$/player"
 import Item from "$/player/inventory/item"
 import { SceneGadgetInfo } from "@/types/proto"
 import { InteractTypeEnum, InterOpTypeEnum, ResinCostTypeEnum, RetcodeEnum } from "@/types/proto/enum"
-import Gadget from "."
 
 export default class TrifleItem extends Gadget {
   item: Item

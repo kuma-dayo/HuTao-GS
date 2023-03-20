@@ -1,11 +1,13 @@
+import SceneGroup from "./sceneGroup"
+
+import Scene from "."
+
 import BaseClass from "#/baseClass"
 import SceneData from "$/gameData/data/SceneData"
 import Player from "$/player"
 import Vector from "$/utils/vector"
 import TLogger from "@/translate/tlogger"
 import { WaitOnBlock } from "@/utils/asyncWait"
-import Scene from "."
-import SceneGroup from "./sceneGroup"
 
 const logger = new TLogger("GSCENE", 0xefa8ec)
 

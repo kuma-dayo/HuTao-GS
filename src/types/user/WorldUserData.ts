@@ -1,4 +1,5 @@
 import { VectorInfo } from "../proto"
+
 import SceneUserData from "./SceneUserData"
 
 export interface LastStateUserData {

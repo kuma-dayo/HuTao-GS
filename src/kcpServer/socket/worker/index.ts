@@ -1,11 +1,14 @@
-import { LogLevel } from "@/logger"
-import parseArgs from "@/utils/parseArgs"
 import { appendFileSync } from "fs"
 import { join } from "path"
 import { cwd, exit, stdin } from "process"
 import { formatWithOptions } from "util"
+
 import ISocket from "../isocket"
+
 import { AcceptTypes, decodeDataList } from "./utils/data"
+
+import { LogLevel } from "@/logger"
+import parseArgs from "@/utils/parseArgs"
 
 export enum WorkerOpcode {
   // Worker

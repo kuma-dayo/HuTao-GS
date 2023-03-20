@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Material from "$/material"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const materialCommand: CommandDefinition = {
   name: "material",

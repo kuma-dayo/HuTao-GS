@@ -1,3 +1,10 @@
+import KcpServer from "../"
+
+import KcpWorkerInterface from "./worker/kcpWorker/kcpWorkerInterface"
+import { ConnectionInfo } from "./worker/recvWorker"
+import RecvWorkerInterface from "./worker/recvWorker/recvWorkerInterface"
+import WorkerInterface from "./worker/workerInterface"
+
 import BaseClass from "#/baseClass"
 import { getCmdIdByName, getNameByCmdId, PACKET_HEAD } from "#/cmdIds"
 import { PacketContext, verbosePackets } from "#/packet"
@@ -9,11 +16,6 @@ import { cRGB } from "@/tty/utils"
 import { PacketHead } from "@/types/kcp"
 import { ENetReasonEnum } from "@/types/proto/enum"
 import { objToProtobuffer } from "@/utils/proto"
-import KcpServer from "../"
-import KcpWorkerInterface from "./worker/kcpWorker/kcpWorkerInterface"
-import { ConnectionInfo } from "./worker/recvWorker"
-import RecvWorkerInterface from "./worker/recvWorker/recvWorkerInterface"
-import WorkerInterface from "./worker/workerInterface"
 
 const { kcpPort } = config
 const { packetsToDump } = config.game

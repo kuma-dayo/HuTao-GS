@@ -1,7 +1,9 @@
-import { getTimestamp } from "@/utils/time"
-import TTYModule from "."
 import { TTY } from ".."
 import { cRGB, noColor } from "../utils"
+
+import TTYModule from "."
+
+import { getTimestamp } from "@/utils/time"
 
 const BORDER_V = "\u2502"
 const BORDER_H = "\u2501"

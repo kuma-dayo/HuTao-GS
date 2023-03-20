@@ -1,14 +1,17 @@
+import { appendFileSync } from "fs"
+import { join } from "path"
+import { cwd } from "process"
+
 import sourceMapSupport from "source-map-support"
-sourceMapSupport.install()
+
 import CLI from "@/cli"
 import { registerBuiltInCommands } from "@/cli/commands"
 import Logger from "@/logger"
 import Server from "@/server"
 import { getTTY } from "@/tty"
 import parseArgs, { ParsedArgs } from "@/utils/parseArgs"
-import { appendFileSync } from "fs"
-import { join } from "path"
-import { cwd } from "process"
+
+sourceMapSupport.install()
 ;(async (args: ParsedArgs) => {
   // initialize tty
   getTTY().setIO()

@@ -1,8 +1,9 @@
+import Activity from "."
+
 import ActivityManager from "$/manager/activityManager"
 import Player from "$/player"
 import { ActivityIdEnum } from "@/types/enum"
 import { ActivityInfo, MusicGameRecord } from "@/types/proto"
-import Activity from "."
 
 const watcherIdList = [
   15072021, 15072020, 15072019, 15072018, 15072017, 15072016, 15072015, 15072014, 15072013, 15072012, 15072005,

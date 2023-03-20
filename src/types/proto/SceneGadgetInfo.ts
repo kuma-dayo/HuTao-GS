@@ -1,3 +1,5 @@
+import { GadgetBornTypeEnum } from "./enum"
+
 import {
   AbilityGadgetInfo,
   BlossomChestInfo,
@@ -21,7 +23,6 @@ import {
   WeatherInfo,
   WorktopInfo,
 } from "."
-import { GadgetBornTypeEnum } from "./enum"
 
 export interface SceneGadgetInfo {
   trifleItem?: ItemInfo

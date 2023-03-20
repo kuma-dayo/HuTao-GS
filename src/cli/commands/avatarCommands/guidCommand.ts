@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 import { EquipTypeEnum } from "@/types/enum"
-import { CommandDefinition } from ".."
 
 const guidCommand: CommandDefinition = {
   name: "guid",

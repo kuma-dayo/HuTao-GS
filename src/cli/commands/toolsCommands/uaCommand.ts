@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import { UAList, UAPatch } from "@/tools/UAPatch"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const uaCommand: CommandDefinition = {
   name: "ua",

@@ -1,3 +1,8 @@
+import KcpWorkerInterface from "./socket/worker/kcpWorker/kcpWorkerInterface"
+import protoCleanup from "./utils/protoCleanup"
+
+import KcpServer from "./"
+
 import BaseClass from "#/baseClass"
 import Player from "$/player"
 import config from "@/config"
@@ -7,9 +12,6 @@ import { PacketHead } from "@/types/kcp"
 import { ENetReasonEnum } from "@/types/proto/enum"
 import MT19937 from "@/utils/mt19937"
 import { versionStrToNum } from "@/utils/version"
-import KcpServer from "./"
-import KcpWorkerInterface from "./socket/worker/kcpWorker/kcpWorkerInterface"
-import protoCleanup from "./utils/protoCleanup"
 
 const logger = new TLogger("CLIENT", 0xffdb4a)
 

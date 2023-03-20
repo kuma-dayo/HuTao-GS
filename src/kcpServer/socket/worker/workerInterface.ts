@@ -1,13 +1,17 @@
+import { ChildProcess } from "child_process"
+
+import Socket from "../"
+import ISocket from "../isocket"
+
+import { AcceptTypes, decodeDataList } from "./utils/data"
+
+import { WorkerOpcode } from "./"
+
 import { LogLevel } from "@/logger"
 import translate from "@/translate"
 import TError from "@/translate/terror"
 import TLogger from "@/translate/tlogger"
 import { attachedSpawn } from "@/utils/childProcess"
-import { ChildProcess } from "child_process"
-import Socket from "../"
-import ISocket from "../isocket"
-import { WorkerOpcode } from "./"
-import { AcceptTypes, decodeDataList } from "./utils/data"
 
 const logger = new TLogger("WORKER", 0x7a34eb)
 

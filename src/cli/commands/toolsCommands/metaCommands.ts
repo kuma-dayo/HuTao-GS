@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import { decryptMetadata, dumpStringLiterals, encryptMetadata, patchMetadata } from "@/tools/metadata"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const metaCommand: CommandDefinition = {
   name: "meta",

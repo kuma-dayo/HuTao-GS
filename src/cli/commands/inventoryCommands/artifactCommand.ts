@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Reliquary from "$/equip/reliquary"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const artifactCommand: CommandDefinition = {
   name: "artifact",

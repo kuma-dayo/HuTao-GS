@@ -1,4 +1,5 @@
 import sourceMapSupport from "source-map-support"
+
 sourceMapSupport.install()
 import Worker from "#/socket/worker"
 import parseArgs, { ParsedArgs } from "@/utils/parseArgs"

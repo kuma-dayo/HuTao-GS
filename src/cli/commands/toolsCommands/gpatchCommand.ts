@@ -1,7 +1,8 @@
+import { CommandDefinition } from ".."
+
 import config from "@/config"
 import { patchGame, unpatchGame } from "@/tools/patcher"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const gpatchCommand: CommandDefinition = {
   name: "gpatch",

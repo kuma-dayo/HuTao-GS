@@ -1,6 +1,7 @@
-import translate from "@/translate"
 import { CommandDefinition } from ".."
+
 import AvatarFightPropUpdate from "#/packets/AvatarFightPropUpdate"
+import translate from "@/translate"
 import { FightPropEnum } from "@/types/enum"
 
 const nocdCommand: CommandDefinition = {

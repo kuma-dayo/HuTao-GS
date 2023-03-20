@@ -1,3 +1,9 @@
+import ConfigAbilityAction from ".."
+import ConfigAbilityPredicate from "../../Predicate"
+
+import CreateEntity from "./CreateEntity"
+import UtilityAction from "./UtilityAction"
+
 import { DynamicFloat, DynamicInt, DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigAttackEvent from "$DT/BinOutput/Config/ConfigAttackEvent"
 import ConfigAttackInfo from "$DT/BinOutput/Config/ConfigAttackInfo"
@@ -17,10 +23,6 @@ import GlobalValuePair from "$DT/BinOutput/Config/GlobalValuePair"
 import RocketJumpExt from "$DT/BinOutput/Config/RocketJumpExt"
 import SelectTargets from "$DT/BinOutput/Config/SelectTargets"
 import SelectTargetsByChildren from "$DT/BinOutput/Config/SelectTargets/Child/SelectTargetsByChildren"
-import ConfigAbilityAction from ".."
-import ConfigAbilityPredicate from "../../Predicate"
-import CreateEntity from "./CreateEntity"
-import UtilityAction from "./UtilityAction"
 
 export default interface ConfigBaseAbilityAction {
   Target?: string

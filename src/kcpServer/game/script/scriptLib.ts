@@ -1,6 +1,7 @@
-import Logger from "@/logger"
-import context from "./scriptLibContext"
 import { GadgetState } from "./constant/gadgetState"
+import context from "./scriptLibContext"
+
+import Logger from "@/logger"
 
 const logger = new Logger("ScriptLib", 0xff7f50)
 

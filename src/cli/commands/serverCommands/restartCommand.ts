@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import CLI from "@/cli"
 import Server from "@/server"
-import { CommandDefinition } from ".."
 
 const restartCommand: CommandDefinition = {
   name: "restart",

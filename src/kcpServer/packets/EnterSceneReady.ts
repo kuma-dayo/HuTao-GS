@@ -1,9 +1,10 @@
-import Packet, { PacketContext, PacketInterface } from "#/packet"
-import { ClientStateEnum } from "@/types/enum"
-import { RetcodeEnum, SceneEnterTypeEnum, VisionTypeEnum } from "@/types/proto/enum"
 import EnterScenePeer from "./EnterScenePeer"
 import PlayerPreEnterMp from "./PlayerPreEnterMp"
 import SceneEntityDisappear from "./SceneEntityDisappear"
+
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import { ClientStateEnum } from "@/types/enum"
+import { RetcodeEnum, SceneEnterTypeEnum, VisionTypeEnum } from "@/types/proto/enum"
 
 export interface EnterSceneReadyReq {
   enterSceneToken: number

@@ -1,5 +1,6 @@
-import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { DynamicVector } from "../BinOutput/Common/DynamicNumber"
+
+import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 
 export interface SceneGroupScriptConfig {
   Monsters: SceneMonsterScriptConfig[]

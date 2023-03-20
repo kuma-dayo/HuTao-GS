@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Vector from "$/utils/vector"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const vehicleCommand: CommandDefinition = {
   name: "vehicle",

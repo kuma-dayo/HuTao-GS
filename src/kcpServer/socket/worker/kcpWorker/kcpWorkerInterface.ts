@@ -1,10 +1,11 @@
-import Socket from "#/socket"
-import { ENetReasonEnum } from "@/types/proto/enum"
 import { WorkerOpcode } from "../"
 import { ConnectionInfo } from "../recvWorker"
 import RecvWorkerInterface from "../recvWorker/recvWorkerInterface"
 import { decodeDataList } from "../utils/data"
 import WorkerInterface from "../workerInterface"
+
+import Socket from "#/socket"
+import { ENetReasonEnum } from "@/types/proto/enum"
 
 export default class KcpWorkerInterface extends WorkerInterface {
   recvWId: number

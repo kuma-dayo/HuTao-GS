@@ -1,8 +1,9 @@
-import Vector from "$/utils/vector"
-import { SceneData } from "@/types/gameData/SceneData"
-import { ClientStateEnum } from "@/types/enum"
-import { LastStateUserData } from "@/types/user/WorldUserData"
 import World from "."
+
+import Vector from "$/utils/vector"
+import { ClientStateEnum } from "@/types/enum"
+import { SceneData } from "@/types/gameData/SceneData"
+import { LastStateUserData } from "@/types/user/WorldUserData"
 
 export default class LastState {
   world: World

@@ -1,5 +1,3 @@
-import ConfigMonster from "./BinOutput/Config/ConfigMonster"
-
 export interface MonsterData {
   Name: string
   Type: string

@@ -1,4 +1,5 @@
 import MT19937 from "../mt19937"
+
 import { initialPrevXor } from "./magic"
 import { memecryptoDecrypt, memecryptoEncrypt, memecryptoPrepareKey } from "./memecrypto"
 import {

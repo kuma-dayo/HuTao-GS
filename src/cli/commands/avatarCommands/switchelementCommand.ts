@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 
 const element = { elementless: 0, pyro: 1, hydro: 2, anemo: 3, cryo: 4, geo: 5, electro: 6, dendro: 7 }

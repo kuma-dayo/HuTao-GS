@@ -1,9 +1,11 @@
-import Socket from "#/socket"
-import { ENetReasonEnum } from "@/types/proto/enum"
-import { ConnectionInfo } from "./"
 import { WorkerOpcode } from "../"
 import { decodeDataList } from "../utils/data"
 import WorkerInterface from "../workerInterface"
+
+import { ConnectionInfo } from "./"
+
+import Socket from "#/socket"
+import { ENetReasonEnum } from "@/types/proto/enum"
 
 export default class RecvWorkerInterface extends WorkerInterface {
   port: number

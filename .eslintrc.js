@@ -10,7 +10,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "import", "unused-imports"],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-interface": "off",
@@ -24,5 +24,16 @@ module.exports = {
     "no-fallthrough": "off",
     "no-async-promise-executor": "off",
     "no-case-declarations": "off",
+    "unused-imports/no-unused-imports": "warn",
+    "import/order": [
+      "warn",
+      {
+        groups: ["builtin", "external", "parent", "sibling", "index", "object", "type"],
+        "newlines-between": "always",
+        pathGroupsExcludedImportTypes: ["builtin"],
+        alphabetize: { order: "asc", caseInsensitive: true },
+        pathGroups: [],
+      },
+    ],
   },
 }

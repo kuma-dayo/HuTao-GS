@@ -1,12 +1,14 @@
-import KcpServer from "./"
-import EnterSceneReady from "./packets/EnterSceneReady"
-import SceneInitFinish from "./packets/SceneInitFinish"
-import EnterSceneDone from "./packets/EnterSceneDone"
-import { PlayerEnterSceneNotify } from "./packets/PlayerEnterScene"
-import SetUpAvatarTeam from "./packets/SetUpAvatarTeam"
-import PostEnterScene from "./packets/PostEnterScene"
-import { ClientStateEnum } from "@/types/enum"
 import Client from "./client"
+import EnterSceneDone from "./packets/EnterSceneDone"
+import EnterSceneReady from "./packets/EnterSceneReady"
+import { PlayerEnterSceneNotify } from "./packets/PlayerEnterScene"
+import PostEnterScene from "./packets/PostEnterScene"
+import SceneInitFinish from "./packets/SceneInitFinish"
+import SetUpAvatarTeam from "./packets/SetUpAvatarTeam"
+
+import KcpServer from "./"
+
+import { ClientStateEnum } from "@/types/enum"
 import { PacketHead } from "@/types/kcp"
 
 export default class DummyClient extends Client {

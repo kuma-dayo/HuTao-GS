@@ -1,6 +1,7 @@
-import translate from "@/translate"
 import { CommandDefinition } from ".."
+
 import config from "@/config"
+import translate from "@/translate"
 
 const windyCommand: CommandDefinition = {
   name: "windy",

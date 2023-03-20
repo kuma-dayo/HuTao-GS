@@ -1,3 +1,11 @@
+import { join } from "path"
+import { cwd } from "process"
+
+import EventEmitter from "promise-events"
+
+import Game from "./game"
+import Socket from "./socket"
+
 import Client from "#/client"
 import PacketHandler from "#/packetHandler"
 import GlobalState from "@/globalState"
@@ -8,11 +16,6 @@ import { ClientStateEnum } from "@/types/enum"
 import { ENetReasonEnum } from "@/types/proto/enum"
 import { waitTick } from "@/utils/asyncWait"
 import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
-import { join } from "path"
-import { cwd } from "process"
-import EventEmitter from "promise-events"
-import Game from "./game"
-import Socket from "./socket"
 
 const logger = new TLogger("KCPSRV", 0xc824ff)
 

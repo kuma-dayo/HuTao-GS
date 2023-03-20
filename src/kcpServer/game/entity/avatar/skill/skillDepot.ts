@@ -1,11 +1,12 @@
+import InherentProudSkill from "./inherentProudSkill"
+import Skill from "./skill"
+
 import Embryo from "$/ability/embryo"
 import AbilityData from "$/gameData/data/AbilityData"
 import SkillData from "$/gameData/data/SkillData"
 import SkillManager from "$/manager/skillManager"
 import { PlayerPropEnum } from "@/types/enum"
 import SkillDepotUserData from "@/types/user/SkillDepotUserData"
-import InherentProudSkill from "./inherentProudSkill"
-import Skill from "./skill"
 
 export default class SkillDepot {
   manager: SkillManager

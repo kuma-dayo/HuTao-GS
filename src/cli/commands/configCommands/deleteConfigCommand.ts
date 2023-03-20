@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 import { getJson, setJson } from "@/utils/json"
-import { CommandDefinition } from ".."
 
 const deleteConfigCommand: CommandDefinition = {
   name: "deleteConfig",

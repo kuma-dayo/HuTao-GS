@@ -1,10 +1,11 @@
-import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { RetcodeEnum } from "@/types/proto/enum"
 import ScenePlayerInfo from "./ScenePlayerInfo"
 import SceneTeamUpdate from "./SceneTeamUpdate"
 import WorldPlayerInfo from "./WorldPlayerInfo"
-import { ClientStateEnum } from "@/types/enum"
+
+import Packet, { PacketInterface, PacketContext } from "#/packet"
 import config from "@/config"
+import { ClientStateEnum } from "@/types/enum"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface SetPlayerNameReq {
   nickName: string

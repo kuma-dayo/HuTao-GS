@@ -1,8 +1,9 @@
+import Entity from "."
+
 import { GRID_SIZE } from "$/manager/entityManager"
 import Vector from "$/utils/vector"
 import { MotionInfo } from "@/types/proto"
 import { MotionStateEnum } from "@/types/proto/enum"
-import Entity from "."
 
 export default class Motion {
   entity: Entity

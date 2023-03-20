@@ -1,13 +1,16 @@
-import config from "@/config"
-import translate from "@/translate"
-import TError from "@/translate/terror"
-import { compare, hash } from "bcryptjs"
 import { randomBytes } from "crypto"
 import { join } from "path"
 import { cwd } from "process"
+
+import { compare, hash } from "bcryptjs"
+
 import { getJsonAsync, setJsonAsync } from "./json"
 import OpenSSL from "./openssl"
 import { rsaDecrypt } from "./rsa"
+
+import config from "@/config"
+import translate from "@/translate"
+import TError from "@/translate/terror"
 
 const TOKEN_TTL = 1209600e3
 

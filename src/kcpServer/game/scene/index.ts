@@ -1,3 +1,9 @@
+import { join } from "path"
+import { cwd } from "process"
+
+import SceneBlock from "./sceneBlock"
+import SceneTag from "./sceneTag"
+
 import BaseClass from "#/baseClass"
 import { PacketContext } from "#/packet"
 import GuestBeginEnterScene from "#/packets/GuestBeginEnterScene"
@@ -19,6 +25,7 @@ import Player from "$/player"
 import Item from "$/player/inventory/item"
 import Vector from "$/utils/vector"
 import World from "$/world"
+import config from "@/config"
 import GlobalState from "@/globalState"
 import Logger from "@/logger"
 import translate from "@/translate"
@@ -33,15 +40,8 @@ import {
 } from "@/types/proto"
 import { ProtEntityTypeEnum, SceneEnterReasonEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
 import SceneUserData from "@/types/user/SceneUserData"
+import { fileExists } from "@/utils/fileSystem"
 import { getTimeSeconds } from "@/utils/time"
-import SceneBlock from "./sceneBlock"
-import SceneTag from "./sceneTag"
-import ScriptLoader from "$/script/scriptLoader"
-import { LuaFactory } from "wasmoon"
-import { fileExists, writeFile } from "@/utils/fileSystem"
-import { join } from "path"
-import { cwd } from "process"
-import config from "@/config"
 
 const HIT_TREE_CD = 86400e3 // 1 day
 

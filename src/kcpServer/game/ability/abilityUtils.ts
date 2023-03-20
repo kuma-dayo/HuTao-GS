@@ -1,6 +1,10 @@
+import { abilityHeal } from "./abilityHeal"
+import AppliedAbility from "./appliedAbility"
+
 import Entity from "$/entity"
 import Avatar from "$/entity/avatar"
 import ClientGadget from "$/entity/gadget/clientGadget"
+import AbilityData from "$/gameData/data/AbilityData"
 import AbilityManager from "$/manager/abilityManager"
 import Vector from "$/utils/vector"
 import { DynamicFloat, DynamicInt } from "$DT/BinOutput/Common/DynamicNumber"
@@ -10,9 +14,6 @@ import SelectTargets from "$DT/BinOutput/Config/SelectTargets"
 import SelectTargetsByShape from "$DT/BinOutput/Config/SelectTargets/Child/SelectTargetsByShape"
 import { AbilityTargettingEnum, EntityTypeEnum, FightPropEnum, TargetTypeEnum } from "@/types/enum"
 import { getStringHash } from "@/utils/hash"
-import AppliedAbility from "./appliedAbility"
-import { abilityHeal } from "./abilityHeal"
-import AbilityData from "$/gameData/data/AbilityData"
 
 const MathOp = ["MUL", "ADD"]
 const creatureTypes = [EntityTypeEnum.Avatar, EntityTypeEnum.Monster]

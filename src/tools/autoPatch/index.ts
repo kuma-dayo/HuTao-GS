@@ -1,6 +1,7 @@
-import TLogger from "@/translate/tlogger"
 import * as QueryCurRegion from "./curRegion"
 import * as QueryRegionList from "./regionList"
+
+import TLogger from "@/translate/tlogger"
 
 const logger = new TLogger("APATCH")
 

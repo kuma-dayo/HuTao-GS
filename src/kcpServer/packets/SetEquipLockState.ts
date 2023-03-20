@@ -1,7 +1,8 @@
-import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { RetcodeEnum } from "@/types/proto/enum"
-import { ClientStateEnum } from "@/types/enum"
 import StoreItemChange from "./StoreItemChange"
+
+import Packet, { PacketInterface, PacketContext } from "#/packet"
+import { ClientStateEnum } from "@/types/enum"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface SetEquipLockStateReq {
   targetEquipGuid: string

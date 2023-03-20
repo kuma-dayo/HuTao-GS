@@ -1,3 +1,7 @@
+import { CmdInfo, CommandDefinition } from "./commands"
+import { getCommandInfo, getCommandInfoAlias } from "./commands/serverCommands/helpCommand"
+import { parseCLIArgs, splitArgs } from "./utils"
+
 import Logger from "@/logger"
 import Server from "@/server"
 import translate from "@/translate"
@@ -5,9 +9,6 @@ import { getTTY, TTY } from "@/tty"
 import { ansiToHTML } from "@/tty/utils"
 import { Announcement } from "@/types/announcement"
 import { escapeHtml } from "@/utils/escape"
-import { CmdInfo, CommandDefinition } from "./commands"
-import { getCommandInfo, getCommandInfoAlias } from "./commands/serverCommands/helpCommand"
-import { parseCLIArgs, splitArgs } from "./utils"
 
 const commandsAnnouncement: Announcement = {
   type: 2, // Game

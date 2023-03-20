@@ -1,6 +1,7 @@
+import ConfigBaseLocalEntity from "."
+
 import { DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigShape from "$DT/BinOutput/Config/ConfigShape"
-import ConfigBaseLocalEntity from "."
 
 export default interface ConfigLocalTrigger extends ConfigBaseLocalEntity {
   $type: "ConfigLocalTrigger"

@@ -1,5 +1,6 @@
-import translate from "@/translate"
 import { CommandDefinition } from ".."
+
+import translate from "@/translate"
 
 const rechargeCommand: CommandDefinition = {
   name: "recharge",

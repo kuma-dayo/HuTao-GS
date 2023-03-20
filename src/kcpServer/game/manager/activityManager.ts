@@ -1,16 +1,15 @@
+import Game from ".."
+
 import { PacketContext } from "#/packet"
 import ActivityInfoPacket from "#/packets/ActivityInfo"
 import Activity from "$/activity"
 import CustomGameActivity from "$/activity/customGameActivity"
-
+import MusicGameActivity from "$/activity/musicGameActivity"
 import Player from "$/player"
+import config from "@/config"
+import { ActivityIdEnum } from "@/types/enum"
 import { ActivityInfo, ActivityScheduleInfo } from "@/types/proto"
 import { getTimeSeconds } from "@/utils/time"
-import Game from ".."
-import { ActivityIdEnum } from "@/types/enum"
-
-import config from "@/config"
-import MusicGameActivity from "$/activity/musicGameActivity"
 const eventlist = config.game.eventlist
 
 export default class ActivityManager {

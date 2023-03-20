@@ -1,8 +1,14 @@
+import Avatar from "./avatar"
+import Monster from "./monster"
+
+import Entity from "."
+
 import AvatarFightPropUpdate from "#/packets/AvatarFightPropUpdate"
 import EntityFightPropChangeReason, { EntityFightPropChangeReasonNotify } from "#/packets/EntityFightPropChangeReason"
 import EntityFightPropUpdate from "#/packets/EntityFightPropUpdate"
 import Reliquary from "$/equip/reliquary"
 import Weapon from "$/equip/weapon"
+import Config from "@/config"
 import Logger from "@/logger"
 import { CurveArithEnum, ElemTypeEnum, FightPropEnum } from "@/types/enum"
 import { EntityFightPropConfig } from "@/types/game"
@@ -10,10 +16,6 @@ import { CurveExcelConfig } from "@/types/gameData/ExcelBinOutput/Common/CurveEx
 import { FightPropPair } from "@/types/proto"
 import { ChangeEnergyReasonEnum, ChangeHpReasonEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
 import PropsUserData from "@/types/user/PropsUserData"
-import Entity from "."
-import Avatar from "./avatar"
-import Monster from "./monster"
-import Config from "@/config"
 
 const logger = new Logger("fightProp", 0xf5c242)
 

@@ -1,8 +1,8 @@
 import Packet, { PacketContext, PacketInterface } from "#/packet"
+import config from "@/config"
 import { ClientStateEnum } from "@/types/enum"
 import { ChatInfo } from "@/types/proto"
 import { RetcodeEnum } from "@/types/proto/enum"
-import config from "@/config"
 
 export interface PullPrivateChatReq {
   targetUid: number

@@ -1,5 +1,5 @@
-import ConfigDither from "./ConfigDither"
 import ConfigCustomAttackShape from "./ConfigCustomAttackShape"
+import ConfigDither from "./ConfigDither"
 import ConfigEntityCommon from "./ConfigEntityCommon"
 import ConfigEntityPoint from "./ConfigEntityPoint"
 import ConfigEntityTags from "./ConfigEntityTags"

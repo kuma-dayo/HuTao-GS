@@ -1,5 +1,6 @@
-import ConfigBaseWidgetToy from "."
 import ConfigWidgetBehaviour from "../../ConfigWidgetBehaviour"
+
+import ConfigBaseWidgetToy from "."
 
 export default interface ConfigWidgetToyGeneral extends ConfigBaseWidgetToy {
   $type: "ConfigWidgetToyGeneral"

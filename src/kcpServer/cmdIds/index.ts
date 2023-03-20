@@ -1,5 +1,3 @@
-import config, { DEFAULT_CONFIG } from "@/config"
-import { CmdIds } from "@/types/kcp"
 import ver1_4 from "./ver1_4"
 import ver1_6_51 from "./ver1_6_51"
 import ver2_6 from "./ver2_6"
@@ -9,6 +7,9 @@ import ver2_8_50 from "./ver2_8_50"
 import ver3_3 from "./ver3_3"
 import ver3_4 from "./ver3_4"
 import ver3_5 from "./ver3_5"
+
+import config, { DEFAULT_CONFIG } from "@/config"
+import { CmdIds } from "@/types/kcp"
 
 const versionMap: { [version: string]: CmdIds } = {
   "1.4.0": ver1_4,

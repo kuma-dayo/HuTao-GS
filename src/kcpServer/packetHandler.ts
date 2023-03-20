@@ -1,9 +1,10 @@
+import { PacketContext, PacketInterface } from "./packet"
+
 import ProtoMatch from "#/protomatch"
 import GlobalState from "@/globalState"
 import TLogger from "@/translate/tlogger"
 import { ClientStateEnum } from "@/types/enum"
 import dataUtil from "@/utils/proto"
-import { PacketContext, PacketInterface } from "./packet"
 
 const logger = new TLogger("PACKET", 0x8810cd)
 

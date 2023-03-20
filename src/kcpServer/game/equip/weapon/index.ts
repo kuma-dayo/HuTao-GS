@@ -1,11 +1,13 @@
+import Equip from ".."
+
+import Affix from "./affix"
+import WeaponEntity from "./weaponEntity"
+
 import WeaponData from "$/gameData/data/WeaponData"
 import Player from "$/player"
 import { EquipTypeEnum, ItemTypeEnum } from "@/types/enum"
 import { EquipInfo, SceneWeaponInfo } from "@/types/proto"
 import WeaponUserData from "@/types/user/WeaponUserData"
-import Equip from ".."
-import Affix from "./affix"
-import WeaponEntity from "./weaponEntity"
 
 export default class Weapon extends Equip {
   entity: WeaponEntity

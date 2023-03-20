@@ -1,6 +1,8 @@
-import Logger, { LogLevel } from "@/logger"
 import { formatWithOptions } from "util"
+
 import translate from "."
+
+import Logger, { LogLevel } from "@/logger"
 
 export default class TLogger extends Logger {
   constructor(name?: string, color?: number) {

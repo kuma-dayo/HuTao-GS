@@ -1,13 +1,16 @@
+import { join } from "path"
+import { cwd } from "process"
+
 import { LuaEngine } from "wasmoon"
-import ScriptLib from "./scriptLib"
+
 import { EventType } from "./constant/eventType"
 import { GadgetState } from "./constant/gadgetState"
 import { RegionShape } from "./constant/regionShape"
+import ScriptLib from "./scriptLib"
+
+import config from "@/config"
 import Logger from "@/logger"
 import { readFile } from "@/utils/fileSystem"
-import { join } from "path"
-import { cwd } from "process"
-import config from "@/config"
 
 const logger = new Logger("ScriptLoader", 0xff7f50)
 export default class ScriptLoader {

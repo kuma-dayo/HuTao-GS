@@ -1,7 +1,3 @@
-import Packet, { PacketContext, PacketInterface } from "#/packet"
-import ChatChannel from "$/chat/chatChannel"
-import { ClientStateEnum, PlayerPropEnum, SystemHintTypeEnum } from "@/types/enum"
-import { RetcodeEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
 import AllMarkPoint from "./AllMarkPoint"
 import HostPlayer from "./HostPlayer"
 import PlayerEnterSceneInfo from "./PlayerEnterSceneInfo"
@@ -18,6 +14,11 @@ import SyncScenePlayTeamEntity from "./SyncScenePlayTeamEntity"
 import SyncTeamEntity from "./SyncTeamEntity"
 import WorldData from "./WorldData"
 import WorldPlayerInfo from "./WorldPlayerInfo"
+
+import Packet, { PacketContext, PacketInterface } from "#/packet"
+import ChatChannel from "$/chat/chatChannel"
+import { ClientStateEnum, PlayerPropEnum, SystemHintTypeEnum } from "@/types/enum"
+import { RetcodeEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
 
 export interface SceneInitFinishReq {
   enterSceneToken: number

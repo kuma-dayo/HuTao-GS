@@ -1,5 +1,6 @@
-import ConfigBaseMove from "."
 import ConfigMoveSmoothedSpeed from "../../ConfigMoveSmoothedSpeed"
+
+import ConfigBaseMove from "."
 
 export default interface ConfigAnimatorMove extends ConfigBaseMove {
   $type: "ConfigAnimatorMove"

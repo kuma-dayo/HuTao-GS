@@ -2,11 +2,11 @@ import fs from "fs"
 import { join } from "path"
 import { performance, PerformanceObserverEntryList } from "perf_hooks"
 import { cwd } from "process"
+
 import { getTTY, TTY } from "./tty"
 import { cRGB, noColor } from "./tty/utils"
 import parseArgs from "./utils/parseArgs"
 import { getTimestamp } from "./utils/time"
-import config from "./config"
 const { appendFile } = fs.promises
 
 export enum LogLevel {

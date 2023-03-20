@@ -1,6 +1,7 @@
+import LanguageData, { DEFAULT_LANG } from "./data"
+
 import GlobalState from "@/globalState"
 import { getJson, setJson } from "@/utils/json"
-import LanguageData, { DEFAULT_LANG } from "./data"
 
 const lcachePath = "data/lcache.json"
 const lcache = getJson(lcachePath, {})

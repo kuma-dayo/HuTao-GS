@@ -1,6 +1,7 @@
-import ConfigAbilityPredicate from "$DT/BinOutput/Config/ConfigAbility/Predicate"
 import ConfigBaseAbilityAction from ".."
 import ConfigAbilityAction from "../.."
+
+import ConfigAbilityPredicate from "$DT/BinOutput/Config/ConfigAbility/Predicate"
 
 export default interface BaseUtilityAction extends ConfigBaseAbilityAction {}
 

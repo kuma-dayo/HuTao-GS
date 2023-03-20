@@ -1,5 +1,6 @@
-import { update } from "@/tools/autoPatch"
 import { CommandDefinition } from ".."
+
+import { update } from "@/tools/autoPatch"
 
 const autopatchCommand: CommandDefinition = {
   name: "autopatch",

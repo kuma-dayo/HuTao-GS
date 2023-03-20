@@ -1,6 +1,7 @@
-import TTYModule from "."
 import { TTY } from ".."
 import { escSeqSplitString, noColor } from "../utils"
+
+import TTYModule from "."
 
 const MAX_LINES = 10000
 

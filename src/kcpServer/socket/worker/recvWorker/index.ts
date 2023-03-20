@@ -1,10 +1,12 @@
-import { LogLevel } from "@/logger"
-import { cRGB } from "@/tty/utils"
-import { waitUntil } from "@/utils/asyncWait"
 import * as dgram from "dgram"
+
 import Worker, { WorkerOpcode } from "../"
 import { AcceptTypes, decodeDataList } from "../utils/data"
 import handshake from "../utils/handshake"
+
+import { LogLevel } from "@/logger"
+import { cRGB } from "@/tty/utils"
+import { waitUntil } from "@/utils/asyncWait"
 
 export interface ConnectionInfo {
   token: number

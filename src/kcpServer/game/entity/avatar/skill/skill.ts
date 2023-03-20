@@ -1,3 +1,6 @@
+import ProudSkill from "./proudSkill"
+import SkillDepot from "./skillDepot"
+
 import { PacketContext } from "#/packet"
 import Embryo from "$/ability/embryo"
 import SkillData from "$/gameData/data/SkillData"
@@ -5,8 +8,6 @@ import { ElemTypeEnum, FightPropEnum } from "@/types/enum"
 import { ChangeEnergyReasonEnum } from "@/types/proto/enum"
 import SkillUserData from "@/types/user/SkillUserData"
 import { getStringHash } from "@/utils/hash"
-import ProudSkill from "./proudSkill"
-import SkillDepot from "./skillDepot"
 
 export default class Skill {
   depot: SkillDepot

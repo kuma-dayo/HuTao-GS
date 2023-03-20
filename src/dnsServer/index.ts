@@ -1,17 +1,20 @@
+import * as dgram from "dgram"
+import Tcp, { AddressInfo } from "net"
+import { join } from "path"
+import { cwd } from "process"
+
+import EventEmitter from "promise-events"
+
+import NameServer from "./nameserver"
+import DnsPacket, { PacketQuestion, ResA, ResCNAME, ResHTTPS } from "./packet"
+import { NAME_TO_QTYPE, QTYPE_TO_NAME } from "./packet/consts"
+import { listAnswer, readStream } from "./utils"
+
 import config from "@/config"
 import Server from "@/server"
 import TLogger from "@/translate/tlogger"
 import { cRGB } from "@/tty/utils"
 import { writeFile } from "@/utils/fileSystem"
-import * as dgram from "dgram"
-import Tcp, { AddressInfo } from "net"
-import { join } from "path"
-import { cwd } from "process"
-import EventEmitter from "promise-events"
-import NameServer from "./nameserver"
-import DnsPacket, { PacketQuestion, ResA, ResCNAME, ResHTTPS } from "./packet"
-import { NAME_TO_QTYPE, QTYPE_TO_NAME } from "./packet/consts"
-import { listAnswer, readStream } from "./utils"
 
 const logger = new TLogger("DNSSRV", 0xfc9c14)
 

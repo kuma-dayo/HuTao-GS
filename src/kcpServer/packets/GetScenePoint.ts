@@ -1,7 +1,7 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { RetcodeEnum } from "@/types/proto/enum"
 import SceneData from "$/gameData/data/SceneData"
 import { ClientStateEnum } from "@/types/enum"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 const unlockType = ["SceneTransPoint", "DungeonEntry", "VirtualTransPoint"]
 

@@ -1,8 +1,9 @@
+import FetterList from "./fetterList"
+
 import { PlayerPropEnum } from "@/types/enum"
 import FetterConfig from "@/types/gameData/ExcelBinOutput/Common/FetterConfig"
 import { FetterInfo } from "@/types/proto"
 import { FetterStateEnum } from "@/types/proto/enum"
-import FetterList from "./fetterList"
 
 export default class Fetter {
   fetterList: FetterList

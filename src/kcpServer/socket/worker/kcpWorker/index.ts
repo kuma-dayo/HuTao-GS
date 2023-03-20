@@ -1,3 +1,12 @@
+import { join } from "path"
+import { cwd } from "process"
+
+import Worker, { WorkerOpcode } from "../"
+import { ConnectionInfo } from "../recvWorker"
+import { AcceptTypes, decodeDataList } from "../utils/data"
+import { Handshake } from "../utils/handshake"
+import { Kcp } from "../utils/kcp"
+
 import { getNameByCmdId, PACKET_HEAD } from "#/cmdIds"
 import Packet from "#/packet"
 import config from "@/config"
@@ -11,13 +20,6 @@ import { fileExists, readFile } from "@/utils/fileSystem"
 import { getEc2bKey } from "@/utils/mhyCrypto/ec2b"
 import { dataToProtobuffer } from "@/utils/proto"
 import { xor } from "@/utils/xor"
-import { join } from "path"
-import { cwd } from "process"
-import Worker, { WorkerOpcode } from "../"
-import { ConnectionInfo } from "../recvWorker"
-import { AcceptTypes, decodeDataList } from "../utils/data"
-import { Handshake } from "../utils/handshake"
-import { Kcp } from "../utils/kcp"
 
 const { version } = config.game
 const { autoPatch } = config.dispatch

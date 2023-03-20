@@ -1,7 +1,8 @@
+import Gadget from "."
+
 import { EvtCreateGadgetNotify } from "#/packets/EvtCreateGadget"
 import Player from "$/player"
 import { SceneGadgetInfo } from "@/types/proto"
-import Gadget from "."
 
 export default class ClientGadget extends Gadget {
   player: Player

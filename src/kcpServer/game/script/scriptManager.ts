@@ -1,10 +1,12 @@
-import SceneGroup from "$/scene/sceneGroup"
 import { LuaFactory } from "wasmoon"
-import ScriptLoader from "./scriptLoader"
-import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
-import scriptLibContext from "./scriptLibContext"
+
 import ScriptArgs from "./scriptArgs"
+import scriptLibContext from "./scriptLibContext"
+import ScriptLoader from "./scriptLoader"
+
+import SceneGroup from "$/scene/sceneGroup"
 import Logger from "@/logger"
+import { EventTypeEnum } from "@/types/enum"
 
 const logger = new Logger("ScriptManager", 0xff7f50)
 export default class scriptManager {

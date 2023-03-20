@@ -1,9 +1,11 @@
-import config from "@/config"
 import { join } from "path"
 import { cwd } from "process"
+
 import { fileExists, readFile, writeFile } from "./fileSystem"
 import { genEc2b, getEc2bKey } from "./mhyCrypto/ec2b"
 import OpenSSL, { RSAKeyPair } from "./openssl"
+
+import config from "@/config"
 
 const { version } = config.game
 const { dispatchKeyId, serverKeySize } = config.dispatch

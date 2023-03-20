@@ -1,5 +1,6 @@
-import { getJson } from "@/utils/json"
 import Logger from "./logger"
+
+import { getJson } from "@/utils/json"
 
 const logger = new Logger("CONFIG", 0xcacaff)
 

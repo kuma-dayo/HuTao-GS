@@ -1,8 +1,9 @@
+import { join, resolve } from "path"
+
 import config from "@/config"
 import TLogger from "@/translate/tlogger"
 import { dirExists, fileExists, mkdir, readFile, writeFile } from "@/utils/fileSystem"
 import OpenSSL from "@/utils/openssl"
-import { join, resolve } from "path"
 
 const logger = new TLogger("SSLGEN", 0xa0ff00)
 

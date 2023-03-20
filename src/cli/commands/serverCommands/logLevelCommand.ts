@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import { LogLevel } from "@/logger"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const logLevels = Object.values(LogLevel)
   .map((v) => parseInt(v.toString()))

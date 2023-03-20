@@ -1,8 +1,10 @@
+import md5 from "md5"
+
+import priceTier from "../priceTier.json"
+
 import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import config from "@/config"
 import { AuthResponse } from "@/utils/authenticator"
-import md5 from "md5"
-import priceTier from "../priceTier.json"
 
 class Hk4eSdkHandler extends Handler {
   constructor() {

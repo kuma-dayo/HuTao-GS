@@ -1,6 +1,7 @@
+import ConfigBaseForceField from "."
+
 import { DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigShape from "$DT/BinOutput/Config/ConfigShape"
-import ConfigBaseForceField from "."
 
 export default interface ConfigRiseField extends ConfigBaseForceField {
   $type: "ConfigRiseField"

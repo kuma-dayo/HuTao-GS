@@ -1,3 +1,9 @@
+import * as dns from "dns"
+import { existsSync, writeFileSync } from "fs"
+import { get } from "https"
+import { join } from "path"
+import { cwd } from "process"
+
 import config from "@/config"
 import translate from "@/translate"
 import TError from "@/translate/terror"
@@ -6,11 +12,6 @@ import { QueryRegionListHttpRsp } from "@/types/proto"
 import { RetcodeEnum } from "@/types/proto/enum"
 import { fileExists } from "@/utils/fileSystem"
 import { dataToProtobuffer } from "@/utils/proto"
-import * as dns from "dns"
-import { existsSync, writeFileSync } from "fs"
-import { get } from "https"
-import { join } from "path"
-import { cwd } from "process"
 const { Resolver } = dns.promises
 
 const host = `dispatch${config.dispatch.dispatchRegion.slice(0, 2).toLowerCase()}global.yuanshen.com`

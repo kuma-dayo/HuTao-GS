@@ -1,7 +1,8 @@
+import { CLILike, CommandDefinition } from ".."
+
 import AbilityScalarValueContainer from "$/ability/abilityScalarValueContainer"
 import AbilityData from "$/gameData/data/AbilityData"
 import translate from "@/translate"
-import { CLILike, CommandDefinition } from ".."
 
 async function printScalarValueContainer(
   print: CLILike["print"],

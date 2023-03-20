@@ -1,11 +1,13 @@
+import { join } from "path"
+
+import { patchMetadata } from "../metadata"
+import { UAPatch } from "../UAPatch"
+
 import config from "@/config"
 import translate from "@/translate"
 import TError from "@/translate/terror"
 import { deleteFile, dirExists, fileExists, fileSize, readFile, writeFile } from "@/utils/fileSystem"
 import { versionStrToNum } from "@/utils/version"
-import { join } from "path"
-import { patchMetadata } from "../metadata"
-import { UAPatch } from "../UAPatch"
 
 const dataDirs = ["GenshinImpact_Data", "YuanShen_Data"]
 const managedMetadataPath = "Managed/Metadata/global-metadata.dat"

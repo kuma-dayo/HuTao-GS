@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import createConfigCommand from "./createConfigCommand"
 import deleteConfigCommand from "./deleteConfigCommand"
 import loadConfigCommand from "./loadConfigCommand"

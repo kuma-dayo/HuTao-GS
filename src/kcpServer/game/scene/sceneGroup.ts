@@ -1,11 +1,15 @@
+import SceneBlock from "./sceneBlock"
+
 import Entity from "$/entity"
 import Gadget from "$/entity/gadget"
 import Monster from "$/entity/monster"
 import Npc from "$/entity/npc"
 import SceneData from "$/gameData/data/SceneData"
 import WorldData from "$/gameData/data/WorldData"
+import scriptManager from "$/script/scriptManager"
 import Vector from "$/utils/vector"
 import Logger from "@/logger"
+import { GadgetStateEnum } from "@/types/enum"
 import {
   SceneGadgetScriptConfig,
   SceneMonsterScriptConfig,
@@ -15,9 +19,6 @@ import {
 } from "@/types/gameData/Script/SceneScriptConfig"
 import { VisionTypeEnum } from "@/types/proto/enum"
 import { WaitOnBlock } from "@/utils/asyncWait"
-import SceneBlock from "./sceneBlock"
-import { GadgetStateEnum } from "@/types/enum"
-import scriptManager from "$/script/scriptManager"
 
 export default class SceneGroup {
   block: SceneBlock

@@ -1,8 +1,9 @@
-import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { RetcodeEnum } from "@/types/proto/enum"
-import { ShopGoods } from "@/types/proto"
 import ItemAddHint from "./ItemAddHint"
+
+import Packet, { PacketInterface, PacketContext } from "#/packet"
 import Material from "$/material"
+import { ShopGoods } from "@/types/proto"
+import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface BuyGoodsReq {
   buyCount: number

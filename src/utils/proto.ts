@@ -1,11 +1,13 @@
+import { join } from "path"
+import { cwd } from "process"
+
+import * as protobuf from "protobufjs"
+
 import { getNameByCmdId } from "#/cmdIds"
 import config from "@/config"
 import GlobalState from "@/globalState"
 import TLogger from "@/translate/tlogger"
 import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
-import { join } from "path"
-import { cwd } from "process"
-import * as protobuf from "protobufjs"
 
 const logger = new TLogger("PROTOU", 0xc2f542)
 

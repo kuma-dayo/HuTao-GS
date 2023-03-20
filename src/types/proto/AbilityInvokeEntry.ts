@@ -1,5 +1,6 @@
-import { AbilityInvokeEntryHead } from "."
 import { AbilityInvokeArgumentEnum, ForwardTypeEnum } from "./enum"
+
+import { AbilityInvokeEntryHead } from "."
 
 export interface AbilityInvokeEntry {
   head: AbilityInvokeEntryHead

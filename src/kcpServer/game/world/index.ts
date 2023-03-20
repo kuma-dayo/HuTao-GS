@@ -1,3 +1,7 @@
+import Game from ".."
+
+import LastState from "./lastState"
+
 import BaseClass from "#/baseClass"
 import { PacketContext } from "#/packet"
 import ClientReconnect from "#/packets/ClientReconnect"
@@ -20,8 +24,6 @@ import { OnlinePlayerInfo } from "@/types/proto"
 import { ClientReconnectReasonEnum, QuitReasonEnum, SceneEnterReasonEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
 import SceneUserData from "@/types/user/SceneUserData"
 import WorldUserData from "@/types/user/WorldUserData"
-import Game from ".."
-import LastState from "./lastState"
 
 const logger = new Logger("GWORLD", 0xefc8cc)
 

@@ -1,7 +1,8 @@
+import { ArgumentDefinition, CLILike, CommandDefinition } from ".."
+
 import CLI from "@/cli"
 import translate from "@/translate"
 import { cRGB } from "@/tty/utils"
-import { ArgumentDefinition, CLILike, CommandDefinition } from ".."
 
 export function getArgumentInfo(argument: ArgumentDefinition) {
   const { name, optional, dynamic, type } = argument

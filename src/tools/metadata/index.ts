@@ -1,3 +1,6 @@
+import { join, resolve } from "path"
+import { cwd } from "process"
+
 import config from "@/config"
 import translate from "@/translate"
 import TError from "@/translate/terror"
@@ -7,8 +10,6 @@ import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
 import { getStringLiteralInfo, replaceStringLiteral, StringLiteralPointer } from "@/utils/metadata"
 import { decryptGlobalMetadata, encryptGlobalMetadata } from "@/utils/mhyCrypto/metadata"
 import OpenSSL from "@/utils/openssl"
-import { join, resolve } from "path"
-import { cwd } from "process"
 
 function getRSAKeyInfo(buf: Buffer): { pointers: StringLiteralPointer[]; data: Buffer; rsaKeys: string[] } {
   const { pointers, data } = getStringLiteralInfo(buf)

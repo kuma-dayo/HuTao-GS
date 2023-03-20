@@ -1,8 +1,5 @@
-import KcpServer from "#/."
-import Player from "$/player"
-import Server from "@/server"
-import { TTY } from "@/tty"
 import CLI from ".."
+
 import accountCommands from "./accountCommands"
 import avatarCommands from "./avatarCommands"
 import configCommands from "./configCommands"
@@ -11,8 +8,13 @@ import inventoryCommands from "./inventoryCommands"
 import playerCommands from "./playerCommands"
 import serverCommands from "./serverCommands"
 import toolsCommands from "./toolsCommands"
-import worldCommands from "./worldCommands"
 import windyCommands from "./windycommand"
+import worldCommands from "./worldCommands"
+
+import KcpServer from "#/."
+import Player from "$/player"
+import Server from "@/server"
+import { TTY } from "@/tty"
 
 export interface ArgumentDefinition {
   name: string

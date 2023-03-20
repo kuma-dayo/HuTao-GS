@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import Monster from "$/entity/monster"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const spawnCommand: CommandDefinition = {
   name: "spawn",

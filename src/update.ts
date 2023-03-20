@@ -1,6 +1,7 @@
 import { get } from "https"
 import { join } from "path"
 import { cwd } from "process"
+
 import config from "./config"
 import Server from "./server"
 import TError from "./translate/terror"

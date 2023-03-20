@@ -1,3 +1,6 @@
+import AbilityScalarValueContainer from "./abilityScalarValueContainer"
+import AppliedAbility from "./appliedAbility"
+
 import Entity from "$/entity"
 import Avatar from "$/entity/avatar"
 import AbilityManager from "$/manager/abilityManager"
@@ -99,8 +102,6 @@ import {
 import { EntityTypeEnum, RelationTypeEnum } from "@/types/enum"
 import { AbilityString } from "@/types/proto"
 import { getStringHash } from "@/utils/hash"
-import AbilityScalarValueContainer from "./abilityScalarValueContainer"
-import AppliedAbility from "./appliedAbility"
 
 export default class AbilityPredicate {
   manager: AbilityManager

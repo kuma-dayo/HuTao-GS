@@ -1,9 +1,10 @@
+import PlayerApplyEnterMpResult from "./PlayerApplyEnterMpResult"
+
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import Player from "$/player"
 import { ClientStateEnum, PlayerPropEnum } from "@/types/enum"
 import { OnlinePlayerInfo } from "@/types/proto"
 import { ApplyEnterResultReasonEnum, MpSettingTypeEnum, RetcodeEnum } from "@/types/proto/enum"
-import PlayerApplyEnterMpResult from "./PlayerApplyEnterMpResult"
 
 export interface PlayerApplyEnterMpReq {
   targetUid: number

@@ -1,6 +1,8 @@
-import { DynamicFloat, DynamicInt, DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
-import ConfigAbilityPredicate from "."
 import ConfigAttackPattern from "../../ConfigAttackPattern"
+
+import ConfigAbilityPredicate from "."
+
+import { DynamicFloat, DynamicInt, DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 
 export default interface ConfigBaseAbilityPredicate {
   Target?: string

@@ -1,6 +1,7 @@
+import { CommandDefinition } from ".."
+
 import translate from "@/translate"
 import TTYPrompt from "@/tty/module/ttyPrompt"
-import { CommandDefinition } from ".."
 
 const registerCommand: CommandDefinition = {
   name: "register",

@@ -1,4 +1,3 @@
-import { DynamicFloat, DynamicInt, DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigAbilityStateToActions from "../../ConfigAbilityStateToActions"
 import ConfigAttackInfo from "../../ConfigAttackInfo"
 import ConfigBornType from "../../ConfigBornType"
@@ -11,6 +10,8 @@ import ElementTypeModifier from "../../ElementTypeModifier"
 import TileShapeInfo from "../../TileShapeInfo"
 import ConfigAbilityAction from "../Action"
 import ConfigAbilityPredicate from "../Predicate"
+
+import { DynamicFloat, DynamicInt, DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 
 export default interface ConfigBaseAbilityMixin {
   IsUnique?: boolean

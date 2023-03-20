@@ -1,3 +1,6 @@
+import { join } from "path"
+import { cwd } from "process"
+
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import config from "@/config"
 import {
@@ -12,8 +15,6 @@ import {
 import { ENetReasonEnum, RetcodeEnum } from "@/types/proto/enum"
 import { fileExists, readFile } from "@/utils/fileSystem"
 import { dataToProtobuffer } from "@/utils/proto"
-import { join } from "path"
-import { cwd } from "process"
 
 export interface PlayerLoginReq {
   token: string

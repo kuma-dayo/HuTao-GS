@@ -1,5 +1,6 @@
-import { WidgetDataUserData } from "@/types/user/WidgetUserData"
 import Widget from "."
+
+import { WidgetDataUserData } from "@/types/user/WidgetUserData"
 
 export default class WidgetData {
   widget: Widget

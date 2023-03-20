@@ -1,7 +1,8 @@
+import { CommandDefinition } from ".."
+
 import Vector from "$/utils/vector"
 import translate from "@/translate"
 import { SceneEnterReasonEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
-import { CommandDefinition } from ".."
 
 const tpCommand: CommandDefinition = {
   name: "tp",

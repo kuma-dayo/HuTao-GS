@@ -1,7 +1,8 @@
+import AbilityScalarValueContainer from "./abilityScalarValueContainer"
+
 import AbilityManager from "$/manager/abilityManager"
 import { AbilityAppliedAbility, AbilityScalarValueEntry, AbilityString } from "@/types/proto"
 import { ProtEntityTypeEnum } from "@/types/proto/enum"
-import AbilityScalarValueContainer from "./abilityScalarValueContainer"
 
 export default class AppliedAbility {
   manager: AbilityManager

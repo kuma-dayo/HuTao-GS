@@ -1,11 +1,13 @@
+import util from "util"
+
+import ChatChannel from "./chatChannel"
+
 import BaseClass from "#/baseClass"
 import CLI from "@/cli"
 import { noColor } from "@/tty/utils"
 import { ChatInfo } from "@/types/proto"
 import { waitMs } from "@/utils/asyncWait"
 import { getTimeSeconds } from "@/utils/time"
-import util from "util"
-import ChatChannel from "./chatChannel"
 
 export default class CommandHandler extends BaseClass {
   channel: ChatChannel

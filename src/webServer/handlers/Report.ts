@@ -1,9 +1,10 @@
-import Handler, { HttpRequest, HttpResponse } from "#/handler"
-import GlobalState from "@/globalState"
-import { fileExists } from "@/utils/fileSystem"
 import fs from "fs"
 import { join } from "path"
 import { cwd } from "process"
+
+import Handler, { HttpRequest, HttpResponse } from "#/handler"
+import GlobalState from "@/globalState"
+import { fileExists } from "@/utils/fileSystem"
 const { readFile, writeFile } = fs.promises
 
 class ReportHandler extends Handler {

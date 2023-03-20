@@ -1,9 +1,10 @@
+import Client from "./client"
+
 import Logger from "@/logger"
 import { ClientStateEnum } from "@/types/enum"
 import { PacketHead } from "@/types/kcp"
 import { WaitOnBlock } from "@/utils/asyncWait"
 import { xor } from "@/utils/xor"
-import Client from "./client"
 const logger = new Logger("PACKET", 0x8810cd)
 
 const WAIT_TIMEOUT = 1800

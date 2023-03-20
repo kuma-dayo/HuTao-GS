@@ -1,5 +1,6 @@
-import { DynamicFloat } from "$DT/BinOutput/Common/DynamicNumber"
 import ConfigBaseSelectTargets from "."
+
+import { DynamicFloat } from "$DT/BinOutput/Common/DynamicNumber"
 
 export default interface SelectTargetsByShape extends ConfigBaseSelectTargets {
   $type: "SelectTargetsByShape"

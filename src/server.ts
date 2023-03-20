@@ -1,12 +1,10 @@
-import GlobalState from "@/globalState"
-import KcpServer from "@/kcpServer"
-import { waitMs } from "@/utils/asyncWait"
-import WebServer from "@/webServer"
 import { mkdirSync, statSync } from "fs"
-import * as hostile from "hostile"
 import { join } from "path"
 import { PerformanceObserver } from "perf_hooks"
 import { cwd, execPath, exit } from "process"
+
+import * as hostile from "hostile"
+
 import config, { SUPPORT_REGIONS, SUPPORT_VERSIONS } from "./config"
 import DnsServer from "./dnsServer"
 import Logger from "./logger"
@@ -18,8 +16,13 @@ import Update from "./update"
 import Authenticator from "./utils/authenticator"
 import { detachedSpawn, execCommand } from "./utils/childProcess"
 import { dirExists, writeFile } from "./utils/fileSystem"
-import MonsterData from "$/gameData/data/MonsterData"
+
 import AvatarData from "$/gameData/data/AvatarData"
+import MonsterData from "$/gameData/data/MonsterData"
+import GlobalState from "@/globalState"
+import KcpServer from "@/kcpServer"
+import { waitMs } from "@/utils/asyncWait"
+import WebServer from "@/webServer"
 
 const { game, dispatch, httpPort, httpsPort, recorderPort } = config
 const { autoGamePatch, gameDir, version, serverName, hosts } = game

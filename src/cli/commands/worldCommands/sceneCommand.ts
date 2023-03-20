@@ -1,9 +1,10 @@
+import { CommandDefinition } from ".."
+
 import SceneData from "$/gameData/data/SceneData"
 import Vector from "$/utils/vector"
+import { DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 import translate from "@/translate"
 import { SceneEnterReasonEnum, SceneEnterTypeEnum } from "@/types/proto/enum"
-import { CommandDefinition } from ".."
-import { DynamicVector } from "$DT/BinOutput/Common/DynamicNumber"
 
 const sceneCommand: CommandDefinition = {
   name: "scene",

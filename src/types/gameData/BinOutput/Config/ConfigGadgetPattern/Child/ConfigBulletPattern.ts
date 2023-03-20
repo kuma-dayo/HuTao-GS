@@ -1,5 +1,6 @@
-import ConfigBaseGadgetPattern from "."
 import ConfigGadgetTriggerAction from "../../ConfigGadgetTriggerAction"
+
+import ConfigBaseGadgetPattern from "."
 
 export default interface ConfigBulletPattern extends ConfigBaseGadgetPattern {
   $type: "ConfigBulletPattern"

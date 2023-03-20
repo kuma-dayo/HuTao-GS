@@ -1,4 +1,5 @@
 import { AvatarTypeEnum } from "../proto/enum"
+
 import EntityUserData from "./EntityUserData"
 import FettersUserData from "./FettersUserData"
 import SkillManagerUserData from "./SkillManagerUserData"

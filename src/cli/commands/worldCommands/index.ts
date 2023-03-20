@@ -1,4 +1,5 @@
 import { CommandDefinition } from ".."
+
 import coopCommand from "./coopCommand"
 import posCommand from "./posCommand"
 import sceneCommand from "./sceneCommand"

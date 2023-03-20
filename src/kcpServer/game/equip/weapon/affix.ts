@@ -1,5 +1,6 @@
-import { WeaponAffixUserData } from "@/types/user/WeaponUserData"
 import Weapon from "."
+
+import { WeaponAffixUserData } from "@/types/user/WeaponUserData"
 
 export default class Affix {
   weapon: Weapon

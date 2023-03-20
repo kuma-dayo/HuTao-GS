@@ -1,5 +1,6 @@
-import { dumpEc2bKey } from "@/tools/ec2b"
 import { CommandDefinition } from ".."
+
+import { dumpEc2bKey } from "@/tools/ec2b"
 
 const ec2bCommand: CommandDefinition = {
   name: "ec2b",

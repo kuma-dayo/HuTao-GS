@@ -1,3 +1,6 @@
+import { join } from "path"
+import { cwd } from "process"
+
 import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import config from "@/config"
 import curRegion from "@/tools/autoPatch/curRegion"
@@ -12,8 +15,6 @@ import { dataToProtobuffer, objToProtobuffer } from "@/utils/proto"
 import { rsaEncrypt, rsaSign } from "@/utils/rsa"
 import { versionStrToNum } from "@/utils/version"
 import { xor } from "@/utils/xor"
-import { join } from "path"
-import { cwd } from "process"
 
 const logger = new TLogger("DIPREQ", 0xffaa00)
 

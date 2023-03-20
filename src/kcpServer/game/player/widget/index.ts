@@ -1,10 +1,12 @@
+import Player from ".."
+
+import WidgetData from "./widgetData"
+
 import { AllWidgetDataNotify } from "#/packets/AllWidgetData"
 import WidgetSlotChange from "#/packets/WidgetSlotChange"
 import { WidgetSlotData } from "@/types/proto"
 import { WidgetSlotOpEnum, WidgetSlotTagEnum } from "@/types/proto/enum"
 import WidgetUserData from "@/types/user/WidgetUserData"
-import Player from ".."
-import WidgetData from "./widgetData"
 
 export default class Widget {
   player: Player

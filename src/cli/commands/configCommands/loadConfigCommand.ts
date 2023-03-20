@@ -1,9 +1,10 @@
+import { CommandDefinition } from ".."
+
 import CLI from "@/cli"
 import { AVAILABLE_CONFIGS } from "@/config"
 import Server from "@/server"
 import translate from "@/translate"
 import { getJson, setJson } from "@/utils/json"
-import { CommandDefinition } from ".."
 
 const loadConfigCommand: CommandDefinition = {
   name: "loadConfig",

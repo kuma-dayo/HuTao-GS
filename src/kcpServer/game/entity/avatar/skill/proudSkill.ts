@@ -1,6 +1,7 @@
+import Skill from "./skill"
+
 import SkillData from "$/gameData/data/SkillData"
 import SkillUserData from "@/types/user/SkillUserData"
-import Skill from "./skill"
 
 export default class ProudSkill {
   skill: Skill

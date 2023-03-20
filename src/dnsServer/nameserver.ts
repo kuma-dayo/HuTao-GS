@@ -1,9 +1,12 @@
-import TLogger from "@/translate/tlogger"
 import * as dgram from "dgram"
 import Tcp from "net"
-import DnsServer from "."
+
 import DnsPacket from "./packet"
 import { readStream } from "./utils"
+
+import DnsServer from "."
+
+import TLogger from "@/translate/tlogger"
 
 const logger = new TLogger("QURYNS", 0xfc6114)
 

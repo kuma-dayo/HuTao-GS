@@ -1,7 +1,8 @@
+import { CommandDefinition } from ".."
+
 import Reliquary from "$/equip/reliquary"
 import ReliquaryData from "$/gameData/data/ReliquaryData"
 import translate from "@/translate"
-import { CommandDefinition } from ".."
 
 const artSetCommand: CommandDefinition = {
   name: "artSet",

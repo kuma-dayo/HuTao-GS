@@ -1,6 +1,7 @@
+import { join } from "path"
+
 import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import { fileExists, readFile } from "@/utils/fileSystem"
-import { join } from "path"
 
 class WebstaticSeaHandler extends Handler {
   constructor() {
