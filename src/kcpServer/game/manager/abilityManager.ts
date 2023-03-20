@@ -333,7 +333,7 @@ export default class AbilityManager extends BaseClass {
     const { entity } = this
     const { manager } = entity
 
-    if (manager == null || !entity.isAlive()) return
+    if (!manager || !entity.isAlive()) return
 
     const { scene } = manager
     const { broadcastContextList } = scene

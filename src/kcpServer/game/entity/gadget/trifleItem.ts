@@ -26,7 +26,7 @@ export default class TrifleItem extends Gadget {
     const { guid } = item
     const { uid, inventory } = player
 
-    if (manager == null) return { retcode: RetcodeEnum.RET_UNKNOWN_ERROR }
+    if (!manager) return { retcode: RetcodeEnum.RET_UNKNOWN_ERROR }
     if (GuidManager.parseGuid(guid).uid !== uid) return { retcode: RetcodeEnum.RET_GADGET_INTERACT_COND_NOT_MEET }
 
     await manager.unregister(this)

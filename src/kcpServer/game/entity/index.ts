@@ -30,10 +30,18 @@ import { getStringHash } from "@/utils/hash"
 import EntityProps from "./entityProps"
 import FightProp, { FightPropChangeReason } from "./fightProps"
 import Motion from "./motion"
-import SceneGroup from "$/scene/sceneGroup"
+import Gadget from "./gadget"
+import Avatar from "./avatar"
+import Monster from "./monster"
+import Npc from "./npc"
 
 export default class Entity extends BaseClass {
   manager?: EntityManager
+
+  avatar?: Avatar
+  monster?: Monster
+  npc?: Npc
+  gadget?: Gadget
 
   entityId: number
   entityType: EntityTypeEnum
@@ -172,6 +180,16 @@ export default class Entity extends BaseClass {
   }
   set promoteLevel(v: number) {
     this.props.set(PlayerPropEnum.PROP_BREAK_LEVEL, v)
+  }
+
+  get sceneBlock() {
+    return this.manager?.scene.sceneBlockList.find((b) => b.id === this.blockId)
+  }
+
+  get sceneGroup() {
+    return this.manager?.scene.sceneBlockList
+      .find((b) => b.id === this.blockId)
+      ?.groupList.find((g) => g.id === this.groupId)
   }
 
   distanceTo(entity: Entity) {
@@ -354,20 +372,6 @@ export default class Entity extends BaseClass {
     }
   }
 
-  // placeholder
-  exportSceneAvatarInfo(): SceneAvatarInfo {
-    return null
-  }
-  exportSceneMonsterInfo(): SceneMonsterInfo {
-    return null
-  }
-  exportSceneNpcInfo(): SceneNpcInfo {
-    return null
-  }
-  exportSceneGadgetInfo(): SceneGadgetInfo {
-    return null
-  }
-
   exportSceneEntityInfo(): SceneEntityInfo {
     const { entityId, protEntityType, motion, props, fightProps, lifeState } = this
     const { sceneTime, reliableSeq } = motion
@@ -389,19 +393,19 @@ export default class Entity extends BaseClass {
 
     switch (protEntityType) {
       case ProtEntityTypeEnum.PROT_ENTITY_AVATAR:
-        sceneEntityInfo.avatar = this.exportSceneAvatarInfo()
+        sceneEntityInfo.avatar = this?.avatar.exportSceneAvatarInfo() || null
         break
       case ProtEntityTypeEnum.PROT_ENTITY_MONSTER:
-        sceneEntityInfo.monster = this.exportSceneMonsterInfo()
+        sceneEntityInfo.monster = this?.monster.exportSceneMonsterInfo() || null
         break
       case ProtEntityTypeEnum.PROT_ENTITY_NPC:
-        sceneEntityInfo.npc = this.exportSceneNpcInfo()
+        sceneEntityInfo.npc = this?.npc.exportSceneNpcInfo() || null
         sceneEntityInfo.propList = []
         delete sceneEntityInfo.lifeState
         delete sceneEntityInfo.entityAuthorityInfo.abilityInfo
         break
       case ProtEntityTypeEnum.PROT_ENTITY_GADGET:
-        sceneEntityInfo.gadget = this.exportSceneGadgetInfo()
+        sceneEntityInfo.gadget = this?.gadget.exportSceneGadgetInfo() || null
         break
     }
 

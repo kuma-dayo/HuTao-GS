@@ -1,5 +1,6 @@
 import { GadgetInteractRsp } from "#/packets/GadgetInteract"
 import GadgetState from "#/packets/GadgetState"
+import WorktopOption from "#/packets/WorktopOption"
 import Entity from "$/entity"
 import GadgetData from "$/gameData/data/GadgetData"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
@@ -22,6 +23,8 @@ export default class Gadget extends Entity {
 
   gadgetState: GadgetStateEnum
 
+  worktopOption: number[]
+
   constructor(gadgetId: number) {
     super()
 
@@ -32,6 +35,10 @@ export default class Gadget extends Entity {
     this.entityType = EntityTypeEnum.Gadget
 
     this.gadgetState = GadgetStateEnum.Default
+
+    this.worktopOption = []
+
+    this.gadget = this
 
     super.initHandlers(this)
   }
@@ -87,8 +94,19 @@ export default class Gadget extends Entity {
 
     this.gadgetState = state
 
-    if (manager == null) return
+    if (!manager) return
+
     await GadgetState.broadcastNotify(manager.scene.broadcastContextList, this)
+  }
+
+  async setWorktopOption(option: number[]) {
+    const { manager } = this
+
+    this.worktopOption = option
+
+    if (!manager) return
+
+    await WorktopOption.broadcastNotify(this.manager.scene.broadcastContextList, this)
   }
 
   exportSceneGadgetInfo(): SceneGadgetInfo {
@@ -99,6 +117,10 @@ export default class Gadget extends Entity {
       groupId,
       configId,
       gadgetState,
+      worktop: {
+        optionList: this.worktopOption,
+        isGuestCanOperate: false,
+      },
     }
 
     if (interactId != null) {

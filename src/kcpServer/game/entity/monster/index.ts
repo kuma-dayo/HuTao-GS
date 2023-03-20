@@ -53,6 +53,8 @@ export default class Monster extends Entity {
     this.protEntityType = ProtEntityTypeEnum.PROT_ENTITY_MONSTER
     this.entityType = EntityTypeEnum.Monster
 
+    this.monster = this
+
     super.initHandlers(this)
   }
 
@@ -222,11 +224,7 @@ export default class Monster extends Entity {
   async handleDeath(seqId?: number, batch = false) {
     const { manager, motion, killDropId } = this
 
-    const currentGroup = this?.manager?.scene.sceneBlockList
-      .find((b) => b.id === this.blockId)
-      ?.groupList.find((g) => g.id === this.groupId)
-
-    if (manager.scene.enableScript) currentGroup.scriptManager.MonsterDeathTrigger()
+    if (manager.scene.enableScript) this.sceneGroup.scriptManager.eventAnyMonsterDieTrigger()
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)
   }

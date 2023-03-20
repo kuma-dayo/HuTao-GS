@@ -25,6 +25,8 @@ export default class Npc extends Entity {
     this.protEntityType = ProtEntityTypeEnum.PROT_ENTITY_NPC
     this.entityType = EntityTypeEnum.NPC
 
+    this.npc = this
+
     super.initHandlers(this)
   }
 

@@ -54,7 +54,7 @@ class GadgetInteractPacket extends Packet implements PacketInterface {
     switch (entity.entityType) {
       case EntityTypeEnum.Chest: {
         WorldChestOpen.sendNotify(context, entity)
-        GadgetState.sendNotify(context, entity, GadgetStateEnum.ChestOpened) //
+        GadgetState.sendNotify(context, entity, GadgetStateEnum.ChestOpened)
         LifeStateChange.sendNotify(context, entity, LifeStateEnum.LIFE_DEAD)
         SceneEntityDisappear.sendNotify(context, [entity.entityId], VisionTypeEnum.VISION_DIE)
 

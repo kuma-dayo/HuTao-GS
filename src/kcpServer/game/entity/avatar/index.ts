@@ -68,6 +68,8 @@ export default class Avatar extends Entity {
     this.protEntityType = ProtEntityTypeEnum.PROT_ENTITY_AVATAR
     this.entityType = EntityTypeEnum.Avatar
 
+    this.avatar = this
+
     super.initHandlers(this)
   }
 
