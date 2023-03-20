@@ -12,7 +12,9 @@
     "pack-exe": "pkg . -o \"dist/HuTao-GS.exe\" --build",
     "start": "node ./buildDev/entry/mainEntry.js",
     "start:dev": "node ./build -mode:dev && node ./buildDev/entry/mainEntry.js",
-    "lint-fix": "eslint --fix \"./src/**/*.ts\""
+    "prepare": "husky install",
+    "lint": "eslint --fix \"./src/**/*.ts\"",
+    "format": "prettier -w \"./src/**/*.ts\""
   },
   "pkg": {
     "assets": [
@@ -27,6 +29,9 @@
   },
   "author": "kumadayo",
   "license": "AGPL-3.0",
+  "lint-staged": {
+    "*.ts": ["eslint --fix", "prettier --write"]
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "denque": "^2.0.1",
@@ -54,6 +59,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "pkg": "^5.8.0",
     "prettier": "^2.8.1",
     "resedit": "^1.6.0",
