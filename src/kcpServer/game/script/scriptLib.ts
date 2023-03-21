@@ -50,6 +50,12 @@ export default class ScriptLib {
     options = options.map((option) => Number(option))
 
     logger.debug("[lua] Call SetWorktopOptionsByGroupId", groupId, configId, options)
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+
+    group.gadgetList.find((gadget) => gadget.configId === configId).setWorktopOption(options)
+
+    return "0"
   }
 
   public SetWorktopOptions(context: context, table: any) {
@@ -176,7 +182,7 @@ export default class ScriptLib {
     logger.debug("[lua] Call GetGroupVariableValue", variable)
 
     const groupVariable = context.currentGroup.Variables.find((Variable) => Variable.Name === variable)
-    return groupVariable.Value.toString()
+    return groupVariable?.Value.toString()
   }
 
   public SetGroupVariableValue(context: context, variable: string, value: number | string) {

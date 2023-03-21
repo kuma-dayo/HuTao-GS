@@ -32,7 +32,7 @@ export default class scriptManager {
         `Scene/${this.currentGroup.block.scene.id}/scene${this.currentGroup.block.scene.id}_group${this.currentGroup.id}.lua`
       )
 
-      if (lua && currentGroup.trigger?.length > 0) {
+      if (currentGroup.trigger?.length > 0) {
         currentGroup.trigger.map((trigger) => {
           if (trigger.Event == EventTypeEnum.EVENT_ANY_MONSTER_DIE) {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition)) //In sceneData, the first letter of all strings is uppercase. The lua function converts the first letter to lowercase because it is lowercase
@@ -62,7 +62,7 @@ export default class scriptManager {
         `Scene/${this.currentGroup.block.scene.id}/scene${this.currentGroup.block.scene.id}_group${this.currentGroup.id}.lua`
       )
 
-      if (lua && currentGroup.trigger?.length > 0) {
+      if (currentGroup.trigger?.length > 0) {
         currentGroup.trigger.map((trigger) => {
           if (trigger.Event === EventTypeEnum.EVENT_SELECT_OPTION) {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
@@ -94,12 +94,14 @@ export default class scriptManager {
         `Scene/${this.currentGroup.block.scene.id}/scene${this.currentGroup.block.scene.id}_group${this.currentGroup.id}.lua`
       )
 
-      if (lua && currentGroup.trigger?.length > 0) {
+      if (currentGroup.trigger?.length > 0) {
         currentGroup.trigger.map((trigger) => {
           if (trigger.Event === EventTypeEnum.EVENT_ANY_MONSTER_LIVE) {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
             const action = lua.global.get(this.getFunctionName(trigger.Action))
+
             logger.debug("[lua] EVENT_ANY_MONSTER_LIVE Condition")
+
             for (const configId of configIdList) {
               if (
                 (condition(
@@ -115,9 +117,43 @@ export default class scriptManager {
         })
       }
     } finally {
-      if (lua) {
-        lua.global.close()
+      lua.global.close()
+    }
+  }
+  async EVENT_GADGET_CREATE(configIdList: number[]) {
+    const { currentGroup } = this
+    let lua = await this.scriptLoader.init(await new LuaFactory().createEngine({ traceAllocations: true }))
+
+    try {
+      await this.scriptLoader.ScriptByPath(
+        lua,
+        `Scene/${this.currentGroup.block.scene.id}/scene${this.currentGroup.block.scene.id}_group${this.currentGroup.id}.lua`
+      )
+
+      if (currentGroup.trigger?.length > 0) {
+        currentGroup.trigger.map((trigger) => {
+          if (trigger.Event === EventTypeEnum.EVENT_GADGET_CREATE) {
+            const condition = lua.global.get(this.getFunctionName(trigger.Condition))
+            const action = lua.global.get(this.getFunctionName(trigger.Action))
+
+            logger.debug("[lua] EVENT_GADGET_CREATE Condition")
+
+            for (const configId of configIdList) {
+              if (
+                (condition(
+                  { currentGroup } as scriptLibContext,
+                  { param1: configId.toString() } as ScriptArgs
+                ) as boolean) == true
+              ) {
+                logger.debug("[lua] EVENT_GADGET_CREATE Action")
+                action({ currentGroup: currentGroup } as scriptLibContext, null)
+              }
+            }
+          }
+        })
       }
+    } finally {
+      lua.global.close()
     }
   }
 }

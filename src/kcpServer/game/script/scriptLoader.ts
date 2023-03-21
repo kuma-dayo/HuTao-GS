@@ -32,19 +32,8 @@ export default class ScriptLoader {
   public async ScriptByPath(lua: LuaEngine, path: string): Promise<LuaEngine> {
     const script = (await readFile(join(cwd(), `data/game/${config.game.version}/Scripts/`, path))).toString()
 
-    const functionIndex = script.indexOf("function")
+    await lua.doString(script.replace(/(?<![.\w"])(?<!\d)(-?(?:\d+(?:\.\d*)?|\.\d+))(?![.\w"])/g, '"$1"'))
 
-    if (functionIndex !== -1) {
-      await lua.doString(
-        script
-          .slice(functionIndex - "function".length)
-          .replace(/(?<![.\w"])(?<!\d)(-?(?:\d+(?:\.\d*)?|\.\d+))(?![.\w"])/g, '"$1"')
-      )
-
-      return lua
-    } else {
-      lua.global.close()
-      return null
-    }
+    return lua
   }
 }
