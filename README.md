@@ -3,7 +3,7 @@ Supported version: 1.4.50 - 3.5.0
 
 ## Requirements
 
-* [Node-Js](https://nodejs.org/en/)
+* [Node-Js](https://nodejs.org/en/) need version 18.15.0
 * [Openssl](https://slproweb.com/products/Win32OpenSSL.html)
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [Typescript](https://www.npmjs.com/package/typescript)
