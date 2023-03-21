@@ -156,4 +156,44 @@ export default class scriptManager {
       lua.global.close()
     }
   }
+  async EVENT_GADGET_STATE_CHANGE(configId: number, state: number) {
+    const { currentGroup } = this
+    let lua = await this.scriptLoader.init(await new LuaFactory().createEngine({ traceAllocations: true }))
+
+    try {
+      lua = await this.scriptLoader.ScriptByPath(
+        lua,
+        `Scene/${this.currentGroup.block.scene.id}/scene${this.currentGroup.block.scene.id}_group${this.currentGroup.id}.lua`
+      )
+
+      if (currentGroup.trigger?.length > 0) {
+        currentGroup.trigger.map((trigger) => {
+          if (trigger.Event === EventTypeEnum.EVENT_GADGET_STATE_CHANGE) {
+            const condition = lua.global.get(this.getFunctionName(trigger.Condition))
+            const action = lua.global.get(this.getFunctionName(trigger.Action))
+
+            logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Condition")
+
+            if (
+              (condition(
+                { currentGroup } as scriptLibContext,
+                { param1: state.toString(), param2: configId.toString() } as ScriptArgs
+              ) as boolean) == true
+            ) {
+              logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Action")
+              action(
+                {
+                  currentGroup: currentGroup,
+                  args: { param1: state.toString(), param2: configId.toString() },
+                } as scriptLibContext,
+                null
+              )
+            }
+          }
+        })
+      }
+    } finally {
+      lua.global.close()
+    }
+  }
 }
