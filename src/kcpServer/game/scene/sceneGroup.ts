@@ -106,6 +106,8 @@ export default class SceneGroup {
       monsterList.push(entity)
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
+
+    if (scene.enableScript) this.scriptManager.EVENT_ANY_MONSTER_LIVE(monsterList.map((monster) => monster.configId))
   }
 
   private async loadNpcs(npcs: SceneNpcScriptConfig[], suites: SceneSuiteScriptConfig[]) {

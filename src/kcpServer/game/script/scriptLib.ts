@@ -153,7 +153,6 @@ export default class ScriptLib {
 
     logger.debug(
       "[lua] Call ActiveChallenge",
-      context,
       challengeId,
       challengeIndex,
       timeLimitOrGroupId,
