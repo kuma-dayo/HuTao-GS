@@ -38,9 +38,9 @@ export default class scriptManager {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition)) //In sceneData, the first letter of all strings is uppercase. The lua function converts the first letter to lowercase because it is lowercase
             const action = lua.global.get(this.getFunctionName(trigger.Action))
 
-            logger.debug("[lua] EVENT_ANY_MONSTER_DIE Condition")
+            logger.verbose("[lua] EVENT_ANY_MONSTER_DIE Condition")
             if ((condition({ currentGroup } as scriptLibContext, null) as boolean) == true) {
-              logger.debug("[lua] EVENT_ANY_MONSTER_DIE Action")
+              logger.verbose("[lua] EVENT_ANY_MONSTER_DIE Action")
 
               action({ currentGroup: currentGroup } as scriptLibContext, null)
             }
@@ -67,14 +67,14 @@ export default class scriptManager {
           if (trigger.Event === EventTypeEnum.EVENT_SELECT_OPTION) {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
             const action = lua.global.get(this.getFunctionName(trigger.Action))
-            logger.debug("[lua] EVENT_SELECT_OPTION Condition")
+            logger.verbose("[lua] EVENT_SELECT_OPTION Condition")
             if (
               (condition(
                 { currentGroup } as scriptLibContext,
                 { param1: configId.toString(), param2: optionid.toString() } as ScriptArgs
               ) as boolean) == true
             ) {
-              logger.debug("[lua] EVENT_SELECT_OPTION Action")
+              logger.verbose("[lua] EVENT_SELECT_OPTION Action")
               action({ currentGroup: currentGroup } as scriptLibContext, null)
             }
           }
@@ -100,7 +100,7 @@ export default class scriptManager {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
             const action = lua.global.get(this.getFunctionName(trigger.Action))
 
-            logger.debug("[lua] EVENT_ANY_MONSTER_LIVE Condition")
+            logger.verbose("[lua] EVENT_ANY_MONSTER_LIVE Condition")
 
             for (const configId of configIdList) {
               if (
@@ -109,7 +109,7 @@ export default class scriptManager {
                   { param1: configId.toString() } as ScriptArgs
                 ) as boolean) == true
               ) {
-                logger.debug("[lua] EVENT_ANY_MONSTER_LIVE Action")
+                logger.verbose("[lua] EVENT_ANY_MONSTER_LIVE Action")
                 action({ currentGroup: currentGroup } as scriptLibContext, null)
               }
             }
@@ -136,7 +136,7 @@ export default class scriptManager {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
             const action = lua.global.get(this.getFunctionName(trigger.Action))
 
-            logger.debug("[lua] EVENT_GADGET_CREATE Condition")
+            logger.verbose("[lua] EVENT_GADGET_CREATE Condition")
 
             for (const configId of configIdList) {
               if (
@@ -145,8 +145,8 @@ export default class scriptManager {
                   { param1: configId.toString() } as ScriptArgs
                 ) as boolean) == true
               ) {
-                logger.debug("[lua] EVENT_GADGET_CREATE Action")
-                action({ currentGroup: currentGroup } as scriptLibContext, null)
+                logger.verbose("[lua] EVENT_GADGET_CREATE Action")
+                action({ currentGroup: currentGroup, args: { param1: configId.toString() } } as scriptLibContext, null)
               }
             }
           }

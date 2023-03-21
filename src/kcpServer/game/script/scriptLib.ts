@@ -58,8 +58,16 @@ export default class ScriptLib {
     return "0"
   }
 
-  public SetWorktopOptions(context: context, table: any) {
-    logger.debug("[lua] Call SetWorktopOptions", table)
+  public SetWorktopOptions(context: context, options: number[] | string[]) {
+    options = options.map((option) => Number(option))
+
+    logger.debug("[lua] Call SetWorktopOptions", options)
+
+    context.currentGroup.gadgetList
+      .find((gadget) => gadget.configId === Number(context.args.param1))
+      .setWorktopOption(options)
+
+    return "0"
   }
 
   public DelWorktopOptionByGroupId(
@@ -179,10 +187,13 @@ export default class ScriptLib {
   }
 
   public GetGroupVariableValue(context: context, variable: string) {
+    variable = variable.charAt(0).toLocaleUpperCase() + variable.slice(1)
+
     logger.debug("[lua] Call GetGroupVariableValue", variable)
 
     const groupVariable = context.currentGroup.Variables.find((Variable) => Variable.Name === variable)
-    return groupVariable?.Value.toString()
+
+    return groupVariable.Value.toString()
   }
 
   public SetGroupVariableValue(context: context, variable: string, value: number | string) {
@@ -328,10 +339,25 @@ export default class ScriptLib {
     logger.debug("[lua] Call ShowReminderRadius", reminderID, location, var4)
   }
 
-  public BeginCameraSceneLook(context: context, var2: number | string) {
-    var2 = Number(var2)
+  public BeginCameraSceneLook(
+    context: context,
+    table: {
+      look_pos: { x: string | number; y: string | number; z: string | number }
+      duration: string | number
+      is_force: boolean
+      is_broadcast: boolean
+      is_recover_keep_current: boolean
+      delay: string | number
+    }
+  ) {
+    table.look_pos.x = Number(table.look_pos.x)
+    table.look_pos.y = Number(table.look_pos.y)
+    table.look_pos.z = Number(table.look_pos.z)
 
-    logger.debug("[lua] Call BeginCameraSceneLook", var2)
+    table.duration = Number(table.duration)
+    table.delay = Number(table.delay)
+
+    logger.debug("[lua] Call BeginCameraSceneLook", table)
   }
 
   public SetPlatformRouteId(context: context, var2: number | string, routeId: number | string) {
