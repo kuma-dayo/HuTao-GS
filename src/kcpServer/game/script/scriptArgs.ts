@@ -1,10 +1,14 @@
 export default class ScriptArgs {
-  param1: number
-  param2: number
-  param3: number
-  sourceEid: number
-  targetEid: number
-  constructor(param1: number, param2: number, param3: number, sourceEid: number, targetEid: number) {
+  param1: string
+  param2: string
+  param3: string
+  sourceEid: string
+  targetEid: string
+  /**
+   * Because of the problem of changing the value when treated as a number
+   * It is necessary to convert it to a string and treat it as a string.
+   */
+  constructor(param1: string, param2: string, param3: string, sourceEid: string, targetEid: string) {
     this.param1 = param1
     this.param2 = param2
     this.param3 = param3

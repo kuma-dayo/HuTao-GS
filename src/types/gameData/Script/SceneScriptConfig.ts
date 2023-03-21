@@ -102,7 +102,7 @@ export interface SceneSuiteScriptConfig {
   Npcs: number[]
   Gadgets: number[]
   Regions: number[]
-  Triggers: number[]
+  Triggers: string[]
   RandWeight: number
 }
 

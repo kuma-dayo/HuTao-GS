@@ -1,52 +1,97 @@
-import { GadgetState } from "./constant/gadgetState"
 import context from "./scriptLibContext"
 
 import Logger from "@/logger"
+import { GadgetStateEnum } from "@/types/enum"
 
 const logger = new Logger("ScriptLib", 0xff7f50)
 
 export default class ScriptLib {
-  public SetGadGetStateByConfigId(context: context, configId: number, gadgetState: number) {
+  public SetGadGetStateByConfigId(context: context, configId: number | string, gadgetState: number | string) {
+    configId = Number(configId)
+    gadgetState = Number(gadgetState)
+
     logger.debug("[lua] Call SetGadGetStateByConfigId", configId, gadgetState)
 
     const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
-    if (!entity) {
-      return 1
-    } else {
+    if (entity) {
       entity.setGadgetState(gadgetState)
-      return 0
+      return "0"
     }
   }
 
-  public SetGroupGadgetStateByConfigId(context: context, groupId: number, configId: number, gadgetState: number) {
+  public SetGroupGadgetStateByConfigId(
+    context: context,
+    groupId: number | string,
+    configId: number | string,
+    gadgetState: number | string
+  ) {
+    groupId = Number(groupId)
+    configId = Number(configId)
+    gadgetState = Number(gadgetState)
+
     logger.debug("[lua] Call SetGroupGadgetStateByConfigId", groupId, configId, gadgetState)
-    return 1
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+
+    const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
+
+    gadget.setGadgetState(gadgetState)
+    return "0"
   }
 
-  public SetWorktopOptionsByGroupId(context: context, groupId: number, configId: number, options: number[]) {
+  public SetWorktopOptionsByGroupId(
+    context: context,
+    groupId: number | string,
+    configId: number | string,
+    options: number[] | string[]
+  ) {
+    groupId = Number(groupId)
+    configId = Number(configId)
+    options = options.map((option) => Number(option))
+
     logger.debug("[lua] Call SetWorktopOptionsByGroupId", groupId, configId, options)
-    return 1
   }
 
   public SetWorktopOptions(context: context, table: any) {
     logger.debug("[lua] Call SetWorktopOptions", table)
-    return 1
   }
 
-  public DelWorktopOptionByGroupId(context: context, groupId: number, configId: number, option: number) {
+  public DelWorktopOptionByGroupId(
+    context: context,
+    groupId: number | string,
+    configId: number | string,
+    option: number | string
+  ) {
+    groupId = Number(groupId)
+    configId = Number(configId)
+    option = Number(option)
+
     logger.debug("[lua] Call DelWorktopOptionByGroupId", groupId, configId, option)
-    return 1
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === Number(groupId))
+
+    const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
+
+    gadget.setWorktopOption(gadget.worktopOption.filter((Option) => Option != option))
+    return "0"
   }
 
   public AutoMonsterTide(
     context: context,
-    chalengeIndex: number,
-    groupId: number,
-    ordersConfigId: number,
-    tideCount: number,
-    sceneLimit: number,
-    param6: number
+    chalengeIndex: number | string,
+    groupId: number | string,
+    ordersConfigId: number | string,
+    tideCount: number | string,
+    sceneLimit: number | string,
+    param6: number | string
   ) {
+    chalengeIndex = Number(chalengeIndex)
+    groupId = Number(groupId)
+    ordersConfigId = Number(ordersConfigId)
+    tideCount = Number(tideCount)
+    sceneLimit = Number(sceneLimit)
+    param6 = Number(param6)
+
     logger.debug(
       "[lua] Call AutoMonsterTide",
       context,
@@ -57,38 +102,55 @@ export default class ScriptLib {
       sceneLimit,
       param6
     )
-    return 1
   }
 
-  public AddExtraGroupSuite(context: context, groupId: number, suite: number) {
+  public AddExtraGroupSuite(context: context, groupId: number | string, suite: number | string) {
+    groupId = Number(groupId)
+    suite = Number(suite)
+
     logger.debug("[lua] Call AddExtraGroupSuite", groupId, suite)
-    return 1
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    group.addGroupSuite(suite)
   }
 
-  public GoToGroupSuite(context: context, groupId: number, suite: number) {
+  public GoToGroupSuite(context: context, groupId: number | string, suite: number | string) {
+    groupId = Number(groupId)
+    suite = Number(suite)
+
     logger.debug("[lua] Call GoToGroupSuite", groupId, suite)
-    return 1
   }
 
-  public RemoveExtraGroupSuite(context: context, groupId: number, suite: number) {
+  public RemoveExtraGroupSuite(context: context, groupId: number | string, suite: number | string) {
+    groupId = Number(groupId)
+    suite = Number(suite)
+
     logger.debug("[lua] Call RemoveExtraGroupSuite", groupId, suite)
-    return 1
   }
 
-  public KillExtraGroupSuite(context: context, groupId: number, suite: number) {
+  public KillExtraGroupSuite(context: context, groupId: number | string, suite: number | string) {
+    groupId = Number(groupId)
+    suite = Number(suite)
+
     logger.debug("[lua] Call KillExtraGroupSuite", groupId, suite)
-    return 1
   }
 
   public ActiveChallenge(
     context: context,
-    challengeId: number,
-    challengeIndex: number,
-    timeLimitOrGroupId: number,
-    groupId: number,
-    objectiveKills: number,
-    param5: number
+    challengeId: number | string,
+    challengeIndex: number | string,
+    timeLimitOrGroupId: number | string,
+    groupId: number | string,
+    objectiveKills: number | string,
+    param5: number | string
   ) {
+    challengeId = Number(challengeId)
+    challengeIndex = Number(challengeIndex)
+    timeLimitOrGroupId = Number(timeLimitOrGroupId)
+    groupId = Number(groupId)
+    objectiveKills = Number(objectiveKills)
+    param5 = Number(param5)
+
     logger.debug(
       "[lua] Call ActiveChallenge",
       context,
@@ -99,174 +161,223 @@ export default class ScriptLib {
       objectiveKills,
       param5
     )
-    return 1
   }
 
-  public GetGroupMonsterCountByGroupId(context: context, groupId: number) {
+  public GetGroupMonsterCountByGroupId(context: context, groupId: number | string) {
+    groupId = Number(groupId)
+
     logger.debug("[lua] Call GetGroupMonsterCountByGroupId", groupId)
-    return 1
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+
+    return group.aliveMonsterCount.toString()
   }
 
   public GetGroupVariableValue(context: context, variable: string) {
     logger.debug("[lua] Call GetGroupVariableValue", variable)
-    return 1
+
+    const groupVariable = context.currentGroup.Variables.find((Variable) => Variable.Name === variable)
+    return groupVariable.Value.toString()
   }
 
-  public SetGroupVariableValue(context: context, variable: string, value: number) {
+  public SetGroupVariableValue(context: context, variable: string, value: number | string) {
+    value = Number(value)
+
     logger.debug("[lua] Call SetGroupVariableValue", variable, value)
-    return 1
   }
 
-  public ChangeGroupVariableValue(context: context, variable: string, value: number) {
+  public ChangeGroupVariableValue(context: context, variable: string, value: number | string) {
+    value = Number(value)
+
     logger.debug("[lua] Call ChangeGroupVariableValue", variable, value)
-    return 1
+
+    context.currentGroup.Variables.find((Variable) => Variable.Name === variable).Value = value
+    return "0"
   }
 
   public PrintContextLog(context: context, msg: string) {
     logger.debug(msg)
-    return 1
   }
 
-  public TowerCountTimeStatus(context: context, isDone: number) {
+  public TowerCountTimeStatus(context: context, isDone: number | string) {
+    isDone = Number(isDone)
+
     logger.debug("[lua] Call TowerCountTimeStatus", isDone)
-    return 1
   }
 
   public GetGroupMonsterCount(context: context) {
     logger.debug("[lua] Call GetGroupMonsterCount")
-    return context.currentGroup.aliveMonsterCount
+    return context.currentGroup.aliveMonsterCount.toString()
   }
 
-  public SetMonsterBattleByGroupId(context: context, var1: number, var2: number) {
+  public SetMonsterBattleByGroupId(context: context, var1: number | string, var2: number | string) {
+    var1 = Number(var1)
+    var2 = Number(var2)
     logger.debug("[lua] Call SetMonsterBattleByGroupId", var1, var2)
-    return 1
   }
 
   public CauseDungeonFail(context: context) {
     logger.debug("[lua] Call CauseDungeonFail")
-    return 1
   }
 
-  public GetGroupVariableValueByGroup(context: context, name: string, groupId: number) {
+  public GetGroupVariableValueByGroup(context: context, name: string, groupId: number | string) {
+    groupId = Number(groupId)
+
     logger.debug("[lua] Call GetGroupVariableValueByGroup", name, groupId)
-    return 1
   }
 
-  public SetIsAllowUseSkill(context: context, canUse: number) {
+  public SetIsAllowUseSkill(context: context, canUse: number | string) {
+    canUse = Number(canUse)
+
     logger.debug("[lua] Call SetIsAllowUseSkill", canUse)
-    return 1
   }
 
   public KillEntityByConfigId(context: context, table: any) {
     logger.debug("[lua] Call KillEntityByConfigId", table)
-    return 1
   }
 
-  public SetGroupVariableValueByGroup(context: context, key: string, value: number, groupId: number) {
+  public SetGroupVariableValueByGroup(context: context, key: string, value: number | string, groupId: number | string) {
+    value = Number(value)
+    groupId = Number(groupId)
+
     logger.debug("[lua] Call SetGroupVariableValueByGroup", key, value, groupId)
-    return 1
   }
 
   public CreateMonster(context: context, table: any) {
     logger.debug("[lua] Call CreateMonster", table)
-    return 1
   }
 
-  public TowerMirrorTeamSetUp(context: context, team: number) {
+  public TowerMirrorTeamSetUp(context: context, team: number | string) {
+    team = Number(team)
+
     logger.debug("[lua] Call TowerMirrorTeamSetUp", team)
-    return 1
   }
 
   public CreateGadget(context: context, table: any) {
     logger.debug("[lua] Call CreateGadget", table)
-    return 1
   }
 
   public CheckRemainGadgetCountByGroupId(context: context, table: any) {
     logger.debug("[lua] Call CheckRemainGadgetCountByGroupId", table)
-    return 1
   }
 
-  public GetGadgetStateByConfigId(context: context, groupId: number, configId: number) {
+  public GetGadgetStateByConfigId(context: context, groupId: number | string, configId: number | string) {
+    groupId = Number(groupId)
+    configId = Number(configId)
+
     logger.debug("[lua] Call GetGadgetStateByConfigId", groupId, configId)
-    return 1
   }
 
-  public MarkPlayerAction(context: context, var1: number, var2: number, var3: number) {
+  public MarkPlayerAction(context: context, var1: number | string, var2: number | string, var3: number | string) {
+    var1 = Number(var1)
+    var2 = Number(var2)
+    var3 = Number(var3)
+
     logger.debug("[lua] Call MarkPlayerAction", var1, var2, var3)
-    return 1
   }
 
-  public AddQuestProgress(context: context, var1: number) {
+  public AddQuestProgress(context: context, var1: number | string) {
+    var1 = Number(var1)
+
     logger.debug("[lua] Call AddQuestProgress", var1)
-    return 1
   }
 
-  public ChangeGroupGadget(context: context, table: { config_id: number; state: GadgetState } | any) {
+  public ChangeGroupGadget(context: context, table: { config_id: number | string; state: GadgetStateEnum }) {
+    table.config_id = Number(table.config_id)
+    table.state = Number(table.state)
+
     logger.debug("[lua] Call ChangeGroupGadget", table)
 
     const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === table.config_id)
 
     if (!entity) {
-      return 1
     } else {
       entity.setGadgetState(table.state)
-      return 0
+      return "0"
     }
   }
 
-  public GetEntityType(context: context, entityId: number) {
+  public GetEntityType(context: context, entityId: number | string) {
+    entityId = Number(entityId)
+
     logger.debug("[lua] Call GetEntityType", entityId)
-    return 1
   }
 
-  public GetQuestState(context: context, entityId: number, questId: number) {
+  public GetQuestState(context: context, entityId: number | string, questId: number | string) {
+    entityId = Number(entityId)
+
     logger.debug("[lua] Call GetQuestState", entityId, questId)
-    return 1
   }
 
-  public ShowReminder(context: context, reminderId: number) {
+  public ShowReminder(context: context, reminderId: number | string) {
+    reminderId = Number(reminderId)
+
     logger.debug("[lua] Call ShowReminder", reminderId)
-    return 1
   }
 
-  public ShowReminderRadius(context: context, reminderID: number, location: any, var4: number) {
+  public ShowReminderRadius(context: context, reminderID: number | string, location: any, var4: number | string) {
+    reminderID = Number(reminderID)
+    location = Number(location)
+    var4 = Number(var4)
+
     logger.debug("[lua] Call ShowReminderRadius", reminderID, location, var4)
-    return 1
   }
 
-  public BeginCameraSceneLook(context: context, var2: number) {
+  public BeginCameraSceneLook(context: context, var2: number | string) {
+    var2 = Number(var2)
+
     logger.debug("[lua] Call BeginCameraSceneLook", var2)
-    return 1
   }
 
-  public SetPlatformRouteId(context: context, var2: number, routeId: number) {
+  public SetPlatformRouteId(context: context, var2: number | string, routeId: number | string) {
+    var2 = Number(var2)
+
     logger.debug("[lua] Call SetPlatformRouteId", var2, routeId)
-    return 1
   }
 
-  public CreateGroupTimerEvent(context: context, unk: number, unk2: number, unk3: number) {
+  public CreateGroupTimerEvent(context: context, unk: number | string, unk2: number | string, unk3: number | string) {
+    unk = Number(unk)
+    unk2 = Number(unk2)
+    unk3 = Number(unk3)
+
     logger.debug("[lua] Call CreateGroupTimerEvent", unk, unk2, unk3)
-    return 1
   }
 
-  public SetGroupReplaceable(context: context, unk: number, unk2: number) {
+  public SetGroupReplaceable(context: context, unk: number | string, unk2: number | string) {
+    unk = Number(unk)
+    unk2 = Number(unk2)
+
     logger.debug("[lua] Call SetGroupReplaceable", unk, unk2)
-    return 1
   }
 
   public PrintLog(context: context, message: string) {
     logger.debug("[lua] PrintLog: ", message)
-    return 1
   }
 
-  public RemoveEntityByConfigId(context: context, groupId: number, entityType: number, configId: number) {
+  public RemoveEntityByConfigId(
+    context: context,
+    groupId: number | string,
+    entityType: number | string,
+    configId: number | string
+  ) {
+    groupId = Number(groupId)
+    entityType = Number(entityType)
+    configId = Number(configId)
+
     logger.debug("[lua] Call RemoveEntityByConfigId", groupId, entityType, configId)
-    return 1
   }
 
-  public async RefreshGroup(context: context, table: { group_id: number; suite: number } | any) {
+  public RefreshGroup(context: context, table: { group_id: number | string; suite: number | string }) {
+    table.group_id = Number(table.group_id)
+    table.suite = Number(table.suite)
+
     logger.debug("[lua] Call RefreshGroup", table)
-    return 1
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === table.group_id)
+
+    if (group) {
+      group.RefreshGroup(table.suite)
+      return "0"
+    }
   }
 }

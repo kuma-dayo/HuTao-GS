@@ -67,10 +67,12 @@ class GadgetInteractPacket extends Packet implements PacketInterface {
         })
       }
       default: {
-        await this.response(
-          context,
-          await entity.interact(player, opType, gadgetId, !!isUseCondenseResin, resinCostType)
-        )
+        await this.response(context, {
+          retcode: RetcodeEnum.RET_SUCC,
+          gadgetEntityId: entity.entityId,
+          gadgetId: entity.gadgetId,
+          interactType: InteractTypeEnum.INTERACT_TYPE_NONE,
+        })
       }
     }
   }

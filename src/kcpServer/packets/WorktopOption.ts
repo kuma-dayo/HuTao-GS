@@ -19,11 +19,7 @@ class WorktopOptionPacket extends Packet implements PacketInterface {
   }
 
   async broadcastNotify(contextList: PacketContext[], gadget: Gadget): Promise<void> {
-    const notifyData: WorktopOptionNotify = {
-      optionList: gadget.worktopOption,
-      gadgetEntityId: gadget.entityId,
-    }
-    await super.broadcastNotify(contextList, notifyData)
+    await super.broadcastNotify(contextList, gadget)
   }
 }
 

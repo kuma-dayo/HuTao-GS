@@ -16,6 +16,7 @@ import {
   SceneNpcScriptConfig,
   SceneSuiteScriptConfig,
   SceneTriggerScriptConfig,
+  SceneVariableScriptConfig,
 } from "@/types/gameData/Script/SceneScriptConfig"
 import { VisionTypeEnum } from "@/types/proto/enum"
 import { WaitOnBlock } from "@/utils/asyncWait"
@@ -34,6 +35,8 @@ export default class SceneGroup {
   loaded: boolean
 
   trigger: SceneTriggerScriptConfig[]
+  Variables: SceneVariableScriptConfig[]
+
   scriptManager: scriptManager
 
   constructor(block: SceneBlock, id: number, pos: Vector, dynamicLoad: boolean) {
@@ -46,8 +49,6 @@ export default class SceneGroup {
     this.monsterList = []
     this.npcList = []
     this.gadgetList = []
-
-    this.trigger = []
 
     this.loaded = false
 
@@ -73,12 +74,12 @@ export default class SceneGroup {
     return true
   }
 
-  private async loadMonsters(monsters: SceneMonsterScriptConfig[]) {
+  private async loadMonsters(monsters: SceneMonsterScriptConfig[], force = false) {
     const { block, id: groupId, monsterList } = this
     const { id: blockId, scene } = block
     const { world, entityManager } = scene
 
-    if (await this.reloadList(monsterList)) return
+    if ((await this.reloadList(monsterList)) && !force) return
 
     const worldLevelData = await WorldData.getWorldLevel(world.level)
     const levelOffset = worldLevelData == null ? 0 : worldLevelData.MonsterLevel - 22
@@ -140,12 +141,12 @@ export default class SceneGroup {
     }
   }
 
-  private async loadGadgets(gadgets: SceneGadgetScriptConfig[]) {
+  private async loadGadgets(gadgets: SceneGadgetScriptConfig[], force = false) {
     const { block, id: groupId, gadgetList } = this
     const { id: blockId, scene } = block
     const { entityManager } = scene
 
-    if (await this.reloadList(gadgetList)) return
+    if ((await this.reloadList(gadgetList)) && !force) return
 
     for (const gadget of gadgets) {
       const { GadgetId, ConfigId, Level, Pos, Rot, InteractId, State } = gadget
@@ -226,7 +227,11 @@ export default class SceneGroup {
       )
     )
 
-    this.trigger = groupData.Triggers
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
+    )
+
+    this.Variables = groupData.Variables ?? []
 
     Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)
@@ -247,5 +252,59 @@ export default class SceneGroup {
 
     Logger.measure("Group unload", grpUnloadPerfMark)
     Logger.clearMarks(grpUnloadPerfMark)
+  }
+
+  async RefreshGroup(suite: number) {
+    const { block, id: groupId } = this
+    const { scene } = block
+    const { entityManager } = scene
+    const { id: sceneId } = block.scene
+    const groupData = await SceneData.getGroup(sceneId, groupId)
+    this.monsterList.map((monster) => entityManager.remove(monster, undefined, undefined, true))
+    this.gadgetList.map((gadget) => entityManager.remove(gadget, undefined, undefined, true))
+    this.monsterList = []
+    this.npcList = []
+    this.gadgetList = []
+
+    await this.loadMonsters(
+      Object.values(
+        groupData.Monsters?.filter((monster) => groupData.Suites?.[suite - 1]?.Monsters?.includes(monster.ConfigId)) ||
+          {}
+      )
+    )
+    await this.loadNpcs(Object.values(groupData.Npcs || {}), Object.values(groupData.Suites || {}))
+    await this.loadGadgets(
+      Object.values(
+        groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
+      )
+    )
+
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
+    )
+  }
+
+  async addGroupSuite(suite: number) {
+    const { block, id: groupId } = this
+    const { id: sceneId } = block.scene
+    const groupData = await SceneData.getGroup(sceneId, groupId)
+
+    await this.loadMonsters(
+      Object.values(
+        groupData.Monsters?.filter((monster) => groupData.Suites?.[suite - 1]?.Monsters?.includes(monster.ConfigId)) ||
+          {}
+      ),
+      true
+    )
+    await this.loadGadgets(
+      Object.values(
+        groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
+      ),
+      true
+    )
+
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
+    )
   }
 }

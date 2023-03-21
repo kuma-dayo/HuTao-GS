@@ -21,7 +21,8 @@ export default class scriptManager {
   private getFunctionName(name: string) {
     return name.charAt(0).toLowerCase() + name.slice(1)
   }
-  public async eventAnyMonsterDieTrigger() {
+
+  public async EVENT_ANY_MONSTER_DIE() {
     const { currentGroup } = this
     let lua = await this.scriptLoader.init(await new LuaFactory().createEngine({ traceAllocations: true }))
 
@@ -37,7 +38,10 @@ export default class scriptManager {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition)) //In sceneData, the first letter of all strings is uppercase. The lua function converts the first letter to lowercase because it is lowercase
             const action = lua.global.get(this.getFunctionName(trigger.Action))
 
+            logger.debug("[lua] EVENT_ANY_MONSTER_DIE Condition")
             if ((condition({ currentGroup } as scriptLibContext, null) as boolean) == true) {
+              logger.debug("[lua] EVENT_ANY_MONSTER_DIE Action")
+
               action({ currentGroup: currentGroup } as scriptLibContext, null)
             }
           }
@@ -48,7 +52,7 @@ export default class scriptManager {
     }
   }
 
-  public async eventSelectOption(configId: number, optionid: number) {
+  public async EVENT_SELECT_OPTION(configId: number, optionid: number) {
     const { currentGroup } = this
     let lua = await this.scriptLoader.init(await new LuaFactory().createEngine({ traceAllocations: true }))
 
@@ -63,12 +67,14 @@ export default class scriptManager {
           if (trigger.Event === EventTypeEnum.EVENT_SELECT_OPTION) {
             const condition = lua.global.get(this.getFunctionName(trigger.Condition))
             const action = lua.global.get(this.getFunctionName(trigger.Action))
+            logger.debug("[lua] EVENT_SELECT_OPTION Condition")
             if (
               (condition(
                 { currentGroup } as scriptLibContext,
-                { param1: configId, param2: optionid } as ScriptArgs
+                { param1: configId.toString(), param2: optionid.toString() } as ScriptArgs
               ) as boolean) == true
             ) {
+              logger.debug("[lua] EVENT_SELECT_OPTION Action")
               action({ currentGroup: currentGroup } as scriptLibContext, null)
             }
           }

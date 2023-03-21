@@ -13,6 +13,7 @@ import Logger from "@/logger"
 import { readFile } from "@/utils/fileSystem"
 
 const logger = new Logger("ScriptLoader", 0xff7f50)
+
 export default class ScriptLoader {
   public async init(lua: LuaEngine): Promise<LuaEngine> {
     lua.global.set("require", function require(arg: string) {
@@ -34,7 +35,11 @@ export default class ScriptLoader {
     const functionIndex = script.indexOf("function")
 
     if (functionIndex !== -1) {
-      await lua.doString(script.slice(functionIndex - "function".length))
+      await lua.doString(
+        script
+          .slice(functionIndex - "function".length)
+          .replace(/(?<![.\w"])(?<!\d)(-?(?:\d+(?:\.\d*)?|\.\d+))(?![.\w"])/g, '"$1"')
+      )
 
       return lua
     } else {
