@@ -94,7 +94,8 @@ export default class Gadget extends Entity {
 
     this.gadgetState = state
 
-    this.sceneGroup.scriptManager.EVENT_GADGET_STATE_CHANGE(this.configId, state)
+    await this.sceneGroup.scriptManager.EVENT_GADGET_STATE_CHANGE(this.configId, state)
+
     if (!manager) return
 
     await GadgetState.broadcastNotify(manager.scene.broadcastContextList, this)

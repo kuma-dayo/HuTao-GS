@@ -107,7 +107,8 @@ export default class SceneGroup {
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
 
-    if (scene.enableScript) this.scriptManager.EVENT_ANY_MONSTER_LIVE(monsterList.map((monster) => monster.configId))
+    if (scene.enableScript)
+      await this.scriptManager.EVENT_ANY_MONSTER_LIVE(monsterList.map((monster) => monster.configId))
   }
 
   private async loadNpcs(npcs: SceneNpcScriptConfig[], suites: SceneSuiteScriptConfig[]) {
@@ -173,7 +174,7 @@ export default class SceneGroup {
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
 
-    if (scene.enableScript) this.scriptManager.EVENT_GADGET_CREATE(gadgetList.map((gadget) => gadget.configId))
+    if (scene.enableScript) await this.scriptManager.EVENT_GADGET_CREATE(gadgetList.map((gadget) => gadget.configId))
   }
 
   private async unloadList(entityList: Entity[]) {
@@ -203,6 +204,12 @@ export default class SceneGroup {
 
     await wob.waitTick()
 
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
+    )
+
+    this.Variables = groupData.Variables ?? []
+
     await this.loadMonsters(
       Object.values(
         groupData.Monsters?.filter((monster) =>
@@ -221,12 +228,6 @@ export default class SceneGroup {
         ) || {}
       )
     )
-
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
-    )
-
-    this.Variables = groupData.Variables ?? []
 
     Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)
@@ -261,6 +262,10 @@ export default class SceneGroup {
     this.npcList = []
     this.gadgetList = []
 
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
+    )
+
     await this.loadMonsters(
       Object.values(
         groupData.Monsters?.filter((monster) => groupData.Suites?.[suite - 1]?.Monsters?.includes(monster.ConfigId)) ||
@@ -273,16 +278,16 @@ export default class SceneGroup {
         groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
       )
     )
-
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
-    )
   }
 
   async addGroupSuite(suite: number) {
     const { block, id: groupId } = this
     const { id: sceneId } = block.scene
     const groupData = await SceneData.getGroup(sceneId, groupId)
+
+    this.trigger = groupData.Triggers.filter((trigger) =>
+      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
+    )
 
     await this.loadMonsters(
       Object.values(
@@ -296,10 +301,6 @@ export default class SceneGroup {
         groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
       ),
       true
-    )
-
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
     )
   }
 }

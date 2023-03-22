@@ -259,7 +259,10 @@ export default class ScriptLib {
     logger.debug("[lua] Call SetGroupVariableValueByGroup", key, value, groupId)
   }
 
-  public CreateMonster(context: context, table: any) {
+  public CreateMonster(context: context, table: { config_id: number | string; delay_time: number | string }) {
+    table.config_id = Number(table.config_id)
+    table.delay_time = Number(table.delay_time)
+
     logger.debug("[lua] Call CreateMonster", table)
   }
 
@@ -410,5 +413,11 @@ export default class ScriptLib {
       group.RefreshGroup(table.suite)
       return "0"
     }
+  }
+
+  public GetHostQuestState(context: context, questId: number | string) {
+    questId = Number(questId)
+
+    logger.debug("[lua] Call GetHostQuestState", questId)
   }
 }

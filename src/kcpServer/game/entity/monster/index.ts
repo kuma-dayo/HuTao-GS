@@ -224,7 +224,7 @@ export default class Monster extends Entity {
   async handleDeath(seqId?: number, batch = false) {
     const { manager, motion, killDropId } = this
 
-    if (manager.scene.enableScript) this.sceneGroup.scriptManager.EVENT_ANY_MONSTER_DIE()
+    if (manager.scene.enableScript) await this.sceneGroup.scriptManager.EVENT_ANY_MONSTER_DIE()
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)
   }
