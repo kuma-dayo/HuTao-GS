@@ -6,11 +6,11 @@ import { GadgetStateEnum } from "@/types/enum"
 const logger = new Logger("ScriptLib", 0xff7f50)
 
 export default class ScriptLib {
-  public SetGadGetStateByConfigId(context: context, configId: number | string, gadgetState: number | string) {
+  public SetGadgetStateByConfigId(context: context, configId: number | string, gadgetState: number | string) {
     configId = Number(configId)
     gadgetState = Number(gadgetState)
 
-    logger.debug("[lua] Call SetGadGetStateByConfigId", configId, gadgetState)
+    logger.debug("[lua] Call SetGadgetStateByConfigId", configId, gadgetState)
 
     const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
     if (entity) {
