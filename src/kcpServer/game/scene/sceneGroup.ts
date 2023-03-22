@@ -311,7 +311,7 @@ export default class SceneGroup {
     const groupData = await SceneData.getGroup(sceneId, groupId)
 
     setTimeout(() => {
-      this.loadMonsters(Object.values(groupData.Monsters?.filter((monster) => monster.ConfigId == configId) || {}))
+      this.loadMonsters(Object.values(groupData.Monsters?.find((monster) => monster.ConfigId == configId) || {}))
     }, delayTime)
   }
 }
