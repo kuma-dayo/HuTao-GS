@@ -37,7 +37,7 @@ export default class ScriptLoader {
     const script = (await readFile(join(cwd(), `data/game/${config.game.version}/Scripts/`, path))).toString()
 
     await lua
-      .doString(script.replace(/(?<![.\w"])(?<!\d)(?<!\s)(-?(?:\d+(?:\.\d*)?|\.\d+))(?!\s)(?![.\w"])/g, '"$1"'))
+      .doString(script.replace(/(?<![.\w"])(?<!\d)(-?(?:\d+(?:\.\d*)?|\.\d+))(?![.\w"])/g, "'$1'"))
       .catch((err) => {
         logger.error("[lua] ScriptByPath", path, err)
       })
