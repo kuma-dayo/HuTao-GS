@@ -264,6 +264,10 @@ export default class ScriptLib {
     table.delay_time = Number(table.delay_time)
 
     logger.debug("[lua] Call CreateMonster", table)
+
+    context.currentGroup.CreateMonster(table.config_id, table.delay_time)
+
+    return "0"
   }
 
   public TowerMirrorTeamSetUp(context: context, team: number | string) {

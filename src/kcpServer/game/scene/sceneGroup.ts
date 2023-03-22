@@ -303,4 +303,15 @@ export default class SceneGroup {
       true
     )
   }
+
+  async CreateMonster(configId: number, delayTime = 0) {
+    const { block, id: groupId } = this
+    const { id: sceneId } = block.scene
+
+    const groupData = await SceneData.getGroup(sceneId, groupId)
+
+    setTimeout(() => {
+      this.loadMonsters(Object.values(groupData.Monsters?.filter((monster) => monster.ConfigId == configId) || {}))
+    }, delayTime)
+  }
 }
