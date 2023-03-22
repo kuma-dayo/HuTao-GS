@@ -15,7 +15,7 @@ export default async function Template(scriptManager: scriptManager) {
         const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
         if (trigger.Condition != "") {
-          const conditionResult = condition({ currentGroup } as scriptLibContext) as boolean
+          const conditionResult = condition({ currentGroup } as scriptLibContext, null) as boolean
 
           logger.verbose(`[lua] Template Condition ${conditionResult}`)
 
