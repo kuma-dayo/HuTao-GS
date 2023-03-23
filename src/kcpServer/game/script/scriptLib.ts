@@ -426,4 +426,16 @@ export default class ScriptLib {
 
     logger.debug("[lua] Call GetHostQuestState", questId)
   }
+
+  public SetGadgetEnableInteract(
+    context: context,
+    groupid: number | string,
+    gadgetIris: number | string,
+    unk: boolean
+  ) {
+    groupid = Number(groupid)
+    gadgetIris = Number(gadgetIris)
+
+    logger.debug("[lua] Call SetGadgetEnableInteract", groupid, gadgetIris, unk)
+  }
 }
