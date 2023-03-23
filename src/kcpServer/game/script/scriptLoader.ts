@@ -6,6 +6,7 @@ import { LuaEngine, LuaFactory } from "wasmoon"
 import { EventType } from "./constant/eventType"
 import { GadgetState } from "./constant/gadgetState"
 import { RegionShape } from "./constant/regionShape"
+import { SealBattleType } from "./constant/sealBattleType"
 import { VisionLevelType } from "./constant/visionLevelType"
 import ScriptLib from "./scriptLib"
 
@@ -26,6 +27,7 @@ export default class ScriptLoader {
     lua.global.set("EventType", EventType)
     lua.global.set("GadgetState", GadgetState)
     lua.global.set("RegionShape", RegionShape)
+    lua.global.set("SealBattleType", SealBattleType)
     lua.global.set("VisionLevelType", VisionLevelType)
 
     lua.global.set("ScriptLib", new ScriptLib())

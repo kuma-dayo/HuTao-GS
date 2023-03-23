@@ -438,4 +438,10 @@ export default class ScriptLib {
 
     logger.debug("[lua] Call SetGadgetEnableInteract", groupid, gadgetIris, unk)
   }
+
+  public StartSealBattle(context: context, unk: number | string, table: any) {
+    unk = Number(unk)
+
+    logger.debug("[lua] Call StartSealBattle", unk, table)
+  }
 }
