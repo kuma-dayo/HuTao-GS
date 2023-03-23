@@ -187,7 +187,9 @@ export default class ScriptLib {
   }
 
   public GetGroupVariableValue(context: context, variable: string) {
-    variable = variable.charAt(0).toLocaleUpperCase() + variable.slice(1)
+    variable = `${variable.charAt(0).toUpperCase() + variable.slice(1)}`.replace(/_([a-z])/g, (match, p1) =>
+      p1.toUpperCase()
+    )
 
     logger.debug("[lua] Call GetGroupVariableValue", variable)
 
