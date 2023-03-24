@@ -1,3 +1,4 @@
+import DungeonChallengeBegin from "#/packets/DungeonChallengeBegin"
 import Scene from "$/scene"
 import SceneGroup from "$/scene/sceneGroup"
 
@@ -5,36 +6,45 @@ export default class WorldChallenge {
   scene: Scene
   sceneGroup: SceneGroup
 
-  isprogress: boolean
-  isfinish: boolean
+  challengeId: number
+  challengeIndex: number
+  startedAt: number
 
-  constructor(scene: Scene, sceneGroup: SceneGroup) {
+  progress: boolean
+  success: boolean
+
+  constructor(scene: Scene, sceneGroup: SceneGroup, challengeId: number, challengeIndex: number) {
     this.scene = scene
     this.sceneGroup = sceneGroup
 
-    this.isprogress = false
-    this.isfinish = false
-  }
+    this.challengeId = challengeId
+    this.challengeIndex = challengeIndex
 
-  get isdone() {
-    return this.finish
+    this.progress = false
+    this.success = false
   }
 
   start() {
-    if (this.isprogress) return
+    if (this.progress) return
 
-    this.isprogress = true
+    this.progress = true
+    this.startedAt = this.scene.timestampSceneTime
+
+    DungeonChallengeBegin.broadcastNotify(this.scene.broadcastContextList, this)
   }
 
-  finish() {
-    if (!this.isprogress) return
+  done() {
+    if (!this.progress) return
+
+    this.success = true
 
     this.sceneGroup.scriptManager.EVENT_CHALLENGE_SUCCESS()
   }
 
   fail() {
-    if (!this.isprogress) return
+    if (!this.progress) return
 
+    this.progress = false
     this.sceneGroup.scriptManager.EVENT_CHALLENGE_FAIL()
   }
 }

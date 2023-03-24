@@ -11,6 +11,7 @@ import Vector from "$/utils/vector"
 import ConfigAbilityAction from "$DT/BinOutput/Config/ConfigAbility/Action"
 import {
   AvatarSkillStart,
+  ChangeGadgetState,
   DebugLog,
   ExecuteGadgetLua,
   GenerateElemBall,
@@ -135,6 +136,14 @@ export default class AbilityAction extends BaseClass {
   // ChangeFollowDampTime
 
   // ChangeGadgetUIInteractHint
+
+  // ChangeGadgetState
+  async handleChangeGadgetState(_context: PacketContext, _ability: AppliedAbility, config: ChangeGadgetState) {
+    const { manager } = this
+    const { entity } = manager
+
+    await (<Gadget>entity).setGadgetState(config.State || GadgetStateEnum.Default)
+  }
 
   // ChangePlayMode
 

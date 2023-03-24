@@ -23,6 +23,7 @@ import GlobalValuePair from "$DT/BinOutput/Config/GlobalValuePair"
 import RocketJumpExt from "$DT/BinOutput/Config/RocketJumpExt"
 import SelectTargets from "$DT/BinOutput/Config/SelectTargets"
 import SelectTargetsByChildren from "$DT/BinOutput/Config/SelectTargets/Child/SelectTargetsByChildren"
+import { GadgetStateEnum } from "@/types/enum"
 
 export default interface ConfigBaseAbilityAction {
   Target?: string
@@ -251,6 +252,10 @@ export interface ChangeFollowDampTime extends ConfigBaseAbilityAction {
 export interface ChangeGadgetUIInteractHint extends ConfigBaseAbilityAction {
   $type: "ChangeGadgetUIInteractHint"
   HintTextMapId: string
+}
+export interface ChangeGadgetState {
+  $type: "ChangeGadgetState"
+  State: GadgetStateEnum
 }
 
 export interface ChangePlayMode extends ConfigBaseAbilityAction {

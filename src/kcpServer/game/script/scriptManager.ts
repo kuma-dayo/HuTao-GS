@@ -6,6 +6,7 @@ import EVENT_CHALLENGE_SUCCESS from "./trigger/EVENT_CHALLENGE_SUCCESS"
 import EVENT_GADGET_CREATE from "./trigger/EVENT_GADGET_CREATE"
 import EVENT_GADGET_STATE_CHANGE from "./trigger/EVENT_GADGET_STATE_CHANGE"
 import EVENT_SELECT_OPTION from "./trigger/EVENT_SELECT_OPTION"
+import EVENT_VARIABLE_CHANGE from "./trigger/EVENT_VARIABLE_CHANGE"
 
 import SceneGroup from "$/scene/sceneGroup"
 import Logger from "@/logger"
@@ -60,5 +61,10 @@ export default class scriptManager {
 
   async EVENT_SELECT_OPTION(configId: number, optionid: number) {
     if (this.currentGroup.trigger?.length > 0) await EVENT_SELECT_OPTION(this, configId.toString(), optionid.toString())
+  }
+
+  async EVENT_VARIABLE_CHANGE(oldValue: number, newValue: number) {
+    if (this.currentGroup.trigger?.length > 0)
+      await EVENT_VARIABLE_CHANGE(this, oldValue.toString(), newValue.toString())
   }
 }

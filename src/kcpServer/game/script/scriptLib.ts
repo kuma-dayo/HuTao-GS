@@ -187,8 +187,9 @@ export default class ScriptLib {
   }
 
   public GetGroupVariableValue(context: context, variable: string) {
-    variable = `${variable.charAt(0).toUpperCase() + variable.slice(1)}`.replace(/_([a-z])/g, (match, p1) =>
-      p1.toUpperCase()
+    variable = (variable.slice(0, 1).toUpperCase() + variable.slice(1)).replace(
+      variable.includes("Config") ? /_[a-zA-Z]/g : /_[a-z]/g,
+      (s) => s.slice(1).toUpperCase()
     )
 
     logger.debug("[lua] Call GetGroupVariableValue", variable)
@@ -202,6 +203,10 @@ export default class ScriptLib {
     value = Number(value)
 
     logger.debug("[lua] Call SetGroupVariableValue", variable, value)
+
+    const oldvalue = Number(this.GetGroupVariableValue(context, variable))
+
+    context.currentGroup.scriptManager.EVENT_VARIABLE_CHANGE(oldvalue, value)
   }
 
   public ChangeGroupVariableValue(context: context, variable: string, value: number | string) {
