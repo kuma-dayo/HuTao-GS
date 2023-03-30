@@ -91,7 +91,10 @@ export default class DungeonChallenge {
   async fail() {
     if (!this.progress) return
 
-    this.progress = false
+    this.success = false
+    this.setProgress = false
+
+    await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.block.scene.broadcastContextList, this)
     await this.sceneGroup.scriptManager.EVENT_CHALLENGE_FAIL()
   }
 }

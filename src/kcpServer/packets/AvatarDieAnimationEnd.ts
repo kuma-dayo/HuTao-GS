@@ -51,6 +51,8 @@ class AvatarDieAnimationEndPacket extends Packet implements PacketInterface {
     } else {
       // Great, everyone is dead
       await WorldPlayerDie.sendNotify(context, currentAvatar)
+
+      if (context.player.currentScene.ischallenge) context.player.currentScene.challenge.fail()
     }
 
     await this.response(context, {
