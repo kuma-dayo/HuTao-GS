@@ -3,6 +3,7 @@ import EVENT_ANY_MONSTER_DIE from "./trigger/EVENT_ANY_MONSTER_DIE"
 import EVENT_ANY_MONSTER_LIVE from "./trigger/EVENT_ANY_MONSTER_LIVE"
 import EVENT_CHALLENGE_FAIL from "./trigger/EVENT_CHALLENGE_FAIL"
 import EVENT_CHALLENGE_SUCCESS from "./trigger/EVENT_CHALLENGE_SUCCESS"
+import EVENT_DUNGEON_SETTLE from "./trigger/EVENT_DUNGEON_SETTLE"
 import EVENT_GADGET_CREATE from "./trigger/EVENT_GADGET_CREATE"
 import EVENT_GADGET_STATE_CHANGE from "./trigger/EVENT_GADGET_STATE_CHANGE"
 import EVENT_SELECT_OPTION from "./trigger/EVENT_SELECT_OPTION"
@@ -27,7 +28,11 @@ export default class scriptManager {
   }
 
   async EVENT_ANY_MONSTER_DIE() {
-    if (this.currentGroup.trigger?.length > 0) await EVENT_ANY_MONSTER_DIE(this)
+    if (this.currentGroup.trigger?.length > 0) {
+      if (this.currentGroup.block.scene.ischallenge) {
+      }
+      await EVENT_ANY_MONSTER_DIE(this)
+    }
   }
 
   async EVENT_ANY_MONSTER_LIVE(configIdList: number[]) {
@@ -44,6 +49,10 @@ export default class scriptManager {
 
   async EVENT_CHALLENGE_SUCCESS() {
     if (this.currentGroup.trigger?.length > 0) await EVENT_CHALLENGE_SUCCESS(this)
+  }
+
+  async EVENT_DUNGEON_SETTLE() {
+    if (this.currentGroup.trigger?.length > 0) await EVENT_DUNGEON_SETTLE(this)
   }
 
   async EVENT_GADGET_CREATE(configIdList: number[]) {

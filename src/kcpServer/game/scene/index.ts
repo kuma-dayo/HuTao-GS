@@ -11,6 +11,7 @@ import PlayerEnterScene, { PlayerEnterSceneNotify } from "#/packets/PlayerEnterS
 import ScenePlayerLocation from "#/packets/ScenePlayerLocation"
 import SceneTime from "#/packets/SceneTime"
 import uidPrefix from "#/utils/uidPrefix"
+import DungeonChallenge from "$/dungeon/dungeonChallenge"
 import Entity from "$/entity"
 import Gadget from "$/entity/gadget"
 import TrifleItem from "$/entity/gadget/trifleItem"
@@ -84,6 +85,9 @@ export default class Scene extends BaseClass {
 
   enableScript: boolean
 
+  ischallenge: boolean
+  challenge: DungeonChallenge
+
   constructor(world: World, sceneId: number) {
     super()
 
@@ -111,6 +115,8 @@ export default class Scene extends BaseClass {
         this.enableScript = GlobalState.get("enableScript") ? bool : false
       }
     )
+
+    this.ischallenge = false
 
     super.initHandlers(this)
   }

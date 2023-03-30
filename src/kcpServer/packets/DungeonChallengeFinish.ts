@@ -1,4 +1,5 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
+import DungeonChallenge from "$/dungeon/dungeonChallenge"
 import {
   ChannellerSlabLoopDungeonResultInfo,
   CustomDungeonResultInfo,
@@ -9,17 +10,17 @@ import {
 
 export interface DungeonChallengeFinishNotify {
   challengeIndex: number
-  finishType: number
+  finishType?: number
   isSuccess: boolean
   challengeRecordType: number
-  isNewRecord: boolean
-  currentValue: number
-  timeCost: number
-  strengthenPointDataMap: { [id: number]: StrengthenPointData }
-  channellerSlabLoopDungeonResultInfo: ChannellerSlabLoopDungeonResultInfo
-  effigyChallengeDungeonResultInfo: EffigyChallengeDungeonResultInfo
-  potionDungeonResultInfo: PotionDungeonResultInfo
-  customDungeonResultInfo: CustomDungeonResultInfo
+  isNewRecord?: boolean
+  currentValue?: number
+  timeCost?: number
+  strengthenPointDataMap?: { [id: number]: StrengthenPointData }
+  channellerSlabLoopDungeonResultInfo?: ChannellerSlabLoopDungeonResultInfo
+  effigyChallengeDungeonResultInfo?: EffigyChallengeDungeonResultInfo
+  potionDungeonResultInfo?: PotionDungeonResultInfo
+  customDungeonResultInfo?: CustomDungeonResultInfo
 }
 
 class DungeonChallengeFinishPacket extends Packet implements PacketInterface {
@@ -27,13 +28,18 @@ class DungeonChallengeFinishPacket extends Packet implements PacketInterface {
     super("DungeonChallengeFinish")
   }
 
-  async sendNotify(context: PacketContext): Promise<void> {
-    // const notifyData: DungeonChallengeFinishNotify = {}
-    // await super.sendNotify(context, notifyData)
+  async sendNotify(context: PacketContext, notifyData: DungeonChallengeFinishNotify): Promise<void> {
+    await super.sendNotify(context, notifyData)
   }
 
-  async broadcastNotify(contextList: PacketContext[], ...data: any[]): Promise<void> {
-    await super.broadcastNotify(contextList, ...data)
+  async broadcastNotify(contextList: PacketContext[], dungeonChallenge: DungeonChallenge): Promise<void> {
+    const notifyData: DungeonChallengeFinishNotify = {
+      challengeIndex: dungeonChallenge.challengeIndex,
+      finishType: dungeonChallenge.success ? 2 : 1,
+      isSuccess: dungeonChallenge.success,
+      challengeRecordType: 2,
+    }
+    await super.broadcastNotify(contextList, notifyData)
   }
 }
 
