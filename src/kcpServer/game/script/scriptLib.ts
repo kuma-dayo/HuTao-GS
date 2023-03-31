@@ -205,7 +205,7 @@ export default class ScriptLib {
 
     const groupVariable = context.currentGroup.Variables.find((Variable) => Variable.Name === variable)
 
-    return groupVariable.Value.toString()
+    return groupVariable?.Value.toString()
   }
 
   public SetGroupVariableValue(context: context, variable: string, value: number | string) {
@@ -216,6 +216,8 @@ export default class ScriptLib {
     const oldvalue = Number(this.GetGroupVariableValue(context, variable))
 
     context.currentGroup.scriptManager.EVENT_VARIABLE_CHANGE(oldvalue, value)
+
+    return "0"
   }
 
   public ChangeGroupVariableValue(context: context, variable: string, value: number | string) {
@@ -457,5 +459,9 @@ export default class ScriptLib {
     unk = Number(unk)
 
     logger.debug("[lua] Call StartSealBattle", unk, table)
+  }
+
+  public InitTimeAxis(context: context, unk: string, unk1: number[] | string[], unk2: boolean) {
+    logger.debug("[lua] Call InitTimeAxis", unk, unk1, unk2)
   }
 }

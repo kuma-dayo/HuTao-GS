@@ -58,6 +58,7 @@ export default class DungeonChallenge {
   async start() {
     if (this.progress) return
 
+    this.success = false
     this.setProgress = true
     this.startedAt = getTimeSeconds()
 
