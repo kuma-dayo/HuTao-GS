@@ -464,4 +464,12 @@ export default class ScriptLib {
   public InitTimeAxis(context: context, unk: string, unk1: number[] | string[], unk2: boolean) {
     logger.debug("[lua] Call InitTimeAxis", unk, unk1, unk2)
   }
+
+  public SetMonsterHp(context: context, groupId: number | string, configId: number | string, percent: number | string) {
+    groupId = Number(groupId)
+    configId = Number(configId)
+    percent = Number(percent)
+
+    logger.debug("[lua] Call SetMonsterHp", groupId, configId)
+  }
 }
