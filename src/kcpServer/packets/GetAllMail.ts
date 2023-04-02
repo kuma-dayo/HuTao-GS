@@ -37,7 +37,7 @@ class GetAllMailPacket extends Packet implements PacketInterface {
           mailId: 1,
           mailTextContent: {
             title: "Welcome To Hutao-GS",
-            content: "",
+            content: '<type="browser" text="Github" href="https://github.com/kuma-dayo/HuTao-GS"/>',
             sender: "Server",
           },
           sendTime: now,
@@ -69,7 +69,7 @@ class GetAllMailPacket extends Packet implements PacketInterface {
           mailId: 1,
           mailTextContent: {
             title: "Welcome To Hutao-GS",
-            content: "",
+            content: '<type="browser" text="Github" href="https://github.com/kuma-dayo/HuTao-GS"/>',
             sender: "Server",
           },
           sendTime: now,
