@@ -102,7 +102,7 @@ export default class KcpWorker extends Worker {
   private updateKcp() {
     const { kcp } = this
     kcp.update(Date.now())
-    this.sendToInterface(WorkerOpcode.KcpStateNotify, kcp.isDeadLink(), kcp.rtt)
+    this.sendToInterface(WorkerOpcode.KcpStateNotify, kcp.isDeadLink())
   }
 
   private async waitPacketRsp(seqId: number) {
