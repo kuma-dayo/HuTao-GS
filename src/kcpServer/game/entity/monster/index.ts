@@ -89,11 +89,14 @@ export default class Monster extends Entity {
       this.specialNameId = (await MonsterData.getSpecialName(describeData.SpecialNameLabID))?.Id || 0
     }
 
-    const abilityList: ConfigEntityAbilityEntry[] = []
-    let globalValue: ConfigGlobalValue
+    let abilityList: ConfigEntityAbilityEntry[] = []
+    let globalValue: ConfigGlobalValue = {
+      ServerGlobalValues: [],
+      InitServerGlobalValues: {},
+    }
 
-    abilityData.Monster[monsterData.Name]?.map((abilityData) => {
-      abilityData["default"]?.AbilityMixins.map((abilityMixin) => {
+    abilityData.Monster[monsterData.Name.replace("Monster_", "")]?.map((abilityData) => {
+      abilityData["Default"]?.AbilityMixins?.map((abilityMixin) => {
         if (
           abilityMixin.$type == "AttachModifierToSelfGlobalValueMixin" &&
           abilityMixin.GlobalValueKey.includes("SGV_") //ConfigAbility has multiple serverGlobalValues, but to get the same values as ConfigMonster, only those with SGV_ in the value are taken.
@@ -103,9 +106,9 @@ export default class Monster extends Entity {
         }
       })
 
-      if (abilityData["default"]?.AbilityName)
+      if (abilityData["Default"]?.AbilityName)
         abilityList.push({
-          AbilityName: abilityData["default"].AbilityName,
+          AbilityName: abilityData["Default"].AbilityName,
           AbilityID: undefined, //Sometimes AbilityName can be substituted. AbilityId may not exist, so set it to undefined.
           AbilityOverride: undefined,
         })
@@ -227,7 +230,7 @@ export default class Monster extends Entity {
 
     if (manager.scene.enableScript) {
       if (manager.scene.ischallenge) await new KillMonsterTrigger().MonsterDeath(manager.scene.challenge)
-      await this.sceneGroup?.scriptManager.EVENT_ANY_MONSTER_DIE()
+      await this.sceneGroup?.scriptManager.EVENT_ANY_MONSTER_DIE(this.configId)
     }
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)

@@ -1,9 +1,19 @@
 # HuTao-GS
 Supported version: 1.4.50 - 3.5.0
 
+## Current features
+
+* Logging in
+* Automatically gives all characters
+* Combat
+* Spawning monsters
+* Dungeon
+* Scene Script
+* Boss AI
+
 ## Requirements
 
-* [Node-Js](https://nodejs.org/en/) need version 18.15.0
+* [Node-Js](https://nodejs.org/en/)
 * [Openssl](https://slproweb.com/products/Win32OpenSSL.html)
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [Typescript](https://www.npmjs.com/package/typescript)

@@ -27,11 +27,11 @@ export default class scriptManager {
     return name.charAt(0).toLowerCase() + name.slice(1)
   }
 
-  async EVENT_ANY_MONSTER_DIE() {
+  async EVENT_ANY_MONSTER_DIE(configId: number) {
     if (this.currentGroup.trigger?.length > 0) {
       if (this.currentGroup.block.scene.ischallenge) {
       }
-      await EVENT_ANY_MONSTER_DIE(this)
+      await EVENT_ANY_MONSTER_DIE(this, configId.toString())
     }
   }
 

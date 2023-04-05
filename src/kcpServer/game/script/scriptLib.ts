@@ -3,6 +3,7 @@ import context from "./scriptLibContext"
 import DungeonChallenge from "$/dungeon/dungeonChallenge"
 import Logger from "@/logger"
 import { GadgetStateEnum } from "@/types/enum"
+import { PlayerDieTypeEnum } from "@/types/proto/enum"
 
 const logger = new Logger("ScriptLib", 0xff7f50)
 
@@ -266,8 +267,15 @@ export default class ScriptLib {
     logger.debug("[lua] Call SetIsAllowUseSkill", canUse)
   }
 
-  public KillEntityByConfigId(context: context, table: any) {
+  public KillEntityByConfigId(context: context, table: { config_id: number | string }) {
+    table.config_id = Number(table.config_id)
     logger.debug("[lua] Call KillEntityByConfigId", table)
+
+    context.currentGroup.gadgetList
+      .find((gadget) => gadget.configId === table.config_id)
+      .kill(null, PlayerDieTypeEnum.PLAYER_DIE_NONE)
+
+    return "0"
   }
 
   public SetGroupVariableValueByGroup(context: context, key: string, value: number | string, groupId: number | string) {
@@ -294,8 +302,14 @@ export default class ScriptLib {
     logger.debug("[lua] Call TowerMirrorTeamSetUp", team)
   }
 
-  public CreateGadget(context: context, table: any) {
+  public CreateGadget(context: context, table: { config_id: number | string }) {
+    table.config_id = Number(table.config_id)
+
     logger.debug("[lua] Call CreateGadget", table)
+
+    context.currentGroup.CreateGadget(table.config_id)
+
+    return "0"
   }
 
   public CheckRemainGadgetCountByGroupId(context: context, table: any) {
@@ -471,5 +485,12 @@ export default class ScriptLib {
     percent = Number(percent)
 
     logger.debug("[lua] Call SetMonsterHp", groupId, configId)
+  }
+
+  public SetWeatherAreaState(context: context, areaId: number | string, state: number | string) {
+    areaId = Number(areaId)
+    state = Number(state)
+
+    logger.debug("[lua] Call SetWeatherAreaState", areaId, state)
   }
 }
