@@ -206,11 +206,11 @@ export default class ScriptLib {
     logger.debug("[lua] Call SetIsAllowUseSkill", canUse)
   }
 
-  public KillEntityByConfigId(context: context, table: { configId: number }) {
+  public KillEntityByConfigId(context: context, table: { config_id: number }) {
     logger.debug("[lua] Call KillEntityByConfigId", table)
 
     context.currentGroup.gadgetList
-      .find((gadget) => gadget.configId === table.configId)
+      .find((gadget) => gadget.configId === table.config_id)
       .kill(null, PlayerDieTypeEnum.PLAYER_DIE_NONE)
 
     return 0
@@ -226,10 +226,10 @@ export default class ScriptLib {
     return 0
   }
 
-  public CreateMonster(context: context, table: { configId: number; delayTime: number }) {
+  public CreateMonster(context: context, table: { config_id: number; delay_time: number }) {
     logger.debug("[lua] Call CreateMonster", table)
 
-    context.currentGroup.CreateMonster(table.configId, table.delayTime)
+    context.currentGroup.CreateMonster(table.config_id, table.delay_time)
 
     return 0
   }
@@ -238,10 +238,10 @@ export default class ScriptLib {
     logger.debug("[lua] Call TowerMirrorTeamSetUp", team)
   }
 
-  public CreateGadget(context: context, table: { configId: number }) {
+  public CreateGadget(context: context, table: { config_id: number }) {
     logger.debug("[lua] Call CreateGadget", table)
 
-    context.currentGroup.CreateGadget(table.configId)
+    context.currentGroup.CreateGadget(table.config_id)
 
     return 0
   }
@@ -262,10 +262,10 @@ export default class ScriptLib {
     logger.debug("[lua] Call AddQuestProgress", var1)
   }
 
-  public ChangeGroupGadget(context: context, table: { configId: number; state: GadgetStateEnum }) {
+  public ChangeGroupGadget(context: context, table: { config_id: number; state: GadgetStateEnum }) {
     logger.debug("[lua] Call ChangeGroupGadget", table)
 
-    const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === table.configId)
+    const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === table.config_id)
 
     if (!entity) {
     } else {
@@ -295,11 +295,11 @@ export default class ScriptLib {
   public BeginCameraSceneLook(
     context: context,
     table: {
-      lookPos: { x: number; y: number; z: number }
+      look_pos: { x: number; y: number; z: number }
       duration: number
-      isForce: boolean
-      isBroadcast: boolean
-      isBecoverKeepCurrent: boolean
+      is_force: boolean
+      is_broadcast: boolean
+      is_recover_keep_current: boolean
       delay: number
     }
   ) {
@@ -326,15 +326,13 @@ export default class ScriptLib {
     logger.debug("[lua] Call RemoveEntityByConfigId", groupId, entityType, configId)
   }
 
-  public RefreshGroup(context: context, table: { groupId: number; suite: number }) {
+  public RefreshGroup(context: context, table: { group_id: number; suite: number }) {
     logger.debug("[lua] Call RefreshGroup", table)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === table.groupId)
+    const group = context.currentGroup.block.groupList.find((group) => group.id === table.group_id)
 
-    if (group) {
-      group.RefreshGroup(table.suite)
-      return 0
-    }
+    group.RefreshGroup(table.suite)
+    return 0
   }
 
   public GetHostQuestState(context: context, questId: number) {
@@ -361,14 +359,11 @@ export default class ScriptLib {
     logger.debug("[lua] Call SetWeatherAreaState", areaId, state)
   }
 
-  public GetRegionEntityCount(context: context, table: { regionEid: number; entityType: EntityTypeEnum }) {
+  public GetRegionEntityCount(context: context, table: { region_eid: number; entity_type: EntityTypeEnum }) {
     logger.debug("[lua] Call GetRegionEntityCount", table)
   }
-  public SetEntityServerGlobalValueByConfigId(
-    context: context,
-    table: { entityId: number; value: string; unk: number }
-  ) {
-    logger.debug("[lua] Call SetEntityServerGlobalValueByConfigId", table)
+  public SetEntityServerGlobalValueByConfigId(context: context, entityId: number, value: string, unk: number) {
+    logger.debug("[lua] Call SetEntityServerGlobalValueByConfigId", entityId, value, unk)
   }
 
   public SetPlatformPointArray(context: context, unk: number, unk2: number, unk3: number[], unk4: any) {
