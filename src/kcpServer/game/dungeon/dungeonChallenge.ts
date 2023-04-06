@@ -1,4 +1,4 @@
-import KillMonsterTrigger from "./trigger/killMonsterTrigger"
+import ChallengeTrigger from "./trigger/challangeTrigger"
 
 import DungeonChallengeBegin from "#/packets/DungeonChallengeBegin"
 import DungeonChallengeFinish from "#/packets/DungeonChallengeFinish"
@@ -66,7 +66,7 @@ export default class DungeonChallenge {
       return context.client.player.uid
     })
 
-    await new KillMonsterTrigger().OnBegin(this)
+    await new ChallengeTrigger().OnBegin(this)
 
     await DungeonChallengeBegin.broadcastNotify(this.sceneGroup.block.scene.broadcastContextList, this)
   }
