@@ -4,7 +4,7 @@ import scriptManager from "../scriptManager"
 
 import { EventTypeEnum } from "@/types/enum"
 
-export default async function EVENT_GADGET_STATE_CHANGE(scriptManager: scriptManager, configId: string, state: string) {
+export default async function EVENT_GADGET_STATE_CHANGE(scriptManager: scriptManager, configId: number, state: number) {
   const { scriptLoader, logger, currentGroup } = scriptManager
 
   const lua = await scriptLoader.init(scriptManager.currentGroup.block.scene.id, scriptManager.currentGroup.id)

@@ -12,6 +12,7 @@ import ScriptLib from "./scriptLib"
 
 import config from "@/config"
 import Logger from "@/logger"
+import { EntityTypeEnum } from "@/types/enum"
 import { readFile } from "@/utils/fileSystem"
 
 const logger = new Logger("ScriptLoader", 0xff7f50)
@@ -24,6 +25,7 @@ export default class ScriptLoader {
       logger.verbose("[lua] Call require", arg)
     })
 
+    lua.global.set("EntityType", EntityTypeEnum)
     lua.global.set("EventType", EventType)
     lua.global.set("GadgetState", GadgetState)
     lua.global.set("RegionShape", RegionShape)
@@ -38,11 +40,9 @@ export default class ScriptLoader {
   public async ScriptByPath(lua: LuaEngine, path: string): Promise<LuaEngine> {
     const script = (await readFile(join(cwd(), `data/game/${config.game.version}/Scripts/`, path))).toString()
 
-    await lua
-      .doString(script.replace(/(?<![.\w"])(?<!\d)(-?(?:\d+(?:\.\d*)?|\.\d+))(?![.\w"])/g, "'$1'"))
-      .catch((err) => {
-        logger.error("[lua] ScriptByPath", path, err)
-      })
+    await lua.doString(script).catch((err) => {
+      logger.error("[lua] ScriptByPath", path, err)
+    })
 
     return lua
   }

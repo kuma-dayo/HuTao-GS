@@ -4,7 +4,7 @@ import scriptManager from "../scriptManager"
 
 import { EventTypeEnum } from "@/types/enum"
 
-export default async function EVENT_VARIABLE_CHANGE(scriptManager: scriptManager, oldValue: string, newValue: string) {
+export default async function EVENT_VARIABLE_CHANGE(scriptManager: scriptManager, oldValue: number, newValue: number) {
   const { scriptLoader, logger, currentGroup } = scriptManager
 
   let lua = await scriptLoader.init(scriptManager.currentGroup.block.scene.id, scriptManager.currentGroup.id)

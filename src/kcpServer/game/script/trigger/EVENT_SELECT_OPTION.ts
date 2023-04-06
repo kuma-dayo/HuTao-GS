@@ -4,7 +4,7 @@ import scriptManager from "../scriptManager"
 
 import { EventTypeEnum } from "@/types/enum"
 
-export default async function EVENT_SELECT_OPTION(scriptManager: scriptManager, configId: string, optionid: string) {
+export default async function EVENT_SELECT_OPTION(scriptManager: scriptManager, configId: number, optionid: number) {
   const { scriptLoader, logger, currentGroup } = scriptManager
 
   const lua = await scriptLoader.init(scriptManager.currentGroup.block.scene.id, scriptManager.currentGroup.id)

@@ -31,7 +31,7 @@ export default class scriptManager {
     if (this.currentGroup.trigger?.length > 0) {
       if (this.currentGroup.block.scene.ischallenge) {
       }
-      await EVENT_ANY_MONSTER_DIE(this, configId.toString())
+      await EVENT_ANY_MONSTER_DIE(this, configId)
     }
   }
 
@@ -39,7 +39,7 @@ export default class scriptManager {
     if (this.currentGroup.trigger?.length > 0)
       await EVENT_ANY_MONSTER_LIVE(
         this,
-        configIdList.map((configId) => configId.toString())
+        configIdList.map((configId) => configId)
       )
   }
 
@@ -56,24 +56,18 @@ export default class scriptManager {
   }
 
   async EVENT_GADGET_CREATE(configIdList: number[]) {
-    if (this.currentGroup.trigger?.length > 0)
-      await EVENT_GADGET_CREATE(
-        this,
-        configIdList.map((configId) => configId.toString())
-      )
+    if (this.currentGroup.trigger?.length > 0) await EVENT_GADGET_CREATE(this, configIdList)
   }
 
   async EVENT_GADGET_STATE_CHANGE(configId: number, state: number) {
-    if (this.currentGroup.trigger?.length > 0)
-      await EVENT_GADGET_STATE_CHANGE(this, configId.toString(), state.toString())
+    if (this.currentGroup.trigger?.length > 0) await EVENT_GADGET_STATE_CHANGE(this, configId, state)
   }
 
   async EVENT_SELECT_OPTION(configId: number, optionid: number) {
-    if (this.currentGroup.trigger?.length > 0) await EVENT_SELECT_OPTION(this, configId.toString(), optionid.toString())
+    if (this.currentGroup.trigger?.length > 0) await EVENT_SELECT_OPTION(this, configId, optionid)
   }
 
   async EVENT_VARIABLE_CHANGE(oldValue: number, newValue: number) {
-    if (this.currentGroup.trigger?.length > 0)
-      await EVENT_VARIABLE_CHANGE(this, oldValue.toString(), newValue.toString())
+    if (this.currentGroup.trigger?.length > 0) await EVENT_VARIABLE_CHANGE(this, oldValue, newValue)
   }
 }
