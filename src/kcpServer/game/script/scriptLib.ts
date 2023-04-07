@@ -369,4 +369,8 @@ export default class ScriptLib {
   public SetPlatformPointArray(context: context, unk: number, unk2: number, unk3: number[], unk4: any) {
     logger.debug("[lua] Call SetPlatformPointArray", unk, unk2, unk3, unk4)
   }
+
+  public SetMonsterBattleByGroup(context: context, configId: number, groupId: number) {
+    logger.debug("[lua] Call SetMonsterBattleByGroup", configId, groupId)
+  }
 }

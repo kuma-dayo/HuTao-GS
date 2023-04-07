@@ -52,8 +52,6 @@ class Handlers
 - [ ] HealHP　:  
     healHP packets do not contain a value to recover, so using the skill will not recover  
     You must either hardcode the recovery amount or use a resource to get the value.
-- [ ] LoseHP (Hutao xiao) :  
-    Same cause as HealHP problem  
 - [ ] Albedo Elevator :  
     This gadget is generated using an AbilityAction called CreateMovingPlatform  
     There are a few other things that need to be implemented, but see this [commit](https://github.com/Grasscutters/Grasscutter/pull/1845)
