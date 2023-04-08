@@ -330,8 +330,8 @@ export default class ScriptLib {
     logger.debug("[lua] Call RefreshGroup", table)
 
     const group = context.currentGroup.block.groupList.find((group) => group.id === table.group_id)
-
     group.RefreshGroup(table.suite)
+
     return 0
   }
 

@@ -1,32 +1,32 @@
 export interface QuestData {
-  id: number
+  Id: number
   ELEPLNPCHAA?: number
-  series?: number
-  titleTextMapHash?: number
-  descTextMapHash?: number
-  luaPath: string
-  suggestTrackMainQuestList?: number[]
-  rewardIdList?: number[]
-  chapterId?: number
-  showRedPoint?: boolean
-  subQuests?: SubQuest[]
-  talks?: Talk[]
+  Series?: number
+  TitleTextMapHash?: number
+  DescTextMapHash?: number
+  LuaPath: string
+  SuggestTrackMainQuestList?: number[]
+  RewardIdList?: number[]
+  ChapterId?: number
+  ShowRedPoint?: boolean
+  SubQuests?: SubQuest[]
+  Talks?: Talk[]
   BPKCHMHEIEE?: number[]
   MLPLKFJDMIK?: number[]
-  freeStyleDic?: { [key: string]: number[] }
-  type?: QuestDatumType
-  showType?: ShowType
-  forcePreloadLuaList?: number[]
+  FreeStyleDic?: { [key: string]: number[] }
+  Type?: QuestDatumType
+  ShowType?: ShowType
+  ForcePreloadLuaList?: number[]
   HBPBFHKEDLF?: number
-  mainQuestTag?: MainQuestTag
-  activeMode?: ActiveMode
-  preloadLuaList?: number[]
-  dialogList?: DialogList[]
-  suggestTrackOutOfOrder?: boolean
-  repeatable?: boolean
-  taskID?: number
-  activityId?: number
-  recommendLevel?: number
+  MainQuestTag?: MainQuestTag
+  ActiveMode?: ActiveMode
+  PreloadLuaList?: number[]
+  DialogList?: DialogList[]
+  SuggestTrackOutOfOrder?: boolean
+  Repeatable?: boolean
+  TaskID?: number
+  ActivityId?: number
+  RecommendLevel?: number
 }
 
 export enum ActiveMode {
@@ -62,8 +62,8 @@ export enum ActionWhile {
 }
 
 export interface TalkRole {
-  type?: TalkRoleType
-  id: string
+  Type?: TalkRoleType
+  Id: string
 }
 
 export enum TalkRoleType {
@@ -89,34 +89,34 @@ export enum ShowType {
 }
 
 export interface SubQuest {
-  subId: number
-  mainId: number
-  order: number
-  descTextMapHash?: number
-  finishCond?: Cond[]
-  guide: Guide
-  acceptCondComb: AcceptCondComb
-  isRewind?: boolean
-  versionBegin: string
-  versionEnd: string
-  isMpBlock?: boolean
-  subIdSet?: number
-  finishExec?: FailExec[]
-  showType?: ShowType
-  banType?: BanType
-  failCond?: Cond[]
-  finishParent?: boolean
-  failExec?: FailExec[]
-  showGuide?: ShowGuide
-  stepDescTextMapHash?: number
-  failParentShow?: ShowType
-  guideTipsTextMapHash?: number
-  failParent?: boolean
+  SubId: number
+  MainId: number
+  Order: number
+  DescTextMapHash?: number
+  FinishCond?: Cond[]
+  Guide: Guide
+  AcceptCondComb: AcceptCondComb
+  IsRewind?: boolean
+  VersionBegin: string
+  VersionEnd: string
+  IsMpBlock?: boolean
+  SubIdSet?: number
+  FinishExec?: FailExec[]
+  ShowType?: ShowType
+  BanType?: BanType
+  FailCond?: Cond[]
+  FinishParent?: boolean
+  FailExec?: FailExec[]
+  ShowGuide?: ShowGuide
+  StepDescTextMapHash?: number
+  FailParentShow?: ShowType
+  GuideTipsTextMapHash?: number
+  FailParent?: boolean
 }
 
 export interface AcceptCondComb {
   ODAOGCJFIHC: string
-  type?: AcceptCondCombType
+  Type?: AcceptCondCombType
 }
 
 export enum AcceptCondCombType {
@@ -133,9 +133,9 @@ export enum BanType {
 }
 
 export interface Cond {
-  type: FailCondType
-  param: number[]
-  count?: number
+  Type: FailCondType
+  Param: number[]
+  Count?: number
 }
 
 export enum FailCondType {
@@ -206,8 +206,8 @@ export enum FailCondType {
 }
 
 export interface FailExec {
-  type?: FailExecType
-  param?: string[]
+  Type?: FailExecType
+  Param?: string[]
 }
 
 export enum FailExecType {
@@ -319,12 +319,12 @@ export enum FailExecType {
 }
 
 export interface Guide {
-  type?: GuideType
-  param?: string[]
-  guideScene?: number
-  guideStyle?: GuideStyle
-  guideLayer?: GuideLayer
-  autoGuide?: AutoGuide
+  Type?: GuideType
+  Param?: string[]
+  GuideScene?: number
+  GuideStyle?: GuideStyle
+  GuideLayer?: GuideLayer
+  AutoGuide?: AutoGuide
 }
 
 export enum AutoGuide {
@@ -357,35 +357,35 @@ export enum ShowGuide {
 }
 
 export interface Talk {
-  id: number
-  beginWay?: BeginWay
-  beginCond?: FailExec[]
-  priority?: number
-  initDialog?: number
-  npcId?: number[]
-  performCfg: string
-  heroTalk?: HeroTalk
-  questId: number
-  assetIndex: number
-  prePerformCfg: PrePerformCFG
-  beginCondComb?: BeginCondComb
-  nextTalks?: number[]
+  Id: number
+  BeginWay?: BeginWay
+  BeginCond?: FailExec[]
+  Priority?: number
+  InitDialog?: number
+  NpcId?: number[]
+  PerformCfg: string
+  HeroTalk?: HeroTalk
+  QuestId: number
+  AssetIndex: number
+  PrePerformCfg: PrePerformCFG
+  BeginCondComb?: BeginCondComb
+  NextTalks?: number[]
   ONJHDOMNFOJ?: number[]
-  dontBlockDaily?: boolean
-  activeMode?: ActiveMode
-  lockGameTime?: boolean
-  questIdleTalk?: boolean
-  lowPriority?: boolean
-  stayFreeStyle?: boolean
-  finishExec?: FailExec[]
-  enableCameraDisplacement?: boolean
+  DontBlockDaily?: boolean
+  ActiveMode?: ActiveMode
+  LockGameTime?: boolean
+  QuestIdleTalk?: boolean
+  LowPriority?: boolean
+  StayFreeStyle?: boolean
+  FinishExec?: FailExec[]
+  EnableCameraDisplacement?: boolean
   PKKCHKIMBDM?: number[]
   NBCNFGJKLMG?: boolean
-  talkMarkType?: TalkMarkType
+  TalkMarkType?: TalkMarkType
   FNOOFAGOKMN?: number
   NBJPAMCNCKC?: number
   FIHPIKGEAGK?: number[]
-  participantId?: number[]
+  ParticipantId?: number[]
   IJIOLOCLAAC?: number[]
   AKHDPOJKBNK?: number[]
 }

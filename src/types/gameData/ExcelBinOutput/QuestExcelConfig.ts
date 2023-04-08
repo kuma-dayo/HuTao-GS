@@ -1,18 +1,18 @@
 export interface QuestExcelConfig {
-  subId: number
-  mainId: number
-  order: number
-  descTextMapHash: number
-  stepDescTextMapHash: number
-  guideTipsTextMapHash: number
-  showType?: FailParentShow
-  guide: Guide
-  finishCondComb: FinishCondComb
-  showGuide?: ShowGuide
-  banType?: BanType
-  isMpBlock?: boolean
-  subIdSet?: number
-  failParentShow?: FailParentShow
+  SubId: number
+  MainId: number
+  Order: number
+  DescTextMapHash: number
+  StepDescTextMapHash: number
+  GuideTipsTextMapHash: number
+  ShowType?: FailParentShow
+  Guide: Guide
+  FinishCondComb: FinishCondComb
+  ShowGuide?: ShowGuide
+  BanType?: BanType
+  IsMpBlock?: boolean
+  SubIdSet?: number
+  FailParentShow?: FailParentShow
 }
 
 export enum BanType {
@@ -29,12 +29,12 @@ export enum FailParentShow {
 export interface FinishCondComb {}
 
 export interface Guide {
-  param: string[]
-  type?: Type
-  guideScene?: number
-  guideStyle?: GuideStyle
-  guideLayer?: GuideLayer
-  autoGuide?: AutoGuide
+  Param: string[]
+  Type?: Type
+  GuideScene?: number
+  GuideStyle?: GuideStyle
+  GuideLayer?: GuideLayer
+  AutoGuide?: AutoGuide
 }
 
 export enum AutoGuide {
