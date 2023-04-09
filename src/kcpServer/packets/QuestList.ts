@@ -16,15 +16,15 @@ class QuestListPacket extends Packet implements PacketInterface {
 
     const notifyData: QuestListNotify = {
       questList: [
-        {
-          questId: 30303,
-          state: 3,
-          startTime: now,
-          parentQuestId: 303,
-          startGameTime: context.player.gameTime,
-          acceptTime: now,
-          finishProgressList: [1],
-        },
+        // {
+        //   acceptTime: now,
+        //   finishProgressList: [0],
+        //   parentQuestId: 40092,
+        //   questId: 4009201,
+        //   startGameTime: context.player.gameTime,
+        //   startTime: now,
+        //   state: 2,
+        // },
       ],
     }
 

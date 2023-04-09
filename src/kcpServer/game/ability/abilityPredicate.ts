@@ -132,22 +132,24 @@ export default class AbilityPredicate {
     const entry = container.getValue(key)
     const entryVal = entry?.val || 0
 
-    switch (type || RelationTypeEnum.Equal) {
-      case RelationTypeEnum.Equal:
-        return entryVal === val
-      case RelationTypeEnum.MoreThan:
-        return entryVal > val
-      case RelationTypeEnum.LessAndEqual:
-        return entryVal <= val
-      case RelationTypeEnum.Between:
-        return entryVal >= val && entryVal <= maxVal
-      case RelationTypeEnum.MoreThanAndEqual:
-        return entryVal >= val
-      case RelationTypeEnum.NoneOrEqual:
-        return entry == null || entryVal === val
-      default:
-        return false
-    }
+    if (typeof entryVal == "number") {
+      switch (type || RelationTypeEnum.Equal) {
+        case RelationTypeEnum.Equal:
+          return entryVal === val
+        case RelationTypeEnum.MoreThan:
+          return entryVal > val
+        case RelationTypeEnum.LessAndEqual:
+          return entryVal <= val
+        case RelationTypeEnum.Between:
+          return entryVal >= val && entryVal <= maxVal
+        case RelationTypeEnum.MoreThanAndEqual:
+          return entryVal >= val
+        case RelationTypeEnum.NoneOrEqual:
+          return entry == null || entryVal === val
+        default:
+          return false
+      }
+    } else return false
   }
 
   check(ability: AppliedAbility, predicate: ConfigAbilityPredicate, target: Entity): boolean {

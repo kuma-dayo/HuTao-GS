@@ -40,9 +40,7 @@ export default class ScriptLoader {
   public async ScriptByPath(lua: LuaEngine, path: string): Promise<LuaEngine> {
     const script = (await readFile(join(cwd(), `data/game/${config.game.version}/Scripts/`, path))).toString()
 
-    await lua.doString(script).catch((err) => {
-      logger.error("[lua] ScriptByPath", path, err)
-    })
+    await lua.doString(script).catch((err) => logger.error("[lua] ScriptByPath", path, err))
 
     return lua
   }
