@@ -1,10 +1,12 @@
-import { QuestDatumType, SubQuest, Talk } from "./BinOutput/Quest"
+import { SubQuest, Talk } from "./BinOutput/Quest"
+
+import { QuestType } from "$/quest/enum"
 
 export interface QuestData {
   Id: number
   Series: number
   ChapterId: number
-  Type: QuestDatumType
+  Type: QuestType
   Talks: Talk[]
   SubQuests: SubQuest[]
 }

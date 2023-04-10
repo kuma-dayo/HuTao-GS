@@ -269,7 +269,18 @@ export default class Player extends BaseClass {
   }
 
   async init(userData: UserData): Promise<void> {
-    const { guidManager, profile, props, openState, inventory, widget, teamManager, avatarList, hostWorld } = this
+    const {
+      guidManager,
+      questManager,
+      profile,
+      props,
+      openState,
+      inventory,
+      widget,
+      teamManager,
+      avatarList,
+      hostWorld,
+    } = this
     const {
       worldData,
       guidData,
@@ -283,11 +294,13 @@ export default class Player extends BaseClass {
       flycloakDataList,
       costumeDataList,
       emojiIdList,
+      questData,
       godMode,
       gameTime,
     } = userData || {}
 
     guidManager.init(guidData)
+    questManager.init(questData)
     profile.init(profileData)
     props.init(propsData)
     openState.init(openStateData)
@@ -889,6 +902,7 @@ export default class Player extends BaseClass {
         avatarId: costume.AvatarId,
       })),
       emojiIdList: emojiCollection,
+      questData: { quest: this.questManager.exportQuestData() },
       worldData: hostWorld.exportUserData(),
       godMode,
       gameTime,

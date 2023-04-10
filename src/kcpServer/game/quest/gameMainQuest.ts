@@ -3,6 +3,7 @@ import GameQuest from "./gameQuest"
 
 import QuestData from "$/gameData/data/QuestData"
 import Player from "$/player"
+import { Talk } from "$DT/BinOutput/Quest"
 
 export default class GameMainQuest {
   player: Player
@@ -10,9 +11,12 @@ export default class GameMainQuest {
 
   parentQuestId: number
   questVars: number[]
+  timeVar: number[]
   parentQuestState: ParentQuestState
   childQuest: GameQuest[]
-  isFinish: boolean
+  isFinished: boolean
+
+  talks: Talk[]
 
   constructor(player: Player, parentQuestId: number) {
     this.player = player
@@ -20,8 +24,9 @@ export default class GameMainQuest {
 
     this.parentQuestId = parentQuestId
     this.questVars = [0, 0, 0, 0, 0] //official server always has a list of 5 questVars, with default value 0
+    this.timeVar = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
     this.parentQuestState = ParentQuestState.PARENT_QUEST_STATE_NONE
-    this.isFinish = false
+    this.isFinished = false
 
     this.addAllChildQuest()
   }
@@ -30,5 +35,11 @@ export default class GameMainQuest {
     this.childQuest = (await QuestData.getQuestData(this.parentQuestId)).SubQuests.map(
       (subQuest) => new GameQuest(this, subQuest)
     )
+  }
+
+  exportQuestData() {
+    const data = this.childQuest.map((quest) => quest.exportQuestData())
+
+    return data
   }
 }

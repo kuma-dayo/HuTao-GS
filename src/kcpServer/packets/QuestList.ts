@@ -1,6 +1,5 @@
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import { Quest } from "@/types/proto"
-import { getTimeSeconds } from "@/utils/time"
 
 export interface QuestListNotify {
   questList: Quest[]
@@ -12,20 +11,10 @@ class QuestListPacket extends Packet implements PacketInterface {
   }
 
   async sendNotify(context: PacketContext): Promise<void> {
-    const now = getTimeSeconds()
-
     const notifyData: QuestListNotify = {
-      questList: [
-        // {
-        //   acceptTime: now,
-        //   finishProgressList: [0],
-        //   parentQuestId: 40092,
-        //   questId: 4009201,
-        //   startGameTime: context.player.gameTime,
-        //   startTime: now,
-        //   state: 2,
-        // },
-      ],
+      questList: context.player.questManager
+        .exportQuestData()
+        .flatMap((mainQuestList) => mainQuestList.exportQuestData()),
     }
 
     await super.sendNotify(context, notifyData)
