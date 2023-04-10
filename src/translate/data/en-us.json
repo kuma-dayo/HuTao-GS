@@ -563,7 +563,10 @@
         "reqInfo": "Search params: %0"
       },
       "error": {
-        "updateFail": "Update failed."
+        "msg": "Connection Failed!",
+        "updateFail": "Update failed.",
+        "outdateServer": "Version mismatch outdated server! \n\nServer version: %0 \nClient version: %1",
+        "outdateClient": "Version mismatch outdated client! \n\nServer version: %0 \nClient version: %1"
       }
     },
     "dnsServer": {

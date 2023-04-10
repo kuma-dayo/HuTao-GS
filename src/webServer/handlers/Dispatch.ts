@@ -5,6 +5,7 @@ import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import config from "@/config"
 import curRegion from "@/tools/autoPatch/curRegion"
 import regionList from "@/tools/autoPatch/regionList"
+import translate from "@/translate"
 import TError from "@/translate/terror"
 import TLogger from "@/translate/tlogger"
 import { QueryCurrRegionHttpRsp, QueryRegionListHttpRsp } from "@/types/proto"
@@ -13,6 +14,7 @@ import DispatchKey from "@/utils/dispatchKey"
 import { fileExists, readFile } from "@/utils/fileSystem"
 import { dataToProtobuffer, objToProtobuffer } from "@/utils/proto"
 import { rsaEncrypt, rsaSign } from "@/utils/rsa"
+import { getTimeSeconds } from "@/utils/time"
 import { versionStrToNum } from "@/utils/version"
 import { xor } from "@/utils/xor"
 
@@ -69,7 +71,13 @@ class DispatchHandler extends Handler {
         // >= 2.7.50
         const keyId = parseInt(searchParams.get("key_id")) || 0
         const keyPairs = await DispatchKey.getKeyPairs(keyId)
-        const encoded = await this.curRegionRsp(searchParams.get("dispatchSeed"))
+        const encoded = await this.curRegionRsp(
+          searchParams.get("dispatchSeed"),
+          searchParams
+            .get("version")
+            .toString()
+            .replace(/[^\d.]/g, "")
+        )
 
         response = {
           content: rsaEncrypt(keyPairs.client.public, encoded).toString("base64"),
@@ -79,7 +87,15 @@ class DispatchHandler extends Handler {
       }
       case clientVersion >= 0x010000: {
         // >= 1.0.0
-        response = (await this.curRegionRsp(searchParams.get("dispatchSeed"))).toString("base64")
+        response = (
+          await this.curRegionRsp(
+            searchParams.get("dispatchSeed"),
+            searchParams
+              .get("version")
+              .toString()
+              .replace(/[^\d.]/g, "")
+          )
+        ).toString("base64")
         break
       }
       default: {
@@ -141,7 +157,7 @@ class DispatchHandler extends Handler {
     })
   }
 
-  private async curRegionRsp(seed?: string): Promise<Buffer> {
+  private async curRegionRsp(seed?: string, clientVersion?: string): Promise<Buffer> {
     let curRegionData: QueryCurrRegionHttpRsp
 
     if (autoPatch) {
@@ -152,30 +168,49 @@ class DispatchHandler extends Handler {
 
       curRegionData = await dataToProtobuffer(await readFile(binPath), "QueryCurrRegionHttpRsp", true)
     } else {
-      const customConfig = Buffer.from(JSON.stringify(clientCustomConfig))
-      xor(customConfig, await DispatchKey.getXorKey())
+      if (clientVersion === version) {
+        const customConfig = Buffer.from(JSON.stringify(clientCustomConfig))
+        xor(customConfig, await DispatchKey.getXorKey())
 
-      const secretKey = (await DispatchKey.getEc2b()).toString("base64")
+        const secretKey = (await DispatchKey.getEc2b()).toString("base64")
 
-      curRegionData = {
-        retcode: RetcodeEnum.RET_SUCC,
-        regionInfo: {
-          secretKey,
-          cdkeyUrl:
-            "https://hk4e-api.mihoyo.com/common/apicdkey/api/exchangeCdkey?sign_type=2&auth_appid=apicdkey&authkey_ver=1",
-        },
-        clientSecretKey: secretKey,
-        clientRegionCustomConfigEncrypted: customConfig.toString("base64"),
+        curRegionData = {
+          retcode: RetcodeEnum.RET_SUCC,
+          regionInfo: {
+            secretKey,
+            cdkeyUrl:
+              "https://hk4e-api.mihoyo.com/common/apicdkey/api/exchangeCdkey?sign_type=2&auth_appid=apicdkey&authkey_ver=1",
+            gateserverIp: hostIp,
+            gateserverPort: Array.isArray(kcpPort) ? kcpPort[Math.floor(Math.random() * kcpPort.length)] : kcpPort,
+            payCallbackUrl: `https://${hostIp}/recharge`,
+          },
+          clientSecretKey: secretKey,
+          clientRegionCustomConfigEncrypted: customConfig.toString("base64"),
+        }
+
+        return objToProtobuffer(curRegionData, "QueryCurrRegionHttpRsp", true)
+      } else {
+        const curRegionData: QueryCurrRegionHttpRsp = {
+          retcode: RetcodeEnum.RET_STOP_SERVER,
+          msg: translate("message.dispatch.error.msg", version, clientVersion),
+          regionInfo: {
+            gateserverIp: hostIp,
+            gateserverPort: Array.isArray(kcpPort) ? kcpPort[Math.floor(Math.random() * kcpPort.length)] : kcpPort,
+            payCallbackUrl: `https://${hostIp}/recharge`,
+          },
+          stopServer: {
+            url: "https://github.com/kuma-dayo/Hutao-GS",
+            stopBeginTime: getTimeSeconds(),
+            stopEndTime: getTimeSeconds() * 2,
+            contentMsg: this.isNewerVersion(clientVersion, version)
+              ? translate("message.dispatch.error.outdateServer", version, clientVersion)
+              : translate("message.dispatch.error.outdateClient", version, clientVersion),
+          },
+        }
+
+        return objToProtobuffer(curRegionData, "QueryCurrRegionHttpRsp", true)
       }
     }
-
-    curRegionData.regionInfo.gateserverIp = hostIp
-    curRegionData.regionInfo.gateserverPort = Array.isArray(kcpPort)
-      ? kcpPort[Math.floor(Math.random() * kcpPort.length)]
-      : kcpPort
-    curRegionData.regionInfo.payCallbackUrl = `https://${hostIp}/recharge`
-
-    return objToProtobuffer(curRegionData, "QueryCurrRegionHttpRsp", true)
   }
 
   private async curRegionRspNFVC(): Promise<string> {
@@ -193,6 +228,21 @@ class DispatchHandler extends Handler {
     ).toString("base64")
 
     return this.nfvcCache
+  }
+
+  isNewerVersion(clientVersion: string, serverVersion: string): boolean {
+    const v1: number[] = clientVersion.split(".").map(Number)
+    const v2: number[] = serverVersion.split(".").map(Number)
+
+    for (let i = 0; i < v1.length; i++) {
+      if (v1[i] > v2[i]) {
+        return true
+      } else if (v1[i] < v2[i]) {
+        return false
+      }
+    }
+
+    return false
   }
 }
 
