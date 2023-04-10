@@ -192,7 +192,7 @@ class DispatchHandler extends Handler {
       } else {
         const curRegionData: QueryCurrRegionHttpRsp = {
           retcode: RetcodeEnum.RET_STOP_SERVER,
-          msg: translate("message.dispatch.error.msg", version, clientVersion),
+          msg: translate("message.dispatch.error.msg"),
           regionInfo: {
             gateserverIp: hostIp,
             gateserverPort: Array.isArray(kcpPort) ? kcpPort[Math.floor(Math.random() * kcpPort.length)] : kcpPort,
