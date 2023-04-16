@@ -37,7 +37,7 @@ export const getJsonAsync = (path: string, defValue: any = null): Promise<any> =
     const jsonPath = join(cwd(), path)
     if (!(await fileExists(jsonPath))) return resolve(defValue)
 
-    if (cache.has(jsonPath)) return resolve(cache.get(jsonPath))
+    if (cache.has(jsonPath) && path.includes("game")) return resolve(cache.get(jsonPath))
 
     try {
       parseAsync((await readFile(jsonPath)).toString(), async (err, data) => {
