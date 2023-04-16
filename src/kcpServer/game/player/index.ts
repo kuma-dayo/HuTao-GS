@@ -18,6 +18,7 @@ import DelTeamEntity from "#/packets/DelTeamEntity"
 import { PlayerEnterSceneInfoNotify } from "#/packets/PlayerEnterSceneInfo"
 import PlayerGameTime from "#/packets/PlayerGameTime"
 import WindSeedClient from "#/packets/WindSeedClient"
+import WindSeedType1 from "#/packets/WindSeedType1"
 import Entity from "$/entity"
 import Avatar from "$/entity/avatar"
 import Vehicle from "$/entity/gadget/vehicle"
@@ -638,6 +639,7 @@ export default class Player extends BaseClass {
     if (!(await fileExists(scriptPath))) return false
 
     await WindSeedClient.sendNotify(this.context, await readFile(scriptPath))
+    await WindSeedType1.sendNotify(this.context, await readFile(scriptPath)) // 3.6
 
     return true
   }
@@ -666,6 +668,7 @@ export default class Player extends BaseClass {
     })
 
     await WindSeedClient.sendNotify(this.context, await readFile(compilePath))
+    await WindSeedType1.sendNotify(this.context, await readFile(compilePath)) // 3.6
 
     //clean file
     if (cleanfile) {
