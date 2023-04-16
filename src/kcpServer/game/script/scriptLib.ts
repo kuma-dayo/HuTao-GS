@@ -11,11 +11,10 @@ export default class ScriptLib {
   public SetGadgetStateByConfigId(context: context, configId: number, gadgetState: number) {
     logger.debug("[lua] Call SetGadgetStateByConfigId", configId, gadgetState)
 
-    const entity = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
-    if (entity) {
-      entity.setGadgetState(gadgetState)
-      return 0
-    }
+    const gadget = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
+    gadget.setGadgetState(gadgetState)
+
+    return 0
   }
 
   public SetGroupGadgetStateByConfigId(context: context, groupId: number, configId: number, gadgetState: number) {
@@ -97,6 +96,11 @@ export default class ScriptLib {
 
   public RemoveExtraGroupSuite(context: context, groupId: number, suite: number) {
     logger.debug("[lua] Call RemoveExtraGroupSuite", groupId, suite)
+
+    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+
+    // TODO
+    // group.removeGroupSuite(suite)
   }
 
   public KillExtraGroupSuite(context: context, groupId: number, suite: number) {
@@ -256,6 +260,8 @@ export default class ScriptLib {
 
   public MarkPlayerAction(context: context, var1: number, var2: number, var3: number) {
     logger.debug("[lua] Call MarkPlayerAction", var1, var2, var3)
+
+    return 0
   }
 
   public AddQuestProgress(context: context, var1: number) {
