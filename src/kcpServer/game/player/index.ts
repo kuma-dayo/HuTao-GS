@@ -905,7 +905,7 @@ export default class Player extends BaseClass {
         avatarId: costume.AvatarId,
       })),
       emojiIdList: emojiCollection,
-      questData: { quest: this.questManager.exportQuestData() },
+      questData: { quest: [] },
       worldData: hostWorld.exportUserData(),
       godMode,
       gameTime,

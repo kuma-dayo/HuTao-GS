@@ -16,6 +16,17 @@ export default class QuestManager {
     this.questList = userData?.quest || []
   }
 
+  async addMainQuest(parentQuestId: number) {
+    const gameMainQuest = new GameMainQuest(this.player, parentQuestId)
+
+    await gameMainQuest.init()
+    this.questList.push(gameMainQuest)
+  }
+
+  getMainQuest(parentQuestId: number) {
+    return this.questList.find((quest) => quest.parentQuestId === parentQuestId)
+  }
+
   exportQuestData(): GameMainQuest[] {
     return this.questList
   }

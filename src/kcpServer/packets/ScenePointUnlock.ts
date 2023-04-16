@@ -2,7 +2,7 @@ import Packet, { PacketInterface, PacketContext } from "#/packet"
 import SceneData from "$/gameData/data/SceneData"
 import Scene from "$/scene"
 
-const unlockType = ["SceneTransPoint", "DungeonEntry", "VirtualTransPoint"]
+const unlockType = ["SceneTransPoint", "DungeonEntry", "VirtualTransPoint", "TransPointNormal", "TransPointStatue"]
 
 export interface ScenePointUnlockNotify {
   sceneId: number

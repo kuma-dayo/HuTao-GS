@@ -26,8 +26,8 @@
           "give": "Give artifact set: (%0)x%1"
         },
         "usage": {
-          "0": "artSet <id> <count> <uid> - Give artifact sets to player",
-          "1": "artSet <id> <count>       - (In game) Give artifact sets to yourself",
+          "0": "artSet <id> <uid>         - Give artifact sets to player",
+          "1": "artSet <id>               - (In game) Give artifact sets to yourself",
           "2": "artSet <id>               - (In game) Give 1 artifact set to yourself"
         }
       },
@@ -543,6 +543,31 @@
         "generateUidFail": "Failed to generate uid."
       }
     },
+    "cache": {
+      "debug": {
+        "ability": "cache abilityData",
+        "avatar": "cache avatarData",
+        "dungeon": "cache dungeonData",
+        "gadget": "cache gadgetData",
+        "growCurve": "cache growCurveData",
+        "mapArea": "cache mapAreaData",
+        "material": "cache materialData",
+        "monster": "cache monsterData",
+        "quest": "cache questData",
+        "reliquary": "cache reliquaryData",
+        "scene": "cache sceneData",
+        "shop": "cache shopData",
+        "skill": "cache skillData",
+        "talent": "cache talentData",
+        "weapon": "cache weaponData",
+        "weather": "cache weatherData",
+        "world": "cache worldData"
+      },
+      "info": {
+        "start": "Start caching resources",
+        "success": "Success caching resources"
+      }
+    },
     "client": {
       "debug": {
         "seed": "Set seed: %0 %1",
@@ -564,9 +589,9 @@
       },
       "error": {
         "msg": "Connection Failed!",
-        "updateFail": "Update failed.",
+        "outdateClient": "Version mismatch outdated client! \n\nServer version: %0 \nClient version: %1",
         "outdateServer": "Version mismatch outdated server! \n\nServer version: %0 \nClient version: %1",
-        "outdateClient": "Version mismatch outdated client! \n\nServer version: %0 \nClient version: %1"
+        "updateFail": "Update failed."
       }
     },
     "dnsServer": {

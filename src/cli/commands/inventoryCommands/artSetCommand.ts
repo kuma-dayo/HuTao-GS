@@ -6,17 +6,17 @@ import translate from "@/translate"
 
 const artSetCommand: CommandDefinition = {
   name: "artSet",
+  alias: "artset",
   usage: 3,
   args: [
     { name: "id", type: "int" },
-    { name: "count", type: "int", optional: true },
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
   exec: async (cmdInfo) => {
     const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
-    const [id, count, uid] = args
+    const [id, uid] = args
 
     const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
@@ -24,14 +24,12 @@ const artSetCommand: CommandDefinition = {
     const artIdList = (await ReliquaryData.getSet(id))?.ContainsList
     if (artIdList == null) return printError(translate("cli.commands.artSet.error.setNotFound"))
 
-    print(translate("cli.commands.artSet.info.give", id, count || 1))
+    print(translate("cli.commands.artSet.info.give", id, 1))
 
-    for (let i = 0; i < count || 1; i++) {
-      for (const id of artIdList) {
-        const reliquary = new Reliquary(id, player)
-        await reliquary.initNew()
-        if (!(await player.inventory.add(reliquary))) return printError(translate("generic.inventoryFull"))
-      }
+    for (const id of artIdList) {
+      const reliquary = new Reliquary(id, player)
+      await reliquary.initNew()
+      if (!(await player.inventory.add(reliquary))) return printError(translate("generic.inventoryFull"))
     }
   },
 }

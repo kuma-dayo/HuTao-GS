@@ -3,7 +3,7 @@ import SceneData from "$/gameData/data/SceneData"
 import { ClientStateEnum } from "@/types/enum"
 import { RetcodeEnum } from "@/types/proto/enum"
 
-const unlockType = ["SceneTransPoint", "DungeonEntry", "VirtualTransPoint"]
+const unlockType = ["SceneTransPoint", "DungeonEntry", "VirtualTransPoint", "TransPointNormal", "TransPointStatue"]
 
 export interface GetScenePointReq {
   sceneId: number

@@ -1,6 +1,5 @@
 import Packet, { PacketContext, PacketInterface } from "#/packet"
 import { ParentQuest } from "@/types/proto"
-import { getJson } from "@/utils/json"
 
 export interface FinishedParentQuestNotify {
   parentQuestList: ParentQuest[]
@@ -13,7 +12,12 @@ class FinishedParentQuestPacket extends Packet implements PacketInterface {
 
   async sendNotify(context: PacketContext): Promise<void> {
     const notifyData: FinishedParentQuestNotify = {
-      parentQuestList: getJson("data/parentQuestList.json", []),
+      parentQuestList: context.player.questManager.exportQuestData().map((quest) => {
+        return {
+          parentQuestId: quest.parentQuestId,
+          isFinished: quest.isFinished,
+        }
+      }),
     }
 
     await super.sendNotify(context, notifyData)

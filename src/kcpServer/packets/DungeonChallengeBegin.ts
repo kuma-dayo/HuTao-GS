@@ -24,7 +24,6 @@ class DungeonChallengeBeginPacket extends Packet implements PacketInterface {
       challengeId: dungeonChallenge.challengeId,
       challengeIndex: dungeonChallenge.challengeIndex,
       groupId: dungeonChallenge.groupId,
-      uidList: dungeonChallenge.uidList,
       paramList: dungeonChallenge.paramList,
     }
 

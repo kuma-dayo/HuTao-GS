@@ -58,7 +58,7 @@ export const objToProtobuffer = async (obj: object, cmdId: number | string, comm
     const message = type.create(obj)
     return Buffer.from(type.encode(message).finish())
   } catch (err) {
-    if (canLogProto(protoName)) logger.error("generic.param1", (<Error>err).message)
+    if (canLogProto(protoName)) logger.error("generic.param1", <Error>err)
     return Buffer.alloc(0)
   }
 }
@@ -78,7 +78,7 @@ export const dataToProtobuffer = async <T extends object>(
     }
     return <T>type.decode(data)
   } catch (err) {
-    if (canLogProto(protoName)) logger.error("generic.param1", (<Error>err).message)
+    if (canLogProto(protoName)) logger.error("generic.param1", <Error>err)
     await dumpProto(protoName, data)
     return <T>{}
   }

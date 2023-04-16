@@ -27,18 +27,20 @@ export default class GameMainQuest {
     this.timeVar = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
     this.parentQuestState = ParentQuestState.PARENT_QUEST_STATE_NONE
     this.isFinished = false
+  }
 
-    this.addAllChildQuest()
+  async init() {
+    await this.addAllChildQuest()
   }
 
   async addAllChildQuest() {
-    this.childQuest = (await QuestData.getQuestData(this.parentQuestId)).SubQuests.map(
-      (subQuest) => new GameQuest(this, subQuest)
-    )
+    const questData = await QuestData.getQuestData(this.parentQuestId)
+    this.talks = questData.Talks
+    this.childQuest = questData.SubQuests.map((subQuest) => new GameQuest(this, subQuest))
   }
 
   exportQuestData() {
-    const data = this.childQuest.map((quest) => quest.exportQuestData())
+    const data = this.childQuest?.map((quest) => quest.exportQuestData()).filter((p) => p !== undefined)
 
     return data
   }

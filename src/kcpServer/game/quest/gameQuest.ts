@@ -1,16 +1,16 @@
-import { QuestContent, QuestState } from "./enum"
+import { QuestState } from "./enum"
 import GameMainQuest from "./gameMainQuest"
 
+import QuestListUpdate from "#/packets/QuestListUpdate"
 import { SubQuest } from "$DT/BinOutput/Quest"
 import { Quest } from "@/types/proto"
 import { getTimeSeconds } from "@/utils/time"
 
 export default class GameQuest {
   mainQuest: GameMainQuest
-  questData: SubQuest
 
   mainQuestId: number
-  subQuestID: number
+  subQuestId: number
 
   state: QuestState
 
@@ -26,10 +26,10 @@ export default class GameQuest {
 
   constructor(mainQuest: GameMainQuest, questData: SubQuest) {
     this.mainQuest = mainQuest
-    this.questData = questData
     this.mainQuestId = questData.MainId
-    this.subQuestID = questData.SubId
+    this.subQuestId = questData.SubId
     this.state = QuestState.QUEST_STATE_NONE
+    this.finishProgressList = [0]
   }
 
   async start() {
@@ -39,12 +39,7 @@ export default class GameQuest {
     this.startGameTime = this.mainQuest.player.gameTime
     this.state = QuestState.QUEST_STATE_UNFINISHED
 
-    const triggerCondList = this.questData.FinishCond.filter((p) => p.Type == QuestContent.QUEST_CONTENT_TRIGGER_FIRE)
-
-    if (triggerCondList.length > 0) {
-      for (const triggerCond of triggerCondList) {
-      }
-    }
+    QuestListUpdate.sendNotify(this.mainQuest.player.context)
   }
 
   exportQuestData() {
@@ -53,7 +48,7 @@ export default class GameQuest {
         acceptTime: this.acceptTime,
         finishProgressList: this.finishProgressList,
         parentQuestId: this.mainQuest.parentQuestId,
-        questID: this.subQuestID,
+        questId: this.subQuestId,
         startGameTime: this.startGameTime,
         startTime: this.startTime,
         state: this.state,

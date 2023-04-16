@@ -18,7 +18,7 @@ class AddQuestContentProgressPacket extends Packet implements PacketInterface {
   }
 
   async request(context: PacketContext, data: AddQuestContentProgressReq): Promise<void> {
-    //Todo
+    //TODO
 
     this.response(context, {
       contentType: data.contentType,

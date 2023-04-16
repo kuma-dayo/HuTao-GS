@@ -27,7 +27,7 @@ class SkipPlayerGameTimePacket extends Packet implements PacketInterface {
   async request(context: PacketContext, data: SkipPlayerGameTimeReq): Promise<void> {
     const { player } = context
     const { gameTime, clientGameTime } = data
-    console.log(data)
+
     if (!player.isHost()) {
       await this.response(context, { retcode: RetcodeEnum.RET_MP_NOT_IN_MY_WORLD })
       await PlayerGameTime.sendNotify(context)
@@ -45,8 +45,6 @@ class SkipPlayerGameTimePacket extends Packet implements PacketInterface {
   }
 
   async response(context: PacketContext, data: SkipPlayerGameTimeRsp): Promise<void> {
-    console.log(data)
-
     await super.response(context, data)
   }
 }
