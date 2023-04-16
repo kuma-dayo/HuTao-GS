@@ -6,7 +6,7 @@ import BaseClass from "#/baseClass"
 import { waitUntil } from "@/utils/asyncWait"
 
 const ISocketBufferTTL = 10e3 // 10 seconds
-const ISocketMessageChunkSize = 65280
+const ISocketMessageChunkSize = 1024 * 8
 const ISocketMaxNum = 0x10000
 
 const ISocketPacketMagic1 = 0x89ab

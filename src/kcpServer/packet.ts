@@ -43,10 +43,6 @@ export const verbosePackets = [
   "VehicleStaminaNotify",
   "WorldPlayerLocationNotify",
   "WorldPlayerRTTNotify",
-
-  //Split to avoid exceeding the limit of one packet.
-  "AvatarDataNotify",
-  "SceneEntityAppearNotify",
 ]
 
 export interface PacketInterface {
