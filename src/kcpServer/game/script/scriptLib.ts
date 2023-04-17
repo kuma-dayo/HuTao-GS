@@ -12,7 +12,7 @@ export default class ScriptLib {
     logger.debug("[lua] Call SetGadgetStateByConfigId", configId, gadgetState)
 
     const gadget = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
-    gadget.setGadgetState(gadgetState)
+    gadget?.setGadgetState(gadgetState)
 
     return 0
   }

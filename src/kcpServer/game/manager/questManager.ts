@@ -12,18 +12,28 @@ export default class QuestManager {
     this.questList = []
   }
 
-  init(userData: QuestUserData) {
-    this.questList = userData?.quest || []
+  async init(userData: QuestUserData) {
+    this.questList =
+      (await Promise.all(
+        userData?.quest.map((mainQuest) => {
+          const gameMainQuest = new GameMainQuest()
+          gameMainQuest.init(mainQuest)
+          return gameMainQuest
+        })
+      )) || []
   }
 
-  async addMainQuest(parentQuestId: number) {
-    const gameMainQuest = new GameMainQuest(this.player, parentQuestId)
+  async addMainQuest(parentQuestId: number): Promise<boolean> {
+    const gameMainQuest = new GameMainQuest()
 
-    await gameMainQuest.init()
-    this.questList.push(gameMainQuest)
+    const result = await gameMainQuest.initNew(this.player, parentQuestId)
+    if (result) {
+      this.questList.push(gameMainQuest)
+      return true
+    } else return false
   }
 
-  getMainQuest(parentQuestId: number) {
+  getMainQuest(parentQuestId: number): GameMainQuest {
     return this.questList.find((quest) => quest.parentQuestId === parentQuestId)
   }
 

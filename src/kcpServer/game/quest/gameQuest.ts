@@ -1,15 +1,13 @@
 import { QuestState } from "./enum"
-import GameMainQuest from "./gameMainQuest"
 
 import QuestListUpdate from "#/packets/QuestListUpdate"
+import Player from "$/player"
 import { SubQuest } from "$DT/BinOutput/Quest"
 import { Quest } from "@/types/proto"
 import { getTimeSeconds } from "@/utils/time"
 
 export default class GameQuest {
-  mainQuest: GameMainQuest
-
-  mainQuestId: number
+  parentQuestId: number
   subQuestId: number
 
   state: QuestState
@@ -19,39 +17,60 @@ export default class GameQuest {
   acceptTime: number
   finishTime: number
 
-  startGameday: number
+  startGameDay: number
 
   finishProgressList: number[]
   failProgressList: number[]
 
-  constructor(mainQuest: GameMainQuest, questData: SubQuest) {
-    this.mainQuest = mainQuest
-    this.mainQuestId = questData.MainId
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
+
+  async init(data: {
+    parentQuestId: number
+    subQuestId: number
+
+    state: QuestState
+
+    startTime: number
+    startGameTime: number
+    acceptTime: number
+    finishTime: number
+
+    startGameDay: number
+
+    finishProgressList: number[]
+    failProgressList: number[]
+  }) {
+    Object.assign(this, data)
+  }
+
+  async initNew(questData: SubQuest) {
+    this.parentQuestId = questData.MainId
     this.subQuestId = questData.SubId
     this.state = QuestState.QUEST_STATE_NONE
     this.finishProgressList = [0]
   }
 
-  async start() {
+  async start(player: Player) {
     this.acceptTime = getTimeSeconds()
     this.startTime = this.acceptTime
-    this.startGameday = this.mainQuest.player.gameTime / 1440
-    this.startGameTime = this.mainQuest.player.gameTime
+    this.startGameDay = player.gameTime / 1440
+    this.startGameTime = player.gameTime
     this.state = QuestState.QUEST_STATE_UNFINISHED
 
-    QuestListUpdate.sendNotify(this.mainQuest.player.context)
+    QuestListUpdate.sendNotify(player.context)
   }
 
-  exportQuestData() {
+  exportQuestData(): Quest {
     if (this.state != QuestState.QUEST_STATE_NONE)
       return {
         acceptTime: this.acceptTime,
         finishProgressList: this.finishProgressList,
-        parentQuestId: this.mainQuest.parentQuestId,
+        parentQuestId: this.parentQuestId,
         questId: this.subQuestId,
         startGameTime: this.startGameTime,
         startTime: this.startTime,
         state: this.state,
-      } as Quest
+      }
   }
 }

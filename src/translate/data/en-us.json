@@ -330,6 +330,16 @@
           "1": "pos       - (In game) Print your current position"
         }
       },
+      "quest": {
+        "desc": "quest Manager",
+        "error": {
+          "alreadyQuest": "Quest already list.",
+          "questNotFound": "Quest not found."
+        },
+        "info": {
+          "questStart": "Starting quest: %0"
+        }
+      },
       "recharge": {
         "desc": "Recharge all avatar in current team",
         "info": {
@@ -545,23 +555,23 @@
     },
     "cache": {
       "debug": {
-        "ability": "cache abilityData",
-        "avatar": "cache avatarData",
-        "dungeon": "cache dungeonData",
-        "gadget": "cache gadgetData",
-        "growCurve": "cache growCurveData",
-        "mapArea": "cache mapAreaData",
-        "material": "cache materialData",
-        "monster": "cache monsterData",
-        "quest": "cache questData",
-        "reliquary": "cache reliquaryData",
-        "scene": "cache sceneData",
-        "shop": "cache shopData",
-        "skill": "cache skillData",
-        "talent": "cache talentData",
-        "weapon": "cache weaponData",
-        "weather": "cache weatherData",
-        "world": "cache worldData"
+        "ability": "Success caching abilityData",
+        "avatar": "Success caching avatarData",
+        "dungeon": "Success caching dungeonData",
+        "gadget": "Success caching gadgetData",
+        "growCurve": "Success caching growCurveData",
+        "mapArea": "Success caching mapAreaData",
+        "material": "Success caching materialData",
+        "monster": "Success caching monsterData",
+        "quest": "Success caching questData",
+        "reliquary": "Success caching reliquaryData",
+        "scene": "Success caching sceneData",
+        "shop": "Success caching shopData",
+        "skill": "Success caching skillData",
+        "talent": "Success caching talentData",
+        "weapon": "Success caching weaponData",
+        "weather": "Success caching weatherData",
+        "world": "Success caching worldData"
       },
       "info": {
         "start": "Start caching resources",

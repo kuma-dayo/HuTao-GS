@@ -4,14 +4,12 @@ import translate from "@/translate"
 
 const questCommand: CommandDefinition = {
   name: "quest",
-  //usage: 1,
   args: [
     { name: "type", type: "str", values: ["start"] },
     { name: "id", type: "int" },
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
-  //onlyAllowPlayer: false,
   exec: async (cmdInfo) => {
     const { args, sender, cli, tty, server, kcpServer } = cmdInfo
     const { print, printError } = cli
@@ -22,8 +20,16 @@ const questCommand: CommandDefinition = {
 
     switch (type) {
       case "start": {
-        await player.questManager.addMainQuest(parentQuestId)
-        await player.questManager.getMainQuest(parentQuestId).childQuest[0].start()
+        const quest = player.questManager.getMainQuest(parentQuestId)
+
+        if (quest === undefined) {
+          const result = await player.questManager.addMainQuest(parentQuestId)
+
+          if (result) print(translate("cli.commands.quest.info.questStart"), parentQuestId)
+          else return printError(translate("cli.commands.quest.error.questNotFound"))
+
+          await player.questManager.getMainQuest(parentQuestId).childQuest[0].start(player)
+        } else return printError(translate("cli.commands.quest.error.alreadyQuest"))
       }
     }
   },

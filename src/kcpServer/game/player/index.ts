@@ -301,7 +301,7 @@ export default class Player extends BaseClass {
     } = userData || {}
 
     guidManager.init(guidData)
-    questManager.init(questData)
+    await questManager.init(questData)
     profile.init(profileData)
     props.init(propsData)
     openState.init(openStateData)
@@ -905,7 +905,11 @@ export default class Player extends BaseClass {
         avatarId: costume.AvatarId,
       })),
       emojiIdList: emojiCollection,
-      questData: { quest: [] },
+      questData: {
+        quest: this.questManager.exportQuestData().map((quest) => {
+          return quest.exportMainQuestData()
+        }),
+      },
       worldData: hostWorld.exportUserData(),
       godMode,
       gameTime,

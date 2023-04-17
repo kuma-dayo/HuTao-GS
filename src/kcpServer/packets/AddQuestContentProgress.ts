@@ -1,4 +1,5 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
+import { QuestContent } from "$/quest/enum"
 import { RetcodeEnum } from "@/types/proto/enum"
 
 export interface AddQuestContentProgressReq {
@@ -19,6 +20,11 @@ class AddQuestContentProgressPacket extends Packet implements PacketInterface {
 
   async request(context: PacketContext, data: AddQuestContentProgressReq): Promise<void> {
     //TODO
+
+    const type = QuestContent[data.contentType]
+    if (type != null) {
+      console.log(data, type)
+    }
 
     this.response(context, {
       contentType: data.contentType,
