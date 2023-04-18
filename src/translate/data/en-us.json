@@ -333,11 +333,14 @@
       "quest": {
         "desc": "quest Manager",
         "error": {
-          "alreadyQuest": "Quest already list.",
-          "questNotFound": "Quest not found."
+          "alreadyMainQuest": "MainQuest already list.",
+          "mainQuestNotAdded": "Quest not added.",
+          "mainQuestNotFound": "MainQuest not found."
         },
         "info": {
-          "questStart": "Starting quest: %0"
+          "subQuestAccept": "Accept SubQuest: %0",
+          "mainQuestAdd": "Added MainQuest: %0",
+          "mainQuestRemove": "Removed Quest: %0"
         }
       },
       "recharge": {

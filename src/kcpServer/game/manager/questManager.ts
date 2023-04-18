@@ -1,3 +1,4 @@
+import QuestListUpdate from "#/packets/QuestListUpdate"
 import Player from "$/player"
 import GameMainQuest from "$/quest/gameMainQuest"
 import QuestUserData from "@/types/user/QuestUserData"
@@ -31,6 +32,17 @@ export default class QuestManager {
       this.questList.push(gameMainQuest)
       return true
     } else return false
+  }
+
+  async removeMainQuest(parentQuestId: number): Promise<boolean> {
+    const gameMainQuest = this.getMainQuest(parentQuestId)
+    if (!gameMainQuest) return false
+
+    this.questList = this.questList.filter((quest) => quest.parentQuestId !== parentQuestId)
+
+    QuestListUpdate.sendNotify(this.player.context)
+
+    return true
   }
 
   getMainQuest(parentQuestId: number): GameMainQuest {

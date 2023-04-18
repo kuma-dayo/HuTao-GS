@@ -7,6 +7,8 @@ import { Quest } from "@/types/proto"
 import { getTimeSeconds } from "@/utils/time"
 
 export default class GameQuest {
+  // questData: SubQuest
+
   parentQuestId: number
   subQuestId: number
 
@@ -45,13 +47,17 @@ export default class GameQuest {
   }
 
   async initNew(questData: SubQuest) {
+    // this.questData = questData
+
     this.parentQuestId = questData.MainId
     this.subQuestId = questData.SubId
     this.state = QuestState.QUEST_STATE_NONE
     this.finishProgressList = [0]
   }
 
-  async start(player: Player) {
+  async accept(player: Player): Promise<boolean> {
+    if (this.acceptTime !== undefined) return false
+
     this.acceptTime = getTimeSeconds()
     this.startTime = this.acceptTime
     this.startGameDay = player.gameTime / 1440
@@ -59,6 +65,7 @@ export default class GameQuest {
     this.state = QuestState.QUEST_STATE_UNFINISHED
 
     QuestListUpdate.sendNotify(player.context)
+    return true
   }
 
   exportQuestData(): Quest {

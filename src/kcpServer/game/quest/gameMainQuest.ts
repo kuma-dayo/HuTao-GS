@@ -91,5 +91,4 @@ export default class GameMainQuest {
       isFinished: this.isFinished,
     }
   }
-  expor
 }
