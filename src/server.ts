@@ -17,8 +17,22 @@ import Authenticator from "./utils/authenticator"
 import { detachedSpawn, execCommand } from "./utils/childProcess"
 import { dirExists, writeFile } from "./utils/fileSystem"
 
+import AbilityData from "$/gameData/data/AbilityData"
 import AvatarData from "$/gameData/data/AvatarData"
+import DungeonData from "$/gameData/data/DungeonData"
+import GadgetData from "$/gameData/data/GadgetData"
+import GrowCurveData from "$/gameData/data/GrowCurveData"
+import MapAreaData from "$/gameData/data/MapAreaData"
+import MaterialData from "$/gameData/data/MaterialData"
 import MonsterData from "$/gameData/data/MonsterData"
+import ReliquaryData from "$/gameData/data/ReliquaryData"
+import SceneData from "$/gameData/data/SceneData"
+import ShopData from "$/gameData/data/ShopData"
+import SkillData from "$/gameData/data/SkillData"
+import TalentData from "$/gameData/data/TalentData"
+import WeaponData from "$/gameData/data/WeaponData"
+import WeatherData from "$/gameData/data/WeatherData"
+import WorldData from "$/gameData/data/WorldData"
 import GlobalState from "@/globalState"
 import KcpServer from "@/kcpServer"
 import { waitMs } from "@/utils/asyncWait"
@@ -248,6 +262,7 @@ export default class Server {
 
       await this.tryPatchGame()
       await this.generateHandBook()
+      await this.resourceCache()
     } catch (err) {
       logger.error("message.server.error.start", err)
     }
@@ -338,5 +353,60 @@ export default class Server {
         logger.error("message.server.error.mkdir", err)
       }
     }
+  }
+  async resourceCache() {
+    const tLogger = new TLogger()
+
+    tLogger.info("message.cache.info.start")
+
+    await AbilityData.getData()
+    tLogger.debug("message.cache.debug.ability")
+
+    await AvatarData.getData()
+    tLogger.debug("message.cache.debug.avatar")
+
+    await DungeonData.getData()
+    tLogger.debug("message.cache.debug.dungeon")
+
+    await GadgetData.getData()
+    tLogger.debug("message.cache.debug.gadget")
+
+    await GrowCurveData.getData()
+    tLogger.debug("message.cache.debug.growCurve")
+
+    await MapAreaData.getData()
+    tLogger.debug("message.cache.debug.mapArea")
+
+    await MaterialData.getData()
+    tLogger.debug("message.cache.debug.material")
+
+    await MonsterData.getData()
+    tLogger.debug("message.cache.debug.monster")
+
+    await ReliquaryData.getData()
+    tLogger.debug("message.cache.debug.reliquary")
+
+    await SceneData.getData()
+    tLogger.debug("message.cache.debug.scene")
+
+    await ShopData.getData()
+    tLogger.debug("message.cache.debug.shop")
+
+    await SkillData.getData()
+    tLogger.debug("message.cache.debug.skill")
+
+    await TalentData.getData()
+    tLogger.debug("message.cache.debug.talent")
+
+    await WeaponData.getData()
+    tLogger.debug("message.cache.debug.weapon")
+
+    await WeatherData.getData()
+    tLogger.debug("message.cache.debug.weather")
+
+    await WorldData.getData()
+    tLogger.debug("message.cache.debug.world")
+
+    tLogger.info("message.cache.info.success")
   }
 }
