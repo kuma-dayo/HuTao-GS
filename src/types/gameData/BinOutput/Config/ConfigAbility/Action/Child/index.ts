@@ -630,7 +630,7 @@ export interface HealHP extends ConfigBaseAbilityAction {
   MuteHealEffect?: boolean
   HealRatio?: number
   Target?: string
-  CdRatio?: string
+  CdRatio?: string // | string[]
   IgnoreAbilityProperty?: boolean
 }
 

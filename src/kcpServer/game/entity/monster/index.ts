@@ -1,12 +1,9 @@
 import KillMonsterTrigger from "$/dungeon/trigger/killMonsterTrigger"
 import Entity from "$/entity"
 import Weapon from "$/equip/weapon"
-import AbilityData from "$/gameData/data/AbilityData"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
 import MonsterData from "$/gameData/data/MonsterData"
 import Player from "$/player"
-import ConfigEntityAbilityEntry from "$DT/BinOutput/Config/ConfigEntityAbilityEntry"
-import ConfigGlobalValue from "$DT/BinOutput/Config/ConfigGlobalValue"
 import { EntityTypeEnum, FightPropEnum, MonsterTypeEnum } from "@/types/enum"
 import { SceneMonsterInfo } from "@/types/proto"
 import { AbilityScalarTypeEnum, ChangeHpReasonEnum, MonsterBornTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
@@ -66,9 +63,7 @@ export default class Monster extends Entity {
     this.growCurve = await GrowCurveData.getGrowCurve("Monster")
 
     const monsterData = await MonsterData.getMonster(monsterId)
-    const abilityData = await AbilityData.getData()
-
-    if (!monsterData || !abilityData) return
+    if (!monsterData) return
 
     this.affixList = monsterData.Affix || []
     this.weaponList = monsterData.Equips.map((id) => Weapon.createByGadgetId(id, player, true))
@@ -83,39 +78,13 @@ export default class Monster extends Entity {
     this.monsterType = MonsterTypeEnum[monsterData.Type] || MonsterTypeEnum.MONSTER_NONE
 
     const describeData = await MonsterData.getDescribe(monsterData.DescribeId)
-
     if (describeData) {
       this.titleId = describeData.TitleID || 0
       this.specialNameId = (await MonsterData.getSpecialName(describeData.SpecialNameLabID))?.Id || 0
     }
 
-    let abilityList: ConfigEntityAbilityEntry[] = []
-    let globalValue: ConfigGlobalValue = {
-      ServerGlobalValues: [],
-      InitServerGlobalValues: {},
-    }
-
-    abilityData.Monster[monsterData.Name.replace("Monster_", "")]?.map((abilityData) => {
-      abilityData["Default"]?.AbilityMixins?.map((abilityMixin) => {
-        if (
-          abilityMixin.$type == "AttachModifierToSelfGlobalValueMixin" &&
-          abilityMixin.GlobalValueKey.includes("SGV_") //ConfigAbility has multiple serverGlobalValues, but to get the same values as ConfigMonster, only those with SGV_ in the value are taken.
-        ) {
-          globalValue.ServerGlobalValues.push(abilityMixin.GlobalValueKey)
-          globalValue.InitServerGlobalValues[abilityMixin.GlobalValueKey] = 0 //InitServerGlobalValues value is fixed at 0 to substitute ConfigMonster
-        }
-      })
-
-      if (abilityData["Default"]?.AbilityName)
-        abilityList.push({
-          AbilityName: abilityData["Default"].AbilityName,
-          AbilityID: undefined, //Sometimes AbilityName can be substituted. AbilityId may not exist, so set it to undefined.
-          AbilityOverride: undefined,
-        })
-    })
-
-    this.loadAbilities(abilityList, true)
-    this.loadGlobalValue(globalValue)
+    this.loadAbilities(monsterData?.Config?.Abilities, true)
+    this.loadGlobalValue(monsterData?.Config?.GlobalValue)
   }
 
   async init(userData: EntityUserData): Promise<void> {

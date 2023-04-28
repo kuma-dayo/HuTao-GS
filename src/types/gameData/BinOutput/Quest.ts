@@ -1,4 +1,4 @@
-import { QuestCond, QuestContent, QuestType } from "$/quest/enum"
+import { QuestCond, QuestContent, QuestType, QuestExec } from "$/quest/enum"
 
 export interface QuestData {
   Id: number
@@ -103,7 +103,7 @@ export interface SubQuest {
   VersionEnd: string
   IsMpBlock?: boolean
   SubIdSet?: number
-  FinishExec?: FailExec[]
+  FinishExec?: FinishExec[]
   ShowType?: ShowType
   BanType?: BanType
   FailCond?: Cond[]
@@ -138,6 +138,11 @@ export interface Cond {
   Type: QuestContent
   Param: number[]
   Count?: number
+}
+
+export interface FinishExec {
+  Type?: QuestExec
+  Param?: string[]
 }
 
 export interface FailExec {
@@ -204,7 +209,7 @@ export interface Talk {
   QuestIdleTalk?: boolean
   LowPriority?: boolean
   StayFreeStyle?: boolean
-  FinishExec?: FailExec[]
+  FinishExec?: FinishExec[]
   EnableCameraDisplacement?: boolean
   PKKCHKIMBDM?: number[]
   NBCNFGJKLMG?: boolean

@@ -43,6 +43,7 @@ export interface TeamTalentData {
     Value?: number
   }[]
   ParamList: number[]
+  Config: ConfigTalent[]
 
   FireAvatarCount?: number
   WaterAvatarCount?: number

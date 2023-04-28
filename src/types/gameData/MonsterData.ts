@@ -1,3 +1,5 @@
+import ConfigMonster from "./BinOutput/Config/ConfigMonster"
+
 export interface MonsterData {
   Name: string
   Type: string
@@ -30,6 +32,8 @@ export interface MonsterData {
   ControllerPathHashPre: number
   ControllerPathRemoteHashSuffix: number
   ControllerPathRemoteHashPre: number
+
+  Config: ConfigMonster
 
   IsInvisibleReset: boolean
   IsAIHashCheck: boolean
