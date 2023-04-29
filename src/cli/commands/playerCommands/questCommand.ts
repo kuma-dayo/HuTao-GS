@@ -10,7 +10,8 @@ const questCommand: CommandDefinition = {
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
-  exec: async ({ args, sender, cli, kcpServer }) => {
+  exec: async (cmdInfo) => {
+    const { args, sender, cli, kcpServer } = cmdInfo
     const { print, printError } = cli
     const [type, questId, uid = sender?.uid] = args
     const parentQuestId = Math.floor(questId / 100)
