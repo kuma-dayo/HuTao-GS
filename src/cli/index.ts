@@ -129,6 +129,7 @@ export default class CLI {
       await cmdDef.exec(cmdInfo)
       return false
     } catch (err) {
+      console.log(err)
       logger.error(translate("cli.error.execFail", err))
       return false
     }

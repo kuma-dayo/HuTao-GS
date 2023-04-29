@@ -19,11 +19,15 @@ class AddQuestContentProgressPacket extends Packet implements PacketInterface {
   }
 
   async request(context: PacketContext, data: AddQuestContentProgressReq): Promise<void> {
-    //TODO
+    const parentQuestId = Math.floor(data.param / 100)
 
     const type = QuestContent[data.contentType]
+
     if (type != null) {
-      console.log(data, type)
+      context.player.questManager
+        .getMainQuest(parentQuestId)
+        .childQuest.find((quest) => quest.subQuestId === data.param)
+        .finishCondExecute(data.contentType)
     }
 
     this.response(context, {

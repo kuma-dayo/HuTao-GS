@@ -14,7 +14,7 @@ class QuestListPacket extends Packet implements PacketInterface {
     const notifyData: QuestListNotify = {
       questList: context.player.questManager
         .exportQuestData()
-        .flatMap((quest) => quest.childQuest.flatMap((childQuest) => childQuest.exportQuestData()))
+        .flatMap((quest) => quest.childQuest.map((childQuest) => childQuest.exportQuestData()))
         .filter((quest) => quest !== undefined),
     }
 

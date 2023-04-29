@@ -4,8 +4,10 @@ import GameQuest from "./gameQuest"
 import QuestData from "$/gameData/data/QuestData"
 import Player from "$/player"
 import { Talk } from "$DT/BinOutput/Quest"
+import { Quest } from "@/types/user/QuestUserData"
 
 export default class GameMainQuest {
+  player: Player
   ownerUid: number
 
   parentQuestId: number
@@ -17,25 +19,12 @@ export default class GameMainQuest {
 
   talks: Talk[]
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(player: Player) {
+    this.player = player
+  }
 
-  async init(data: {
-    ownerUid: number
-    parentQuestId: number
-    questVars: number[]
-    timeVar: number[]
-    parentQuestState: ParentQuestState
-    childQuest: GameQuest[]
-    isFinished: boolean
-  }) {
-    this.ownerUid = data.ownerUid
-
-    this.parentQuestId = data.parentQuestId
-    this.questVars = data.questVars
-    this.timeVar = data.timeVar
-    this.parentQuestState = data.parentQuestState
-    this.isFinished = data.isFinished
+  async init(data: Quest) {
+    Object.assign(this, Object.assign({}, data, { childQuest: undefined }))
 
     const questData = await QuestData.getQuestData(this.parentQuestId)
 
@@ -43,7 +32,7 @@ export default class GameMainQuest {
 
     this.childQuest = await Promise.all(
       data.childQuest.map((childQuest) => {
-        const gameQuest = new GameQuest()
+        const gameQuest = new GameQuest(this)
         gameQuest.init(childQuest)
         return gameQuest
       })
@@ -63,12 +52,12 @@ export default class GameMainQuest {
 
   async addAllChildQuest(): Promise<boolean> {
     const questData = await QuestData.getQuestData(this.parentQuestId)
-    if (!questData) return false
+    if (!questData.SubQuests) return false
 
     this.talks = questData.Talks
     this.childQuest = await Promise.all(
       questData.SubQuests.map(async (subQuest) => {
-        const gameQuest = new GameQuest()
+        const gameQuest = new GameQuest(this)
         await gameQuest.initNew(subQuest)
         return gameQuest
       })
@@ -77,7 +66,7 @@ export default class GameMainQuest {
     return true
   }
 
-  exportQuestData() {
+  exportAllSubQuestData() {
     return this.childQuest?.map((quest) => quest.exportQuestData()).filter((p) => p !== undefined)
   }
   exportMainQuestData() {
@@ -86,7 +75,7 @@ export default class GameMainQuest {
       parentQuestId: this.parentQuestId,
       questVars: this.questVars,
       timeVar: this.timeVar,
-      childQuest: this.childQuest,
+      childQuest: this.childQuest.map((quest) => quest.export()),
       parentQuestState: this.parentQuestState,
       isFinished: this.isFinished,
     }

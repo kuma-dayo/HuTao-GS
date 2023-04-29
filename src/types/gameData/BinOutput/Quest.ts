@@ -1,4 +1,4 @@
-import { QuestCond, QuestContent, QuestType, QuestExec } from "$/quest/enum"
+import { QuestType, QuestExec, QuestContent } from "$/quest/enum"
 
 export interface QuestData {
   Id: number
@@ -146,7 +146,7 @@ export interface FinishExec {
 }
 
 export interface FailExec {
-  Type?: QuestCond
+  Type?: QuestContent
   Param?: string[]
 }
 

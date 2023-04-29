@@ -906,9 +906,7 @@ export default class Player extends BaseClass {
       })),
       emojiIdList: emojiCollection,
       questData: {
-        quest: this.questManager.exportQuestData().map((quest) => {
-          return quest.exportMainQuestData()
-        }),
+        quest: this.questManager.exportQuestData().map((quest) => quest.exportMainQuestData()),
       },
       worldData: hostWorld.exportUserData(),
       godMode,

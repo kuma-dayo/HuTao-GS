@@ -10,43 +10,49 @@ const questCommand: CommandDefinition = {
     { name: "uid", type: "int", optional: true },
   ],
   allowPlayer: true,
-  exec: async (cmdInfo) => {
-    const { args, sender, cli, tty, server, kcpServer } = cmdInfo
+  exec: async ({ args, sender, cli, kcpServer }) => {
     const { print, printError } = cli
-    const [type, questId, uid] = args
-    const parentQuestId: number = Math.floor(questId / 100)
+    const [type, questId, uid = sender?.uid] = args
+    const parentQuestId = Math.floor(questId / 100)
+    const player = kcpServer.game.getPlayerByUid(uid)
 
-    const player = kcpServer.game.getPlayerByUid(uid || sender?.uid)
     if (!player) return printError(translate("generic.playerNotFound"))
 
     const mainQuest = player.questManager.getMainQuest(parentQuestId)
 
     switch (type) {
       case "add": {
-        if (mainQuest !== undefined) return printError(translate("cli.commands.quest.error.alreadyMainQuest"))
+        if (mainQuest) return printError(translate("cli.commands.quest.error.alreadyMainQuest"))
 
         const result = await player.questManager.addMainQuest(parentQuestId)
 
         if (result) print(translate("cli.commands.quest.info.mainQuestAdd", parentQuestId))
         else return printError(translate("cli.commands.quest.error.mainQuestNotFound"))
+
+        break
       }
       case "accept": {
-        if (mainQuest === undefined) return printError(translate("cli.commands.quest.error.mainQuestNotAdded"))
+        if (!mainQuest) return printError(translate("cli.commands.quest.error.mainQuestNotAdded"))
 
-        const subQuest = mainQuest.childQuest.find((quest) => quest.subQuestId == questId)
+        const subQuest = mainQuest.childQuest.find((quest) => quest.subQuestId === questId)
 
-        if (subQuest === undefined) return printError(translate("cli.commands.quest.error.subQuestNotFound"))
+        if (!subQuest) return printError(translate("cli.commands.quest.error.subQuestNotFound"))
+
         const result = await subQuest.accept(player)
 
         if (result) print(translate("cli.commands.quest.info.subQuestAccept", questId))
         else return printError(translate("cli.commands.quest.error.questNotAdded"))
+        break
       }
       case "remove": {
         const result = await player.questManager.removeMainQuest(parentQuestId)
 
         if (result) print(translate("cli.commands.quest.info.mainQuestRemove", parentQuestId))
         else return printError(translate("cli.commands.quest.error.mainQuestNotFound"))
+        break
       }
+      default:
+        return printError(translate("cli.commands.quest.error.invalidType"))
     }
   },
 }

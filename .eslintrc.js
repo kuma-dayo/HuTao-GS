@@ -16,6 +16,7 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/type-annotation-spacing": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-empty": "off",
     "no-control-regex": "off",

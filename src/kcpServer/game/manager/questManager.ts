@@ -1,5 +1,6 @@
 import QuestListUpdate from "#/packets/QuestListUpdate"
 import Player from "$/player"
+import FinishExecAction from "$/quest/FinishExecAction"
 import GameMainQuest from "$/quest/gameMainQuest"
 import QuestUserData from "@/types/user/QuestUserData"
 
@@ -8,24 +9,28 @@ export default class QuestManager {
 
   questList: GameMainQuest[]
 
+  finishExecAction: FinishExecAction
+
   constructor(player: Player) {
     this.player = player
     this.questList = []
+
+    this.finishExecAction = new FinishExecAction(this)
   }
 
   async init(userData: QuestUserData) {
     this.questList =
       (await Promise.all(
-        userData?.quest.map((mainQuest) => {
-          const gameMainQuest = new GameMainQuest()
-          gameMainQuest.init(mainQuest)
+        userData.quest.map(async (mainQuest) => {
+          const gameMainQuest = new GameMainQuest(this.player)
+          await gameMainQuest.init(mainQuest)
           return gameMainQuest
         })
       )) || []
   }
 
   async addMainQuest(parentQuestId: number): Promise<boolean> {
-    const gameMainQuest = new GameMainQuest()
+    const gameMainQuest = new GameMainQuest(this.player)
 
     const result = await gameMainQuest.initNew(this.player, parentQuestId)
     if (result) {
