@@ -1,15 +1,15 @@
 import FetterList from "./fetterList"
 
 import { PlayerPropEnum } from "@/types/enum"
-import FetterConfig from "@/types/gameData/ExcelBinOutput/Common/FetterConfig"
+import FetterConfig, { FetterCond } from "@/types/gameData/ExcelBinOutput/Common/FetterConfig"
 import { FetterInfo } from "@/types/proto"
 import { FetterStateEnum } from "@/types/proto/enum"
 
 export default class Fetter {
   fetterList: FetterList
   id: number
-  openConds: any[]
-  finishConds: any[]
+  openConds: FetterCond[]
+  finishConds: FetterCond[]
   state: FetterStateEnum
 
   constructor(fetterList: FetterList, data: FetterConfig) {
