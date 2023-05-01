@@ -8,7 +8,7 @@ import inventoryCommands from "./inventoryCommands"
 import playerCommands from "./playerCommands"
 import serverCommands from "./serverCommands"
 import toolsCommands from "./toolsCommands"
-import windyCommands from "./windycommand"
+import windyCommands from "./windycommands"
 import worldCommands from "./worldCommands"
 
 import KcpServer from "#/."
