@@ -1,6 +1,5 @@
 import { CommandDefinition } from ".."
 
-import constCommand from "./constCommand"
 import damageCommand from "./damage"
 import equipCommand from "./equipCommand"
 import godCommand from "./godCommand"
@@ -11,6 +10,7 @@ import rechargeCommand from "./rechargeCommand"
 import setcsCommand from "./setcsCommand"
 import setfpCommand from "./setfpCommand"
 import switchelementCommand from "./switchelementCommand"
+import talentCommand from "./talentCommand"
 
 const avatarCommands: CommandDefinition[] = [
   godCommand,
@@ -20,7 +20,7 @@ const avatarCommands: CommandDefinition[] = [
   equipCommand,
   setcsCommand,
   setfpCommand,
-  constCommand,
+  talentCommand,
   switchelementCommand,
   nocdCommand,
   damageCommand,

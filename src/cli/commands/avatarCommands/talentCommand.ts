@@ -2,8 +2,9 @@ import { CommandDefinition } from ".."
 
 import translate from "@/translate"
 
-const constCommand: CommandDefinition = {
-  name: "const",
+const talentCommand: CommandDefinition = {
+  name: "talent",
+  alias: "const",
   usage: 6,
   args: [
     { name: "mode", type: "str", values: ["unlock", "lock", "list"] },
@@ -44,4 +45,4 @@ const constCommand: CommandDefinition = {
   },
 }
 
-export default constCommand
+export default talentCommand
