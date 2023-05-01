@@ -2,8 +2,8 @@ import QuestListUpdate from "#/packets/QuestListUpdate"
 import Player from "$/player"
 import FinishExecAction from "$/quest/FinishExecAction"
 import GameMainQuest from "$/quest/gameMainQuest"
+import { questEncryptionKey } from "$/quest/QuestEncryptionKeys"
 import QuestUserData from "@/types/user/QuestUserData"
-
 export default class QuestManager {
   player: Player
 
@@ -16,6 +16,10 @@ export default class QuestManager {
     this.questList = []
 
     this.finishExecAction = new FinishExecAction(this)
+  }
+
+  static getQuestKey(parentQuestId: number): BigInt {
+    return questEncryptionKey.find((key) => key.mainQuestId === parentQuestId)?.encryptionKey || 0n
   }
 
   async init(userData: QuestUserData) {
@@ -43,7 +47,7 @@ export default class QuestManager {
     const gameMainQuest = this.getMainQuest(parentQuestId)
     if (!gameMainQuest) return false
 
-    this.questList = this.questList.filter((quest) => quest.parentQuestId !== parentQuestId)
+    this.questList = this.questList.filter((quest) => quest != gameMainQuest)
 
     QuestListUpdate.sendNotify(this.player.context)
 

@@ -11,7 +11,10 @@ class QuestListUpdatePacket extends Packet implements PacketInterface {
   }
 
   async sendNotify(context: PacketContext): Promise<void> {
-    const questList = context.player.questManager.exportQuestData().flatMap((quest) => quest.exportAllSubQuestData())
+    const questList = context.player.questManager
+      .exportQuestData()
+      .flatMap((quest) => quest.childQuest.map((childQuest) => childQuest.exportQuestData()))
+      .filter((quest) => quest !== undefined)
 
     const notifyData: QuestListUpdateNotify = {
       questList: questList,

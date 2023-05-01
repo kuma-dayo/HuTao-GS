@@ -130,13 +130,10 @@ export default class GameQuest {
     }
   }
 
-  array_equal(a: any[], b: any[]) {
-    if (!Array.isArray(a)) return false
-    if (!Array.isArray(b)) return false
-    if (a.length != b.length) return false
-    for (let i = 0, n = a.length; i < n; ++i) {
-      if (a[i] !== b[i]) return false
-    }
+  array_equal(arr1: any[], arr2: any[]): boolean {
+    if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false
+    if (arr1.length !== arr2.length) return false
+    for (let i = 0; i < arr1.length; i++) if (arr1[i] !== arr2[i]) return false
     return true
   }
   exportQuestData(): Quest {
