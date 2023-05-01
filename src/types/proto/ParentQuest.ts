@@ -10,5 +10,5 @@ export interface ParentQuest {
   parentQuestState?: number
   questVarSeq?: number
   timeVarMap?: { [k: number]: number }
-  GJJJKEIPAPC?: number
+  videoKey?: number
 }
