@@ -48,7 +48,9 @@ function commandListHelpPage(cli: CLILike) {
 
   print(translate("cli.commands.help.page.commandList.title"))
 
-  const lines = CLI.commands.map((cmd) => getCommandInfo(cmd, undefined, true))
+  const lines = CLI.commands.flatMap((cmd) =>
+    [getCommandInfo(cmd, undefined, true)].concat(cmd.alias ? getCommandInfoAlias(cmd, undefined, true) : [])
+  )
   for (const line of lines) print(` ${line}`)
 }
 
@@ -84,7 +86,7 @@ const helpCommand: CommandDefinition = {
       name: "command",
       type: "str",
       get values() {
-        return CLI.commands.flatMap((c) => (c.alias?.length > 0 ? [c.name].concat(c.alias) : [c.name]))
+        return CLI.commands.flatMap((c) => (c.alias ? [c.name].concat(c.alias) : [c.name]))
       },
       optional: true,
     },

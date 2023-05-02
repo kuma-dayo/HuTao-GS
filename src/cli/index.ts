@@ -56,7 +56,7 @@ export default class CLI {
       commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
         escapeHtml(getCommandInfo(cmd, CLI.prefix, true))
       )}</p>`
-      for (const data of cmd.alias?.length ? getCommandInfoAlias(cmd, CLI.prefix, true) : []) {
+      for (const data of cmd.alias ? getCommandInfoAlias(cmd, CLI.prefix, true) : []) {
         commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
           escapeHtml(data)
         )}</p>`
