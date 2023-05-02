@@ -4,7 +4,7 @@ import translate from "@/translate"
 
 const talentCommand: CommandDefinition = {
   name: "talent",
-  alias: "const",
+  alias: ["const"],
   usage: 6,
   args: [
     { name: "mode", type: "str", values: ["unlock", "lock", "list"] },

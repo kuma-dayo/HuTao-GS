@@ -4,7 +4,7 @@ import translate from "@/translate"
 
 const damageCommand: CommandDefinition = {
   name: "damage",
-  alias: "dmg",
+  alias: ["dmg"],
   //usage: 1,
   args: [
     { name: "damage", type: "int" },

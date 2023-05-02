@@ -6,7 +6,7 @@ import translate from "@/translate"
 
 const artSetCommand: CommandDefinition = {
   name: "artSet",
-  alias: "artset",
+  alias: ["artset"],
   usage: 3,
   args: [
     { name: "id", type: "int" },

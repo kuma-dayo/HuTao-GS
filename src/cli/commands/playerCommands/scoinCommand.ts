@@ -4,6 +4,7 @@ import translate from "@/translate"
 
 const scoinCommand: CommandDefinition = {
   name: "scoin",
+  alias: ["mora"],
   usage: 2,
   args: [
     { name: "amount", type: "int" },

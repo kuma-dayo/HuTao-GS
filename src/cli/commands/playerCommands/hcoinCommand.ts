@@ -4,6 +4,7 @@ import translate from "@/translate"
 
 const hcoinCommand: CommandDefinition = {
   name: "hcoin",
+  alias: ["primogen"],
   usage: 2,
   args: [
     { name: "amount", type: "int" },
