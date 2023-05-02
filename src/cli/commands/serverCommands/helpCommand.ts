@@ -24,10 +24,16 @@ export function getCommandInfo(command: CommandDefinition, prefix = "", showDesc
 
 export function getCommandInfoAlias(command: CommandDefinition, prefix = "", showDesc = false) {
   const { name, args, alias } = command
-  const cmdName = cRGB(0xffffff, prefix + alias)
-  const cmdArgs = cRGB(0xffb71c, args != null && args.length > 0 ? " " + args.map(getArgumentInfo).join(" ") : "")
-  const cmdDesc = showDesc ? " - " + translate(`cli.commands.${name}.desc`) : ""
-  return `${cmdName}${cmdArgs}${cmdDesc}`
+  const data: string[] = []
+  for (const alia of alias) {
+    const cmdName = cRGB(0xffffff, prefix + alia)
+    const cmdArgs = cRGB(0xffb71c, args != null && args.length > 0 ? " " + args.map(getArgumentInfo).join(" ") : "")
+    const cmdDesc = showDesc ? " - " + translate(`cli.commands.${name}.desc`) : ""
+
+    data.push(`${cmdName}${cmdArgs}${cmdDesc}`)
+  }
+
+  return data
 }
 
 function consoleHelpPage(cli: CLILike) {
@@ -51,7 +57,7 @@ function commandHelpPage(cli: CLILike, commandName?: string) {
 
   if (commandName == null) return commandListHelpPage(cli)
 
-  const command = CLI.commands.find((c) => c.name === commandName || c.alias === commandName)
+  const command = CLI.commands.find((c) => c.name === commandName || c.alias?.includes(commandName))
   if (command == null) return printError("Command not found:", commandName)
 
   print(translate("cli.commands.help.page.commandInfo.title"))
@@ -78,7 +84,7 @@ const helpCommand: CommandDefinition = {
       name: "command",
       type: "str",
       get values() {
-        return CLI.commands.flatMap((c) => [c.alias, c.name].filter(Boolean))
+        return CLI.commands.flatMap((c) => (c.alias?.length > 0 ? [c.name].concat(c.alias) : [c.name]))
       },
       optional: true,
     },

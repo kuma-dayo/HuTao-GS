@@ -56,9 +56,11 @@ export default class CLI {
       commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
         escapeHtml(getCommandInfo(cmd, CLI.prefix, true))
       )}</p>`
-      commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
-        escapeHtml(getCommandInfoAlias(cmd, CLI.prefix, true))
-      )}</p>`
+      for (const data of cmd.alias?.length ? getCommandInfoAlias(cmd, CLI.prefix, true) : []) {
+        commandsAnnouncement.content += `<p style="white-space: pre-wrap;background: black;color: white;">◇ ${ansiToHTML(
+          escapeHtml(data)
+        )}</p>`
+      }
     }
   }
 
@@ -84,7 +86,7 @@ export default class CLI {
 
     if (input.includes(" ")) {
       // suggest argument values
-      const cmdDef = commands.find((c) => c.name === cmdName)
+      const cmdDef = commands.find((c) => c.name === cmdName || c.alias?.includes(cmdName))
       if (!cmdDef) return null
       return (
         cmdDef.args?.[args.length - 1]?.values
@@ -96,7 +98,7 @@ export default class CLI {
       // suggest command
       return (
         commands
-          .map((c) => c.name)
+          .flatMap((c) => [c.name, ...(c.alias || [])])
           .filter((cn) => cn.indexOf(cmdName) === 0)
           .sort((a, b) => a.length - b.length)[0] || null
       )
@@ -114,7 +116,7 @@ export default class CLI {
       return translate("cli.error.parseFail", err)
     }
 
-    const cmdDef = CLI.commands.find((cmd) => cmd.name === cmdName || cmd.alias === cmdName)
+    const cmdDef = CLI.commands.find((cmd) => cmd.name === cmdName || cmd.alias?.includes(cmdName))
     if (!cmdDef) return translate("cli.error.unknownCommand", cmdName)
 
     if (!cmdDef.allowPlayer && cmdInfo.sender != null) return translate("cli.error.consoleOnly")
