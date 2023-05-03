@@ -22,11 +22,36 @@ export default class SceneTag {
       type: cond.CondType,
       params: [cond.Param1, cond.Param2].filter((param) => param != null),
     }))
-    this.isDefault = !!data.IsDefaultValid
+    this.isDefault = data.IsDefaultValid
   }
 
-  // Not yet implemented
+  get activityManager() {
+    return this.scene.world.game.activityManager
+  }
+
   isActive(): boolean {
-    return true
+    if (this.conds.length === 0) return this.isDefault
+
+    const bools: boolean[] = []
+
+    for (const cond of this.conds) {
+      switch (cond.type) {
+        case "SCENE_TAG_COND_TYPE_SPECIFIC_ACTIVITY_OPEN":
+        case "SCENE_TAG_COND_TYPE_ACTIVITY_CONTENT_OPEN": {
+          const isOpen =
+            this.activityManager.exportActivityScheduleInfoList().find((a) => a.activityId === cond.params[0])
+              ?.isOpen || false
+
+          bools.push(isOpen)
+          break
+        }
+        default: {
+          bools.push(false)
+          break
+        }
+      }
+    }
+
+    return bools.every((v) => v) ? !this.isDefault : this.isDefault
   }
 }

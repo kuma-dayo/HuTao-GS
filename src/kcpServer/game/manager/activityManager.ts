@@ -15,9 +15,9 @@ const eventlist = config.game.eventlist
 export default class ActivityManager {
   game: Game
 
-  activityList: Activity[]
-
   startDate: Date
+
+  private activityList: Activity[]
 
   constructor(game: Game) {
     this.game = game
