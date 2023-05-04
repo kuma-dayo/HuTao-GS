@@ -16,35 +16,32 @@ export default async function EVENT_GADGET_STATE_CHANGE(scriptManager: scriptMan
         const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
         if (trigger.Condition != "") {
-          const conditionResult = condition(
-            { currentGroup } as scriptLibContext,
-            { param1: Number(state), param2: configId } as ScriptArgs
-          ) as boolean
-
-          logger.verbose(
-            `[lua] EVENT_GADGET_STATE_CHANGE Condition ${conditionResult} ${Number(state)} ${trigger.Condition}`
+          const conditionResult = <boolean>(
+            condition(<scriptLibContext>{ currentGroup }, <ScriptArgs>{ param1: state, param2: configId })
           )
+
+          logger.verbose(`[lua] EVENT_GADGET_STATE_CHANGE Condition ${conditionResult} ${state} ${trigger.Condition}`)
 
           if (conditionResult == true && trigger.Action != "") {
             logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Action")
 
             action(
-              {
+              <scriptLibContext>{
                 currentGroup: currentGroup,
-                args: { param1: Number(state), param2: configId },
-              } as scriptLibContext,
-              { param1: Number(state), param2: configId } as ScriptArgs
+                args: { param1: state, param2: configId },
+              },
+              <ScriptArgs>{ param1: state, param2: configId }
             )
           }
         } else {
           logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Action")
 
           action(
-            {
+            <scriptLibContext>{
               currentGroup: currentGroup,
-              args: { param1: Number(state), param2: configId },
-            } as scriptLibContext,
-            { param1: Number(state), param2: configId } as ScriptArgs
+              args: { param1: state, param2: configId },
+            },
+            <ScriptArgs>{ param1: state, param2: configId }
           )
         }
       }

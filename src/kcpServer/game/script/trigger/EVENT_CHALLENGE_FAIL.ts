@@ -15,19 +15,19 @@ export default async function EVENT_CHALLENGE_FAIL(scriptManager: scriptManager)
         const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
         if (trigger.Condition != "") {
-          const conditionResult = condition({ currentGroup } as scriptLibContext, null) as boolean
+          const conditionResult: boolean = condition(<scriptLibContext>{ currentGroup }, null)
 
           logger.verbose(`[lua] EVENT_CHALLENGE_FAIL Condition ${conditionResult}`)
 
           if (conditionResult == true && trigger.Action != "") {
             logger.verbose("[lua] EVENT_CHALLENGE_FAIL Action")
 
-            action({ currentGroup: currentGroup } as scriptLibContext, null)
+            action(<scriptLibContext>{ currentGroup: currentGroup }, null)
           }
         } else {
           logger.verbose("[lua] EVENT_CHALLENGE_FAIL Action")
 
-          action({ currentGroup: currentGroup } as scriptLibContext, null)
+          action(<scriptLibContext>{ currentGroup: currentGroup }, null)
         }
       }
     })

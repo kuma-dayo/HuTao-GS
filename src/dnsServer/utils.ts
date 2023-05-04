@@ -6,17 +6,17 @@ import { NAME_TO_QTYPE, QTYPE_TO_NAME } from "./packet/consts"
 function getAnsValue(res: PacketResource) {
   switch (res.type) {
     case NAME_TO_QTYPE.A:
-      return (res as ResA).address
+      return (<ResA>res).address
     case NAME_TO_QTYPE.AAAA:
-      return (res as ResAAAA).address
+      return (<ResAAAA>res).address
     case NAME_TO_QTYPE.CNAME:
-      return (res as ResCNAME).domain
+      return (<ResCNAME>res).domain
     case NAME_TO_QTYPE.SVCB:
     case NAME_TO_QTYPE.HTTPS:
       return (
-        (res as ResSVCB).priority +
+        (<ResSVCB>res).priority +
         JSON.stringify(
-          Object.fromEntries(Object.entries((res as ResSVCB).fields).map((e) => [e[0], e[1].toString("utf8")]))
+          Object.fromEntries(Object.entries((<ResSVCB>res).fields).map((e) => [e[0], e[1].toString("utf8")]))
         )
       )
     default:

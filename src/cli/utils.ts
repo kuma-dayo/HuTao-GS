@@ -51,7 +51,7 @@ export function castCLIArg(ctx: ParseCLICtx, arg: string, def: ArgumentDefinitio
     case "b64":
     case "hex": {
       try {
-        return Buffer.from(arg, type.split("-")[0] as BufferEncoding)
+        return Buffer.from(arg, <BufferEncoding>type.split("-")[0])
       } catch (err) {
         return typeError(ctx, def)
       }

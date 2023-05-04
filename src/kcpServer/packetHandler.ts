@@ -23,7 +23,7 @@ export default class PacketHandler {
     const { instances } = this
 
     if (!instances[name]) {
-      instances[name] = (await import(`./packets/${name}`)).default as PacketInterface
+      instances[name] = <PacketInterface>(await import(`./packets/${name}`)).default
     }
 
     return instances[name]
@@ -77,7 +77,7 @@ export default class PacketHandler {
         notifyWaitStateMask,
       } = packet
 
-      const state = {
+      const state = <[ClientStateEnum, boolean, number, ClientStateEnum, boolean, number]>{
         Req: [reqState, reqStatePass, reqStateMask, reqWaitState, reqWaitStatePass, reqWaitStateMask],
         Notify: [
           notifyState,
@@ -87,7 +87,7 @@ export default class PacketHandler {
           notifyWaitStatePass,
           notifyWaitStateMask,
         ],
-      }[type] as [ClientStateEnum, boolean, number, ClientStateEnum, boolean, number]
+      }[type]
 
       const data = await dataUtil.dataToProtobuffer(packetData, packetID)
 

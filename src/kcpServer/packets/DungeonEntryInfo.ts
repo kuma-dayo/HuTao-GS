@@ -30,7 +30,7 @@ class DungeonEntryInfoPacket extends Packet implements PacketInterface {
     const { pointId } = data
     const dungeonEntryList: DungeonEntryInfo[] = []
 
-    const dungeonEntryData = (await SceneData.getScenePoint(currentScene.id, pointId)) as DungeonEntry
+    const dungeonEntryData = <DungeonEntry>await SceneData.getScenePoint(currentScene.id, pointId)
 
     if (dungeonEntryData && dungeonEntryData.DungeonIds) {
       for (const id of dungeonEntryData.DungeonIds) {

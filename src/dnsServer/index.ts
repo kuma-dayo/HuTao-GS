@@ -73,7 +73,7 @@ export default class DnsServer extends EventEmitter {
   }
 
   tcpAddress(): AddressInfo {
-    return this.tcp.address() as AddressInfo
+    return <AddressInfo>this.tcp.address()
   }
 
   udpAddress(): AddressInfo {

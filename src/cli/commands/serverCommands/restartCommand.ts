@@ -6,7 +6,7 @@ import Server from "@/server"
 const restartCommand: CommandDefinition = {
   name: "restart",
   exec: async (cmdInfo) => {
-    const { cli, server } = cmdInfo as { cli: CLI; server: Server }
+    const { cli, server } = <{ cli: CLI; server: Server }>cmdInfo
 
     cli.stop()
     await server.restart()

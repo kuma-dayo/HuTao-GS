@@ -16,25 +16,21 @@ export default async function EVENT_VARIABLE_CHANGE(scriptManager: scriptManager
         const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
         if (trigger.Condition != "") {
-          const conditionResult = condition(
-            { currentGroup } as scriptLibContext,
-            { param1: oldValue, param2: newValue } as ScriptArgs
-          ) as boolean
+          const conditionResult = <boolean>(
+            condition(<scriptLibContext>{ currentGroup }, <ScriptArgs>{ param1: oldValue, param2: newValue })
+          )
 
           logger.verbose(`[lua] EVENT_VARIABLE_CHANGE Condition ${conditionResult}`)
 
           if (conditionResult == true && trigger.Action != "") {
             logger.verbose("[lua] EVENT_VARIABLE_CHANGE Action")
 
-            action(
-              { currentGroup: currentGroup, args: { param1: oldValue, param2: newValue } } as scriptLibContext,
-              null
-            )
+            action(<scriptLibContext>{ currentGroup: currentGroup, args: { param1: oldValue, param2: newValue } }, null)
           }
         } else {
           logger.verbose("[lua] EVENT_VARIABLE_CHANGE Action")
 
-          action({ currentGroup: currentGroup, args: { param1: oldValue, param2: newValue } } as scriptLibContext, null)
+          action(<scriptLibContext>{ currentGroup: currentGroup, args: { param1: oldValue, param2: newValue } }, null)
         }
       }
     })

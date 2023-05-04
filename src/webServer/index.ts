@@ -107,7 +107,7 @@ export default class WebServer extends EventEmitter {
       server.on("error", (err) => logger.error("generic.param1", err))
 
       server.listen(port, () => {
-        logger.info("message.webServer.info.listen", cRGB(0xffffff, (server.address() as AddressInfo).port.toString()))
+        logger.info("message.webServer.info.listen", cRGB(0xffffff, (<AddressInfo>server.address()).port.toString()))
         if (++listening >= total) this.emit("listening")
       })
 

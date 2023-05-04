@@ -30,7 +30,7 @@ class PersonalSceneJumpPacket extends Packet implements PacketInterface {
     const { pointId } = data
 
     const { TranSceneId, TranPos, TranRot } =
-      ((await SceneData.getScenePoint(currentScene.id, pointId)) as PersonalSceneJumpPoint) || {}
+      <PersonalSceneJumpPoint>await SceneData.getScenePoint(currentScene.id, pointId) || {}
     const scene = await currentWorld.getScene(TranSceneId)
 
     if (!scene) {

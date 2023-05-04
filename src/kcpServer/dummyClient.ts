@@ -48,7 +48,7 @@ export default class DummyClient extends Client {
 
     if (packetName === "PlayerEnterSceneNotify") {
       // Response to enter scene request
-      const { enterSceneToken } = data as PlayerEnterSceneNotify
+      const { enterSceneToken } = <PlayerEnterSceneNotify>data
 
       // Wait until state change
       await EnterSceneReady.waitState(context, ClientStateEnum.ENTER_SCENE, false, 0xf0ff)

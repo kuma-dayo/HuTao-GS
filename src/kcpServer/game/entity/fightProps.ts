@@ -303,9 +303,9 @@ export default class FightProp {
 
     switch (entityType) {
       case ProtEntityTypeEnum.PROT_ENTITY_AVATAR:
-        return [(entity as Avatar).weapon].filter((weapon) => weapon != null)
+        return [(<Avatar>entity).weapon].filter((weapon) => weapon != null)
       case ProtEntityTypeEnum.PROT_ENTITY_MONSTER:
-        return (entity as Monster).weaponList
+        return (<Monster>entity).weaponList
       default:
         return []
     }
@@ -321,11 +321,11 @@ export default class FightProp {
   }
 
   private getCostElemVal(): number {
-    return (this.entity as Avatar).skillManager.costElemVal
+    return (<Avatar>this.entity).skillManager.costElemVal
   }
 
   private getCostElemType(): ElemTypeEnum {
-    return (this.entity as Avatar).skillManager.costElemType
+    return (<Avatar>this.entity).skillManager.costElemType
   }
 
   private getMaxEnergy(): number {
@@ -454,8 +454,8 @@ export default class FightProp {
         fightPropMap,
       })
     } else if (entity.protEntityType === ProtEntityTypeEnum.PROT_ENTITY_AVATAR) {
-      await AvatarFightPropUpdate.sendNotify((entity as Avatar).player.context, {
-        avatarGuid: (entity as Avatar).guid.toString(),
+      await AvatarFightPropUpdate.sendNotify((<Avatar>entity).player.context, {
+        avatarGuid: (<Avatar>entity).guid.toString(),
         fightPropMap,
       })
     }

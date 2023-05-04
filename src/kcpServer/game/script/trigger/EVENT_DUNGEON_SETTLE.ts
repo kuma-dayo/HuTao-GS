@@ -17,10 +17,12 @@ export default async function EVENT_DUNGEON_SETTLE(scriptManager: scriptManager)
           const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
           if (trigger.Condition != "") {
-            const conditionResult = condition(
-              { currentGroup: sceneGroup } as scriptLibContext,
-              { param1: sceneGroup.block.scene.ischallenge ? 0 : 1 } as ScriptArgs
-            ) as boolean
+            const conditionResult = <boolean>condition(
+              <scriptLibContext>{ currentGroup: sceneGroup },
+              <ScriptArgs>{
+                param1: sceneGroup.block.scene.ischallenge ? 0 : 1,
+              }
+            )
 
             logger.verbose(`[lua] EVENT_DUNGEON_SETTLE Condition ${conditionResult}`)
 
@@ -28,10 +30,10 @@ export default async function EVENT_DUNGEON_SETTLE(scriptManager: scriptManager)
               logger.verbose("[lua] EVENT_DUNGEON_SETTLE Action")
 
               action(
-                {
+                <scriptLibContext>{
                   currentGroup: sceneGroup,
                   args: { param1: sceneGroup.block.scene.ischallenge ? 0 : 1 },
-                } as scriptLibContext,
+                },
                 null
               )
             }
@@ -39,10 +41,10 @@ export default async function EVENT_DUNGEON_SETTLE(scriptManager: scriptManager)
             logger.verbose("[lua] EVENT_DUNGEON_SETTLE Action")
 
             action(
-              {
+              <scriptLibContext>{
                 currentGroup: sceneGroup,
                 args: { param1: sceneGroup.block.scene.ischallenge ? 0 : 1 },
-              } as scriptLibContext,
+              },
               null
             )
           }

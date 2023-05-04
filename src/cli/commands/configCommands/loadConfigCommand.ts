@@ -20,7 +20,7 @@ const loadConfigCommand: CommandDefinition = {
     },
   ],
   exec: async (cmdInfo) => {
-    const { args, cli, server } = cmdInfo as { args: string[]; cli: CLI; server: Server }
+    const { args, cli, server } = <{ args: string[]; cli: CLI; server: Server }>cmdInfo
     const { print, printError } = cli
     const [name] = args
 

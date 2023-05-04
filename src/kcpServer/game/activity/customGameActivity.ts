@@ -10,8 +10,6 @@ export default class CustomGameActivity extends Activity {
   }
 
   exportActivityInfo(player: Player): ActivityInfo {
-    const info: ActivityInfo = super.exportActivityInfo(player)
-
-    return info
+    return super.exportActivityInfo(player)
   }
 }

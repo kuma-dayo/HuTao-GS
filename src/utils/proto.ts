@@ -39,7 +39,7 @@ export const getProtoType = async (proto: string, common = false): Promise<proto
   if (!(await fileExists(protoPath))) return null
 
   const root = await protobuf.load(protoPath)
-  const type = root.lookup(proto) as protobuf.Type
+  const type = <protobuf.Type>root.lookup(proto)
 
   protoTypeCache[cacheId] = type
 

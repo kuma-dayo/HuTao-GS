@@ -16,10 +16,13 @@ export default async function EVENT_SELECT_OPTION(scriptManager: scriptManager, 
         const action = lua.global.get(scriptManager.getFunctionName(trigger.Action))
 
         if (trigger.Condition != "") {
-          const conditionResult = condition(
-            { currentGroup } as scriptLibContext,
-            { param1: configId, param2: optionid } as ScriptArgs
-          ) as boolean
+          const conditionResult = <boolean>condition(
+            <scriptLibContext>{ currentGroup },
+            <ScriptArgs>{
+              param1: configId,
+              param2: optionid,
+            }
+          )
 
           logger.verbose(`[lua] EVENT_SELECT_OPTION Condition ${conditionResult}`)
 
@@ -27,16 +30,19 @@ export default async function EVENT_SELECT_OPTION(scriptManager: scriptManager, 
             logger.verbose("[lua] EVENT_SELECT_OPTION Action")
 
             action(
-              { currentGroup: currentGroup, args: { param1: configId, param2: optionid } } as scriptLibContext,
-              { param1: configId, param2: optionid } as ScriptArgs
+              <scriptLibContext>{ currentGroup: currentGroup, args: { param1: configId, param2: optionid } },
+              <ScriptArgs>{
+                param1: configId,
+                param2: optionid,
+              }
             )
           }
         } else {
           logger.verbose("[lua] EVENT_SELECT_OPTION Action")
 
           action(
-            { currentGroup: currentGroup, args: { param1: configId, param2: optionid } } as scriptLibContext,
-            { param1: configId, param2: optionid } as ScriptArgs
+            <scriptLibContext>{ currentGroup: currentGroup, args: { param1: configId, param2: optionid } },
+            <ScriptArgs>{ param1: configId, param2: optionid }
           )
         }
       }
