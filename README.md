@@ -27,6 +27,42 @@ cd HuTao-GS
 npm i
 npm run start:dev
 ```
+## Resource
+```
+data
+├── game
+│   └── x.x.x
+│       ├── Scripts
+│       │   └── Scene
+│       ├── AbilityData.json
+│       ├── AvatarData.json
+│       ├── DropData.json
+│       ├── DungeonData.json
+│       ├── GadgetData.json
+│       ├── GrowCurveData.json
+│       ├── MapAreaData.json
+│       ├── MaterialData.json
+│       ├── MonsterData.json
+│       ├── QuestData.json
+│       ├── ReliquaryData.json
+│       ├── SceneData.json
+│       ├── ShopData.json
+│       ├── SkillData.json
+│       ├── TalentData.json
+│       ├── WeaponData.json
+│       ├── WeatherData.json
+│       └── WorldData.json
+└── proto
+    ├── x.x.x
+    ├── ForceUpdateInfo.proto
+    ├── PacketHead.proto
+    ├── QueryCurrRegionHttpRsp.proto
+    ├── QueryRegionListHttpRsp.proto
+    ├── RegionInfo.proto
+    ├── RegionSimpleInfo.proto
+    ├── ResVersionConfig.proto
+    └── StopServerInfo.proto
+```
 ## Fidder Script
 ```
 import System;
