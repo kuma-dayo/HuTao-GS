@@ -21,7 +21,7 @@ export interface GlobalStateData {
   ShowPacketId: boolean
   UseProtoMatch: boolean
   WorldSpawn: boolean
-  enableScript: boolean
+  EnableScript: boolean
 }
 
 export const DEFAULT_GSTATE: GlobalStateData = {
@@ -33,7 +33,7 @@ export const DEFAULT_GSTATE: GlobalStateData = {
   ShowPacketId: false,
   UseProtoMatch: false,
   WorldSpawn: true,
-  enableScript: false,
+  EnableScript: false,
 }
 
 export default class GlobalState {

@@ -11,7 +11,7 @@ import PlayerEnterScene, { PlayerEnterSceneNotify } from "#/packets/PlayerEnterS
 import ScenePlayerLocation from "#/packets/ScenePlayerLocation"
 import SceneTime from "#/packets/SceneTime"
 import uidPrefix from "#/utils/uidPrefix"
-import DungeonChallenge from "$/dungeon/dungeonChallenge"
+import DungeonChallenge from "$/challenge/dungeonChallenge"
 import Entity from "$/entity"
 import Gadget from "$/entity/gadget"
 import TrifleItem from "$/entity/gadget/trifleItem"
@@ -83,7 +83,7 @@ export default class Scene extends BaseClass {
   sceneBlockInit: boolean
   destroyed: boolean
 
-  enableScript: boolean
+  EnableScript: boolean
 
   ischallenge: boolean
   challenge: DungeonChallenge
@@ -112,7 +112,7 @@ export default class Scene extends BaseClass {
 
     fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/Scene/${sceneId}/scene${sceneId}.lua`)).then(
       (bool) => {
-        this.enableScript = GlobalState.get("enableScript") ? bool : false
+        this.EnableScript = GlobalState.get("EnableScript") ? bool : false
       }
     )
 

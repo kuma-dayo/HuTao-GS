@@ -1,5 +1,5 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
-import DungeonChallenge from "$/dungeon/dungeonChallenge"
+import DungeonChallenge from "$/challenge/dungeonChallenge"
 import {
   ChannellerSlabLoopDungeonResultInfo,
   CustomDungeonResultInfo,

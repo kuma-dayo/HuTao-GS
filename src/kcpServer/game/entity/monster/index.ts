@@ -1,4 +1,4 @@
-import KillMonsterTrigger from "$/dungeon/trigger/killMonsterTrigger"
+import KillMonsterTrigger from "$/challenge/trigger/killMonsterTrigger"
 import Entity from "$/entity"
 import Weapon from "$/equip/weapon"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
@@ -197,7 +197,7 @@ export default class Monster extends Entity {
   async handleDeath(seqId?: number, batch = false) {
     const { manager, motion, killDropId } = this
 
-    if (manager.scene.enableScript) {
+    if (manager.scene.EnableScript) {
       if (manager.scene.ischallenge) await new KillMonsterTrigger().MonsterDeath(manager.scene.challenge)
       await this.sceneGroup?.scriptManager.EVENT_ANY_MONSTER_DIE(this.configId)
     }

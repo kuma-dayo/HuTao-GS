@@ -1,6 +1,6 @@
 import context from "./scriptLibContext"
 
-import DungeonChallenge from "$/dungeon/dungeonChallenge"
+import DungeonChallenge from "$/challenge/dungeonChallenge"
 import Logger from "@/logger"
 import { EntityTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { PlayerDieTypeEnum } from "@/types/proto/enum"

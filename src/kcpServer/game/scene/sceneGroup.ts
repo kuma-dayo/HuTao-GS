@@ -107,7 +107,7 @@ export default class SceneGroup {
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
 
-    if (scene.enableScript)
+    if (scene.EnableScript)
       await this.scriptManager.EVENT_ANY_MONSTER_LIVE(monsterList.map((monster) => monster.configId))
   }
 
@@ -174,7 +174,7 @@ export default class SceneGroup {
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
 
-    if (scene.enableScript) await this.scriptManager.EVENT_GADGET_CREATE(gadgetList.map((gadget) => gadget.configId))
+    if (scene.EnableScript) await this.scriptManager.EVENT_GADGET_CREATE(gadgetList.map((gadget) => gadget.configId))
   }
 
   private async unloadList(entityList: Entity[]) {
