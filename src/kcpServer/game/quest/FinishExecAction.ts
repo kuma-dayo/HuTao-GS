@@ -4,6 +4,7 @@ import BaseClass from "#/baseClass"
 import QuestManager from "$/manager/questManager"
 import Player from "$/player"
 import Logger from "@/logger"
+import { toCamelCase } from "@/utils/string"
 
 const logger = new Logger("FinishExecAction", 0xbc9302)
 export default class FinishExecAction extends BaseClass {
@@ -13,19 +14,12 @@ export default class FinishExecAction extends BaseClass {
     super()
 
     this.manager = manager
-    super.initHandlers()
+    super.initHandlers(this)
   }
 
-  //Hutao-GD https://github.com/kuma-dayo/Hutao-GD/blob/main/src/utils/deobfuscate.ts#L11
-  fixString(str: string): string {
-    return (str.slice(0, 1).toUpperCase() + str.slice(1)).replace(
-      str.includes("Config") ? /_[a-zA-Z]/g : /_[a-z]/g,
-      (s) => s.slice(1).toUpperCase()
-    )
-  }
   async runAction(content: QuestExec, param: string[], player: Player): Promise<void> {
-    logger.debug("RunAction:", content, param)
-    await this.emit(this.fixString(content.toString().replace("QUEST_EXEC_", "")), param, player)
+    logger.debug("FinishExecAction:", content, param)
+    await this.emit(toCamelCase(QuestExec[content].replace("QUEST_EXEC_", "")), param, player)
   }
 
   /** Event **/
