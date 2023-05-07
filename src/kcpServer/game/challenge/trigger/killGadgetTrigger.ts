@@ -6,7 +6,7 @@ export default class KillGadgetTrigger {
   public async OnBegin(challenge: DungeonChallenge) {
     const { challengeIndex, sceneGroup, score } = challenge
 
-    await ChallengeData.broadcastNotify(sceneGroup.block.scene.broadcastContextList, {
+    await ChallengeData.broadcastNotify(sceneGroup.scene.broadcastContextList, {
       challengeIndex: challengeIndex,
       paramIndex: 2,
       value: score,
@@ -17,7 +17,7 @@ export default class KillGadgetTrigger {
     let { challengeIndex, sceneGroup, goal } = challenge
     const newScore = challenge.incrementScore()
 
-    await ChallengeData.broadcastNotify(sceneGroup.block.scene.broadcastContextList, {
+    await ChallengeData.broadcastNotify(sceneGroup.scene.broadcastContextList, {
       challengeIndex: challengeIndex,
       paramIndex: 2,
       value: newScore,

@@ -113,19 +113,19 @@ export default class GameQuest {
           (finishCond) =>
             finishCond.type.toString() == QuestContent[trigger] && this.array_equal(finishCond.param, param)
         )
-        .map((finishCond) => {
+        .forEach((finishCond) => {
           finishCond.finish()
         })
     } else {
       this.finishCond
         .filter((finishCond) => finishCond.type.toString() == QuestContent[trigger])
-        .map((finishCond) => {
+        .forEach((finishCond) => {
           finishCond.finish()
         })
     }
 
     if (this.finishCond.every((finishCond) => finishCond.isFinished)) {
-      this.finishExec.map(async (finishExec) => await finishExec.execute())
+      this.finishExec.forEach(async (finishExec) => await finishExec.execute())
       await this.finish()
     }
   }

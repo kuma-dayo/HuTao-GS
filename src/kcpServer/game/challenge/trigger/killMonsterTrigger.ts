@@ -6,7 +6,7 @@ export default class KillMonsterTrigger {
   public async OnBegin(challenge: DungeonChallenge) {
     let { challengeIndex, sceneGroup, score } = challenge
 
-    await ChallengeData.broadcastNotify(sceneGroup.block.scene.broadcastContextList, {
+    await ChallengeData.broadcastNotify(sceneGroup.scene.broadcastContextList, {
       challengeIndex: challengeIndex,
       paramIndex: 1,
       value: score,
@@ -17,7 +17,7 @@ export default class KillMonsterTrigger {
     let { challengeIndex, sceneGroup, goal } = challenge
     const newScore = challenge.incrementScore()
 
-    await ChallengeData.broadcastNotify(sceneGroup.block.scene.broadcastContextList, {
+    await ChallengeData.broadcastNotify(sceneGroup.scene.broadcastContextList, {
       challengeIndex: challengeIndex,
       paramIndex: 1,
       value: newScore,

@@ -5,7 +5,7 @@ import Entity from "$/entity"
 import GadgetData from "$/gameData/data/GadgetData"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
 import Player from "$/player"
-import { EntityTypeEnum, GadgetStateEnum } from "@/types/enum"
+import { EntityTypeEnum, EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { SceneGadgetInfo } from "@/types/proto"
 import {
   InteractTypeEnum,
@@ -89,12 +89,13 @@ export default class Gadget extends Entity {
     }
   }
 
-  async setGadgetState(state: GadgetStateEnum) {
+  async setGadgetState(state: GadgetStateEnum, silent = false) {
     const { manager } = this
 
     this.gadgetState = state
 
-    if (manager.scene.EnableScript) await this.sceneGroup.scriptManager.EVENT_GADGET_STATE_CHANGE(this.configId, state)
+    if (manager.scene.EnableScript && !silent)
+      await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_GADGET_STATE_CHANGE, this.configId, state)
 
     if (!manager) return
 

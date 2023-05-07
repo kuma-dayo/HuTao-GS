@@ -1,5 +1,7 @@
 import SceneBlock from "./sceneBlock"
 
+import Scene from "."
+
 import Entity from "$/entity"
 import Gadget from "$/entity/gadget"
 import Monster from "$/entity/monster"
@@ -9,7 +11,7 @@ import WorldData from "$/gameData/data/WorldData"
 import scriptManager from "$/script/scriptManager"
 import Vector from "$/utils/vector"
 import Logger from "@/logger"
-import { GadgetStateEnum } from "@/types/enum"
+import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import {
   SceneGadgetScriptConfig,
   SceneMonsterScriptConfig,
@@ -53,6 +55,10 @@ export default class SceneGroup {
     this.loaded = false
 
     this.scriptManager = new scriptManager(this)
+  }
+
+  get scene(): Scene {
+    return this.block.scene
   }
 
   get aliveMonsterCount(): number {
@@ -108,7 +114,10 @@ export default class SceneGroup {
     }
 
     if (scene.EnableScript)
-      await this.scriptManager.EVENT_ANY_MONSTER_LIVE(monsterList.map((monster) => monster.configId))
+      await this.scriptManager.emit(
+        EventTypeEnum.EVENT_ANY_MONSTER_LIVE,
+        monsterList.map((monster) => monster.configId)
+      )
   }
 
   private async loadNpcs(npcs: SceneNpcScriptConfig[], suites: SceneSuiteScriptConfig[]) {
@@ -174,7 +183,11 @@ export default class SceneGroup {
       await entityManager.add(entity, undefined, undefined, undefined, true)
     }
 
-    if (scene.EnableScript) await this.scriptManager.EVENT_GADGET_CREATE(gadgetList.map((gadget) => gadget.configId))
+    if (scene.EnableScript)
+      await this.scriptManager.emit(
+        EventTypeEnum.EVENT_GADGET_CREATE,
+        gadgetList.map((gadget) => gadget.configId)
+      )
   }
 
   private async unloadList(entityList: Entity[]) {

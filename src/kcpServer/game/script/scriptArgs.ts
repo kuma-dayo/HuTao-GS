@@ -1,9 +1,9 @@
 export default class ScriptArgs {
-  param1: number
-  param2: number
-  param3: number
-  sourceEid: number
-  targetEid: number
+  param1?: number
+  param2?: number
+  param3?: number
+  sourceEid?: number
+  targetEid?: number
 
   constructor(param1: number, param2: number, param3: number, sourceEid: number, targetEid: number) {
     this.param1 = param1

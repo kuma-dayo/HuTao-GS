@@ -4,7 +4,7 @@ import Weapon from "$/equip/weapon"
 import GrowCurveData from "$/gameData/data/GrowCurveData"
 import MonsterData from "$/gameData/data/MonsterData"
 import Player from "$/player"
-import { EntityTypeEnum, FightPropEnum, MonsterTypeEnum } from "@/types/enum"
+import { EntityTypeEnum, EventTypeEnum, FightPropEnum, MonsterTypeEnum } from "@/types/enum"
 import { SceneMonsterInfo } from "@/types/proto"
 import { AbilityScalarTypeEnum, ChangeHpReasonEnum, MonsterBornTypeEnum, ProtEntityTypeEnum } from "@/types/proto/enum"
 import EntityUserData from "@/types/user/EntityUserData"
@@ -199,7 +199,7 @@ export default class Monster extends Entity {
 
     if (manager.scene.EnableScript) {
       if (manager.scene.ischallenge) await new KillMonsterTrigger().MonsterDeath(manager.scene.challenge)
-      await this.sceneGroup?.scriptManager.EVENT_ANY_MONSTER_DIE(this.configId)
+      await this.sceneGroup?.scriptManager.emit(EventTypeEnum.EVENT_ANY_MONSTER_DIE, this.configId)
     }
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)

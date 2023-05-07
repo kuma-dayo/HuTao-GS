@@ -3,6 +3,7 @@ import ChallengeTrigger from "./trigger/challangeTrigger"
 import DungeonChallengeBegin from "#/packets/DungeonChallengeBegin"
 import DungeonChallengeFinish from "#/packets/DungeonChallengeFinish"
 import SceneGroup from "$/scene/sceneGroup"
+import { EventTypeEnum } from "@/types/enum"
 import { getTimeSeconds } from "@/utils/time"
 
 export default class DungeonChallenge {
@@ -38,12 +39,12 @@ export default class DungeonChallenge {
     this.progress = false
     this.success = false
 
-    this.sceneGroup.block.scene.challenge = this
+    this.sceneGroup.scene.challenge = this
   }
 
   set setProgress(progress: boolean) {
     this.progress = progress
-    this.sceneGroup.block.scene.ischallenge = progress
+    this.sceneGroup.scene.ischallenge = progress
   }
 
   set setScore(score: number) {
@@ -62,13 +63,13 @@ export default class DungeonChallenge {
     this.setProgress = true
     this.startedAt = getTimeSeconds()
 
-    this.uidList = this.sceneGroup.block.scene.broadcastContextList.map((context) => {
+    this.uidList = this.sceneGroup.scene.broadcastContextList.map((context) => {
       return context.client.player.uid
     })
 
     await new ChallengeTrigger().OnBegin(this)
 
-    await DungeonChallengeBegin.broadcastNotify(this.sceneGroup.block.scene.broadcastContextList, this)
+    await DungeonChallengeBegin.broadcastNotify(this.sceneGroup.scene.broadcastContextList, this)
   }
 
   async done() {
@@ -77,8 +78,8 @@ export default class DungeonChallenge {
     this.success = true
     this.setProgress = false
 
-    await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.block.scene.broadcastContextList, this)
-    await this.sceneGroup.scriptManager.EVENT_CHALLENGE_SUCCESS()
+    await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.scene.broadcastContextList, this)
+    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_SUCCESS)
 
     this.settle()
   }
@@ -86,7 +87,7 @@ export default class DungeonChallenge {
   async settle() {
     if (this.progress || !this.success) return
 
-    await this.sceneGroup.scriptManager.EVENT_DUNGEON_SETTLE()
+    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_DUNGEON_SETTLE)
   }
 
   async fail() {
@@ -95,7 +96,7 @@ export default class DungeonChallenge {
     this.success = false
     this.setProgress = false
 
-    await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.block.scene.broadcastContextList, this)
-    await this.sceneGroup.scriptManager.EVENT_CHALLENGE_FAIL()
+    await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.scene.broadcastContextList, this)
+    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_FAIL)
   }
 }
