@@ -3,7 +3,6 @@ import { cwd } from "process"
 
 import { LuaEngine, LuaFactory } from "wasmoon"
 
-import { EventType } from "./constant/eventType"
 import { GadgetState } from "./constant/gadgetState"
 import { RegionShape } from "./constant/regionShape"
 import { SealBattleType } from "./constant/sealBattleType"
@@ -12,7 +11,7 @@ import ScriptLib from "./scriptLib"
 
 import config from "@/config"
 import Logger from "@/logger"
-import { EntityTypeEnum } from "@/types/enum"
+import { EntityTypeEnum, EventTypeEnum } from "@/types/enum"
 import { readFile } from "@/utils/fileSystem"
 
 const logger = new Logger("ScriptLoader", 0xff7f50)
@@ -26,7 +25,7 @@ export default class ScriptLoader {
     })
 
     lua.global.set("EntityType", EntityTypeEnum)
-    lua.global.set("EventType", EventType)
+    lua.global.set("EventType", EventTypeEnum)
     lua.global.set("GadgetState", GadgetState)
     lua.global.set("RegionShape", RegionShape)
     lua.global.set("SealBattleType", SealBattleType)
