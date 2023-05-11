@@ -1,7 +1,8 @@
-import { LuaEngine } from "wasmoon"
+import { LuaEngine, LuaFactory } from "wasmoon"
 
 import ScriptArgs from "./scriptArgs"
 import scriptLibContext from "./scriptLibContext"
+import ScriptLoader from "./scriptLoader"
 import scriptManager from "./scriptManager"
 
 import BaseClass from "#/baseClass"
@@ -17,17 +18,25 @@ interface actionFunc {
 }
 
 export default class ScriptTrigger extends BaseClass {
+  lua: LuaEngine
+  isInit: boolean
   constructor() {
     super()
+
     super.initHandlers(this)
   }
 
-  async runTrigger(scriptManager: scriptManager, type: EventTypeEnum, ...args: any[]) {
-    const { scriptLoader, currentGroup } = scriptManager
-    const lua = await scriptLoader.init(currentGroup.block.scene.id, currentGroup.id)
+  async init() {
+    this.lua = await new LuaFactory().createEngine()
+    this.isInit = true
+  }
+  async runTrigger(scriptLoader: ScriptLoader, scriptManager: scriptManager, type: EventTypeEnum, ...args: any[]) {
+    const { currentGroup } = scriptManager
+    if (!this.isInit) await this.init()
+    const lua = await scriptLoader.init(this.lua, currentGroup.block.scene.id, currentGroup.id)
 
     if (currentGroup.trigger?.length > 0)
-      this.emit(toCamelCase(EventTypeEnum[type].replace("EVENT_", "")), scriptManager, lua, ...args)
+      await this.emit(toCamelCase(EventTypeEnum[type].replace("EVENT_", "")), scriptManager, lua, ...args)
   }
 
   /** Event **/
@@ -65,7 +74,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -102,7 +111,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -137,7 +146,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -174,7 +183,7 @@ export default class ScriptTrigger extends BaseClass {
         })
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -209,7 +218,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -246,7 +255,7 @@ export default class ScriptTrigger extends BaseClass {
         lua.global.resetThread()
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -281,7 +290,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -318,7 +327,7 @@ export default class ScriptTrigger extends BaseClass {
         })
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
   // SpecificMonsterHPChange
@@ -360,7 +369,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
 
@@ -395,7 +404,7 @@ export default class ScriptTrigger extends BaseClass {
         return
       })
     } finally {
-      lua.global.close()
+      lua.global.resetThread()
     }
   }
   // SealBattleBegin

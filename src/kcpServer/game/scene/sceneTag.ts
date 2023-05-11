@@ -45,6 +45,9 @@ export default class SceneTag {
           bools.push(isOpen)
           break
         }
+        case "SCENE_TAG_COND_TYPE_NONE": {
+          bools.push(true)
+        }
         default: {
           bools.push(false)
           break

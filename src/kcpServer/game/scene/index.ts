@@ -24,6 +24,8 @@ import VehicleManager from "$/manager/vehicleManager"
 import Material from "$/material"
 import Player from "$/player"
 import Item from "$/player/inventory/item"
+import ScriptLoader from "$/script/scriptLoader"
+import ScriptTrigger from "$/script/scriptTrigger"
 import Vector from "$/utils/vector"
 import World from "$/world"
 import config from "@/config"
@@ -64,6 +66,8 @@ export default class Scene extends BaseClass {
   entityManager: EntityManager
   combatManager: CombatManager
   vehicleManager: VehicleManager
+  scriptLoader: ScriptLoader
+  scriptTrigger: ScriptTrigger
 
   playerList: Player[]
 
@@ -105,14 +109,16 @@ export default class Scene extends BaseClass {
     this.entityManager = new EntityManager(this)
     this.combatManager = new CombatManager(this)
     this.vehicleManager = new VehicleManager(this)
+    this.scriptLoader = new ScriptLoader()
+    this.scriptTrigger = new ScriptTrigger()
 
     this.playerList = []
 
     this.dieY = -1000
 
     fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/Scene/${sceneId}/scene${sceneId}.lua`)).then(
-      (bool) => {
-        this.EnableScript = GlobalState.get("EnableScript") ? bool : false
+      (exists) => {
+        this.EnableScript = GlobalState.get("EnableScript") && exists
       }
     )
 

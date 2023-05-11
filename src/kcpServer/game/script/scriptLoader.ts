@@ -1,7 +1,7 @@
 import { join } from "path"
 import { cwd } from "process"
 
-import { LuaEngine, LuaFactory } from "wasmoon"
+import { LuaEngine } from "wasmoon"
 
 import { GadgetState } from "./constant/gadgetState"
 import { RegionShape } from "./constant/regionShape"
@@ -17,9 +17,7 @@ import { readFile } from "@/utils/fileSystem"
 const logger = new Logger("ScriptLoader", 0xff7f50)
 
 export default class ScriptLoader {
-  public async init(sceneId: number, groupId: number): Promise<LuaEngine> {
-    const lua = await new LuaFactory().createEngine({ traceAllocations: true })
-
+  public async init(lua: LuaEngine, sceneId: number, groupId: number): Promise<LuaEngine> {
     lua.global.set("require", function require(arg: string) {
       logger.verbose("[lua] Call require", arg)
     })
