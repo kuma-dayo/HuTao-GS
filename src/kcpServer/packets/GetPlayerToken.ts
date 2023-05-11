@@ -23,10 +23,10 @@ interface GetPlayerTokenReq {
   cloudClientIp?: number
   // >= 2.7.50
   keyId?: number
+  // custom name
   clientSeed?: string
-  // >= 3.2.50
+  // official name
   clientRandKey?: string
-  lang?: number
 }
 
 interface GetPlayerTokenRsp {
@@ -56,9 +56,10 @@ interface GetPlayerTokenRsp {
   regPlatform?: number
   clientIpStr?: string
   // >= 2.7.50
+  // custom name
   encryptedSeed?: string
   seedSignature?: string
-  // >= 3.2.50
+  // official name
   serverRandKey?: string
   sign?: string
 }
@@ -70,7 +71,8 @@ class GetPlayerTokenPacket extends Packet implements PacketInterface {
 
   async request(context: PacketContext, data: GetPlayerTokenReq) {
     const { game, client } = context
-    const { accountUid, accountToken, accountType, platformType, channelId, clientSeed, keyId, clientRandKey } = data
+    const { accountUid, accountToken, accountType, platformType, channelId, keyId, clientSeed, clientRandKey } = data
+
     const { uid, userData } = await game.getPlayerInfo(accountUid)
     const seed =
       (BigInt(Math.floor(0x10000 * Math.random())) << 48n) |
@@ -97,22 +99,14 @@ class GetPlayerTokenPacket extends Packet implements PacketInterface {
       // >= 2.7.50
       const { client, server } = await DispatchKey.getKeyPairs(keyId)
 
-      const clientSeeds = clientSeed || clientRandKey
+      const crkEncrypted = Buffer.from(clientSeed || clientRandKey, "base64")
+      const crk = rsaDecrypt(server.private, crkEncrypted)
 
-      const cseedEncrypted = Buffer.from(clientSeeds, "base64")
-      const cseed = rsaDecrypt(server.private, cseedEncrypted)
-      const seedBuf = Buffer.alloc(8)
-      seedBuf.writeBigUInt64BE(seed ^ cseed.readBigUInt64BE())
+      const srk = Buffer.alloc(8)
+      srk.writeBigUInt64BE(seed ^ crk.readBigUInt64BE())
 
-      if (clientSeed != null) {
-        // >= 2.7.50
-        rsp.encryptedSeed = rsaEncrypt(client.public, seedBuf).toString("base64")
-        rsp.seedSignature = rsaSign(server.private, seedBuf).toString("base64")
-      } else {
-        // >= 3.2.50
-        rsp.serverRandKey = rsaEncrypt(client.public, seedBuf).toString("base64")
-        rsp.sign = rsaSign(server.private, seedBuf).toString("base64")
-      }
+      rsp.serverRandKey = rsp.encryptedSeed = rsaEncrypt(client.public, srk).toString("base64")
+      rsp.sign = rsp.seedSignature = rsaSign(server.private, srk).toString("base64")
     } else {
       // < 2.7.50
       rsp.secretKeySeed = seed.toString()
