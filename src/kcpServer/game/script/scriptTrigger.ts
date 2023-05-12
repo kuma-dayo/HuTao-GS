@@ -20,6 +20,7 @@ interface actionFunc {
 export default class ScriptTrigger extends BaseClass {
   lua: LuaEngine
   isInit: boolean
+
   constructor() {
     super()
 
@@ -33,7 +34,7 @@ export default class ScriptTrigger extends BaseClass {
   async runTrigger(scriptLoader: ScriptLoader, scriptManager: scriptManager, type: EventTypeEnum, ...args: any[]) {
     const { currentGroup } = scriptManager
     if (!this.isInit) await this.init()
-    const lua = await scriptLoader.init(this.lua, currentGroup.block.scene.id, currentGroup.id)
+    const lua = await scriptLoader.init(this.lua, scriptManager.scene.id, currentGroup.id)
 
     if (currentGroup.trigger?.length > 0)
       await this.emit(toCamelCase(EventTypeEnum[type].replace("EVENT_", "")), scriptManager, lua, ...args)

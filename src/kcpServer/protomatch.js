@@ -20,8 +20,8 @@ const TYPES = {
   FIXED32: 5,
 }
 
-const protoDir = join(cwd(), `data/proto/${config.game.version}`)
-const ignoreProtos = Object.keys(cmdIds)
+const protoDir = join(cwd(), `data/proto/${cmdIds.version}`)
+const ignoreProtos = Object.keys(cmdIds.proto)
 
 function readUntil(ref, end, include = false) {
   const { data, offset } = ref

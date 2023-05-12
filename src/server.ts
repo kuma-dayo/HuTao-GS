@@ -17,6 +17,7 @@ import Authenticator from "./utils/authenticator"
 import { detachedSpawn, execCommand } from "./utils/childProcess"
 import { dirExists, writeFile } from "./utils/fileSystem"
 
+import { cmdIds } from "#/cmdIds"
 import AbilityData from "$/gameData/data/AbilityData"
 import AvatarData from "$/gameData/data/AvatarData"
 import DungeonData from "$/gameData/data/DungeonData"
@@ -108,6 +109,7 @@ export default class Server {
     logger.info("message.server.info.name", cRGB(0xffffff, serverName))
     logger.info("message.server.info.build", cRGB(0xffffff, process.env.BUILD_INFO || "development"))
     logger.info("message.server.info.gameVersion", cRGB(0xffffff, version))
+    logger.info("message.server.info.protoVersion", cRGB(0xffffff, cmdIds.version))
     logger.info("message.server.info.dispatchRegion", cRGB(0xffffff, dispatchRegion))
     logger.info("message.server.info.dispatchSeed", cRGB(0xffffff, dispatchSeed))
     logger.info("message.server.info.dispatchKey", cRGB(0xffffff, dispatchKeyId?.toString()))

@@ -199,7 +199,7 @@ export default class Monster extends Entity {
 
     if (manager.scene.EnableScript) {
       if (manager.scene.ischallenge) await new KillMonsterTrigger().MonsterDeath(manager.scene.challenge)
-      await this.sceneGroup?.scriptManager.emit(EventTypeEnum.EVENT_ANY_MONSTER_DIE, this.configId)
+      await this.sceneGroup?.scene.scriptManager.emit(EventTypeEnum.EVENT_ANY_MONSTER_DIE, this.groupId, this.configId)
     }
     await manager?.scene?.spawnDropsById(motion.pos, killDropId, seqId)
     await super.handleDeath(seqId, batch)

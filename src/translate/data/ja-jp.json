@@ -683,6 +683,7 @@
 				"dispatchRegion": "ディスパッチ リージョン: %0",
 				"dispatchSeed": "ディスパッチ シード: %0",
 				"gameVersion": "ゲーム バージョン: %0",
+				"protoVersion": "プロトファイル バージョン: %0",
 				"logLevel": "ログ レベル: %0",
 				"mkdir": "ディレクトリを作成しています: %0",
 				"name": "名前: %0",

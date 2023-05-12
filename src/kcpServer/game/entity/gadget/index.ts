@@ -95,7 +95,12 @@ export default class Gadget extends Entity {
     this.gadgetState = state
 
     if (manager.scene.EnableScript && !silent)
-      await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_GADGET_STATE_CHANGE, this.configId, state)
+      await this.sceneGroup.scene.scriptManager.emit(
+        EventTypeEnum.EVENT_GADGET_STATE_CHANGE,
+        this.groupId,
+        this.configId,
+        state
+      )
 
     if (!manager) return
 

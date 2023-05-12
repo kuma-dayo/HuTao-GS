@@ -25,6 +25,7 @@ import Material from "$/material"
 import Player from "$/player"
 import Item from "$/player/inventory/item"
 import ScriptLoader from "$/script/scriptLoader"
+import scriptManager from "$/script/scriptManager"
 import ScriptTrigger from "$/script/scriptTrigger"
 import Vector from "$/utils/vector"
 import World from "$/world"
@@ -66,6 +67,8 @@ export default class Scene extends BaseClass {
   entityManager: EntityManager
   combatManager: CombatManager
   vehicleManager: VehicleManager
+  scriptManager: scriptManager
+
   scriptLoader: ScriptLoader
   scriptTrigger: ScriptTrigger
 
@@ -109,6 +112,8 @@ export default class Scene extends BaseClass {
     this.entityManager = new EntityManager(this)
     this.combatManager = new CombatManager(this)
     this.vehicleManager = new VehicleManager(this)
+    this.scriptManager = new scriptManager(this)
+
     this.scriptLoader = new ScriptLoader()
     this.scriptTrigger = new ScriptTrigger()
 

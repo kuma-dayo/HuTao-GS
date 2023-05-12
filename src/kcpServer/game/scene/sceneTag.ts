@@ -48,6 +48,9 @@ export default class SceneTag {
         case "SCENE_TAG_COND_TYPE_NONE": {
           bools.push(true)
         }
+        case "SCENE_TAG_COND_TYPE_QUEST_FINISH": {
+          bools.push(true)
+        }
         default: {
           bools.push(false)
           break

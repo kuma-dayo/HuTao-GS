@@ -3,8 +3,7 @@ import { cwd } from "process"
 
 import * as protobuf from "protobufjs"
 
-import { getNameByCmdId } from "#/cmdIds"
-import config from "@/config"
+import { getNameByCmdId, cmdIds } from "#/cmdIds"
 import GlobalState from "@/globalState"
 import TLogger from "@/translate/tlogger"
 import { fileExists, readFile, writeFile } from "@/utils/fileSystem"
@@ -34,8 +33,7 @@ export const getProtoType = async (proto: string, common = false): Promise<proto
   const cacheId = proto + Number(common)
   const cache = protoTypeCache[cacheId]
   if (cache) return cache
-
-  const protoPath = join(cwd(), `data/proto${common ? "" : "/" + config.game.version}/${proto}.proto`)
+  const protoPath = join(cwd(), `data/proto${common ? "" : "/" + cmdIds.version}/${proto}.proto`)
   if (!(await fileExists(protoPath))) return null
 
   const root = await protobuf.load(protoPath)

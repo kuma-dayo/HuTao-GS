@@ -50,8 +50,12 @@ const versionMap: { [version: string]: CmdIds } = {
   "3.6.0": ver3_6,
 }
 
-export const cmdIds: CmdIds = versionMap[config.game.version] || versionMap[DEFAULT_CONFIG.game.version] || {}
-export const switchedCmdIds = Object.fromEntries(Object.entries(cmdIds).map((e) => [e[1], e[0]]))
+export const cmdIds: CmdIds = versionMap[config.game.version] ||
+  versionMap[DEFAULT_CONFIG.game.version] || {
+    proto: {},
+    version: "",
+  }
+export const switchedCmdIds = Object.fromEntries(Object.entries(cmdIds.proto).map((e) => [e[1], e[0]]))
 
 export const PACKET_HEAD = 0xffff
 
@@ -67,7 +71,7 @@ export const getNameByCmdId = (cmdId: number | string): number | string => {
 export const getCmdIdByName = (protoName: string | number): number | string => {
   if (protoName === "PacketHead") return PACKET_HEAD
 
-  const id = cmdIds[protoName]
+  const id = cmdIds.proto[protoName]
   if (id == null) return protoName
 
   return id

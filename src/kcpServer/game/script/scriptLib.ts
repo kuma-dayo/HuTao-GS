@@ -4,6 +4,7 @@ import DungeonChallenge from "$/challenge/dungeonChallenge"
 import Logger from "@/logger"
 import { EntityTypeEnum, EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { PlayerDieTypeEnum } from "@/types/proto/enum"
+import { toCamelCase } from "@/utils/string"
 
 const logger = new Logger("ScriptLib", 0xff7f50)
 
@@ -35,10 +36,8 @@ export default class ScriptLib {
 
     const gadget = group?.gadgetList.find((gadget) => gadget.configId === configId)
 
-    if (gadget) {
-      gadget.setWorktopOption(options)
-      return 0
-    }
+    gadget?.setWorktopOption(options)
+    return 0
   }
 
   public SetWorktopOptions(context: context, options: number[]) {
@@ -147,10 +146,7 @@ export default class ScriptLib {
   }
 
   public GetGroupVariableValue(context: context, variable: string) {
-    variable = (variable.slice(0, 1).toUpperCase() + variable.slice(1)).replace(
-      variable.includes("Config") ? /_[a-zA-Z]/g : /_[a-z]/g,
-      (s) => s.slice(1).toUpperCase()
-    )
+    variable = toCamelCase(variable)
 
     logger.debug("[lua] Call GetGroupVariableValue", variable)
 
@@ -164,16 +160,18 @@ export default class ScriptLib {
 
     const oldvalue = Number(this.GetGroupVariableValue(context, variable))
 
-    context.currentGroup.scriptManager.emit(EventTypeEnum.EVENT_VARIABLE_CHANGE, oldvalue, value)
+    context.currentGroup.scene.scriptManager.emit(
+      EventTypeEnum.EVENT_VARIABLE_CHANGE,
+      context.currentGroup.id,
+      oldvalue,
+      value
+    )
 
     return 0
   }
 
   public ChangeGroupVariableValue(context: context, variable: string, value: number) {
-    variable = (variable.slice(0, 1).toUpperCase() + variable.slice(1)).replace(
-      variable.includes("Config") ? /_[a-zA-Z]/g : /_[a-z]/g,
-      (s) => s.slice(1).toUpperCase()
-    )
+    variable = toCamelCase(variable)
 
     logger.debug("[lua] Call ChangeGroupVariableValue", variable, value)
 
@@ -299,7 +297,7 @@ export default class ScriptLib {
   }
 
   public BeginCameraSceneLook(
-    context: context,
+    _context: context,
     table: {
       look_pos: { x: number; y: number; z: number }
       duration: number

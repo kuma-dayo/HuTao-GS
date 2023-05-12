@@ -32,6 +32,7 @@
         "name": "名稱: %0",
         "build": "編譯: %0",
         "gameVersion": "遊戲版本: %0",
+        "protoVersion": "協議版本: %0",
         "dispatchRegion": "Dispatch region: %0",
         "dispatchSeed": "Dispatch seed: %0",
         "dispatchKey": "Dispatch key: %0",

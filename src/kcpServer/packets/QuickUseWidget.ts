@@ -33,7 +33,6 @@ class QuickUseWidgetPacket extends Packet implements PacketInterface {
   }
 
   async request(context: PacketContext, data: QuickUseWidgetReq): Promise<void> {
-    console.log(data)
     await this.response(context, { retcode: RetcodeEnum.RET_UNKNOWN_ERROR })
   }
 

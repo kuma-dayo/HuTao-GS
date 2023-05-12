@@ -79,7 +79,7 @@ export default class DungeonChallenge {
     this.setProgress = false
 
     await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.scene.broadcastContextList, this)
-    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_SUCCESS)
+    await this.sceneGroup.scene.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_SUCCESS, this.groupId)
 
     this.settle()
   }
@@ -87,7 +87,7 @@ export default class DungeonChallenge {
   async settle() {
     if (this.progress || !this.success) return
 
-    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_DUNGEON_SETTLE)
+    await this.sceneGroup.scene.scriptManager.emit(EventTypeEnum.EVENT_DUNGEON_SETTLE, this.groupId)
   }
 
   async fail() {
@@ -97,6 +97,6 @@ export default class DungeonChallenge {
     this.setProgress = false
 
     await DungeonChallengeFinish.broadcastNotify(this.sceneGroup.scene.broadcastContextList, this)
-    await this.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_FAIL)
+    await this.sceneGroup.scene.scriptManager.emit(EventTypeEnum.EVENT_CHALLENGE_FAIL, this.groupId)
   }
 }

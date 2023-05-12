@@ -5,7 +5,10 @@ export interface SocketContext {
 }
 
 export interface CmdIds {
-  [packet: string]: number
+  version: string
+  proto: {
+    [packet: string]: number
+  }
 }
 
 export interface PacketHead {

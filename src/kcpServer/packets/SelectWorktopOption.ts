@@ -27,7 +27,12 @@ class SelectWorktopOptionPacket extends Packet implements PacketInterface {
     const entity = <Gadget>entityManager.getEntity(gadgetEntityId, true)
 
     if (context.player.currentScene.EnableScript)
-      await entity.sceneGroup.scriptManager.emit(EventTypeEnum.EVENT_SELECT_OPTION, entity.configId, optionId)
+      await entity.sceneGroup.scene.scriptManager.emit(
+        EventTypeEnum.EVENT_SELECT_OPTION,
+        entity.groupId,
+        entity.configId,
+        optionId
+      )
 
     await this.response(context, {
       gadgetEntityId,

@@ -8,7 +8,6 @@ import Monster from "$/entity/monster"
 import Npc from "$/entity/npc"
 import SceneData from "$/gameData/data/SceneData"
 import WorldData from "$/gameData/data/WorldData"
-import scriptManager from "$/script/scriptManager"
 import Vector from "$/utils/vector"
 import Logger from "@/logger"
 import { EventTypeEnum, GadgetStateEnum } from "@/types/enum"
@@ -39,8 +38,6 @@ export default class SceneGroup {
   trigger: SceneTriggerScriptConfig[]
   Variables: SceneVariableScriptConfig[]
 
-  scriptManager: scriptManager
-
   constructor(block: SceneBlock, id: number, pos: Vector, dynamicLoad: boolean) {
     this.block = block
 
@@ -53,8 +50,6 @@ export default class SceneGroup {
     this.gadgetList = []
 
     this.loaded = false
-
-    this.scriptManager = new scriptManager(this)
   }
 
   get scene(): Scene {
@@ -114,8 +109,9 @@ export default class SceneGroup {
     }
 
     if (scene.EnableScript)
-      await this.scriptManager.emit(
+      await this.scene.scriptManager.emit(
         EventTypeEnum.EVENT_ANY_MONSTER_LIVE,
+        this.id,
         monsterList.map((monster) => monster.configId)
       )
   }
@@ -184,8 +180,9 @@ export default class SceneGroup {
     }
 
     if (scene.EnableScript)
-      await this.scriptManager.emit(
+      await this.scene.scriptManager.emit(
         EventTypeEnum.EVENT_GADGET_CREATE,
+        this.id,
         gadgetList.map((gadget) => gadget.configId)
       )
   }
@@ -211,6 +208,8 @@ export default class SceneGroup {
 
     const groupData = await SceneData.getGroup(sceneId, groupId)
     if (!groupData) return
+
+    this.scene.scriptManager.setGroup(this)
 
     const grpLoadPerfMark = `GroupLoad-${sceneId}-${groupId}`
     Logger.mark(grpLoadPerfMark)
