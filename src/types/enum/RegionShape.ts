@@ -1,4 +1,4 @@
-export enum RegionShape {
+export enum RegionShapeEnum {
   NONE = 0,
   SPHERE = 1,
   CUBIC = 2,

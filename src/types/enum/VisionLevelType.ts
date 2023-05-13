@@ -1,4 +1,4 @@
-export enum VisionLevelType {
+export enum VisionLevelTypeEnum {
   VISION_LEVEL_NORMAL = 0,
   VISION_LEVEL_LITTLE_REMOTE = 1,
   VISION_LEVEL_REMOTE = 2,
