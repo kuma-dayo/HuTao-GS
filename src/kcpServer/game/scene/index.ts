@@ -236,7 +236,7 @@ export default class Scene extends BaseClass {
     if (sceneBlockInit) return
     this.sceneBlockInit = true
 
-    if (!GlobalState.get("WorldSpawn")) return
+    if (!this.EnableScript) return
     for (const block of sceneBlockList) await block.initNew()
   }
 
