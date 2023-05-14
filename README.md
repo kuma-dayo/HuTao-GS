@@ -1,16 +1,6 @@
 # HuTao-GS
 Supported version: 1.4.0 - 3.6.0
 
-## Current features
-
-* Logging in
-* Automatically gives all characters
-* Combat
-* Spawning monsters
-* Dungeon
-* Scene Script
-* Boss AI
-
 ## Requirements
 
 * [Node-Js](https://nodejs.org/en/)
@@ -80,14 +70,3 @@ class Handlers
     }
 }
 ```
-
-## Todo
-
-#### Fixed all skill behavior
-
-- [ ] HealHP　:  
-    healHP packets do not contain a value to recover, so using the skill will not recover  
-    You must either hardcode the recovery amount or use a resource to get the value.
-- [ ] Albedo Elevator :  
-    This gadget is generated using an AbilityAction called CreateMovingPlatform  
-    There are a few other things that need to be implemented, but see this [commit](https://github.com/Grasscutters/Grasscutter/pull/1845)
