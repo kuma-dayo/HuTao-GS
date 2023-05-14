@@ -1,10 +1,8 @@
-import { abilityHeal } from "./abilityHeal"
 import AppliedAbility from "./appliedAbility"
 
 import Entity from "$/entity"
 import Avatar from "$/entity/avatar"
 import ClientGadget from "$/entity/gadget/clientGadget"
-import AbilityData from "$/gameData/data/AbilityData"
 import AbilityManager from "$/manager/abilityManager"
 import Vector from "$/utils/vector"
 import { DynamicFloat, DynamicInt } from "$DT/BinOutput/Common/DynamicNumber"
@@ -103,28 +101,6 @@ export default class AbilityUtils {
     amount += caster.getProp(FightPropEnum.FIGHT_PROP_CUR_ATTACK) * this.eval(ability, AmountByCasterAttackRatio)
     amount += target.getProp(FightPropEnum.FIGHT_PROP_MAX_HP) * this.eval(ability, AmountByTargetMaxHPRatio)
     amount += target.getProp(FightPropEnum.FIGHT_PROP_CUR_HP) * this.eval(ability, AmountByTargetCurrentHPRatio)
-
-    if (amount !== 0) {
-      return amount
-    }
-    const abilityName = await AbilityData.lookupString(ability.abilityName)
-    const healDataAvatarList = new abilityHeal().healDataAvatarList
-
-    if (config.$type == "HealHP") {
-      for (const healDataAvatar of healDataAvatarList) {
-        for (const healData of healDataAvatar.healdataList) {
-          if (healData.abilityName == abilityName && healData.cdRatioName.includes(config?.CdRatio)) {
-            switch (healDataAvatar.fightPropertyType) {
-              case 0:
-                amount += target.getProp(FightPropEnum.FIGHT_PROP_MAX_HP) * healData.HPRatio + healData.HPbase
-              case 1:
-              case 2:
-              //todo
-            }
-          }
-        }
-      }
-    }
 
     return amount
   }
