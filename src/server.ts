@@ -26,7 +26,6 @@ import GrowCurveData from "$/gameData/data/GrowCurveData"
 import MapAreaData from "$/gameData/data/MapAreaData"
 import MaterialData from "$/gameData/data/MaterialData"
 import MonsterData from "$/gameData/data/MonsterData"
-import QuestData from "$/gameData/data/QuestData"
 import ReliquaryData from "$/gameData/data/ReliquaryData"
 import SceneData from "$/gameData/data/SceneData"
 import ShopData from "$/gameData/data/ShopData"
@@ -385,9 +384,6 @@ export default class Server {
 
     await MonsterData.getData()
     tLogger.debug("message.cache.debug.monster")
-
-    await QuestData.getData()
-    tLogger.debug("message.cache.debug.quest")
 
     await ReliquaryData.getData()
     tLogger.debug("message.cache.debug.reliquary")

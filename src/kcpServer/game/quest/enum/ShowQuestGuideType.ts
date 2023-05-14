@@ -1,5 +1,0 @@
-export enum ShowQuestGuideType {
-  QUEST_GUIDE_ITEM_ENABLE = 0,
-  QUEST_GUIDE_ITEM_DISABLE = 1,
-  QUEST_GUIDE_ITEM_MOVE_HIDE = 2,
-}

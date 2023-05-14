@@ -33,7 +33,6 @@ data
 │       ├── MapAreaData.json
 │       ├── MaterialData.json
 │       ├── MonsterData.json
-│       ├── QuestData.json
 │       ├── ReliquaryData.json
 │       ├── SceneData.json
 │       ├── ShopData.json

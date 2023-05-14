@@ -29,7 +29,6 @@ import MaterialData from "$/gameData/data/MaterialData"
 import WeaponData from "$/gameData/data/WeaponData"
 import EnergyManager from "$/manager/energyManager"
 import GuidManager from "$/manager/guidManager"
-import QuestManager from "$/manager/questManager"
 import RuntimeIDManager from "$/manager/runtimeIDManager"
 import TeamManager from "$/manager/teamManager"
 import Material from "$/material"
@@ -82,7 +81,6 @@ export default class Player extends BaseClass {
   ridManager: RuntimeIDManager
   teamManager: TeamManager
   energyManager: EnergyManager
-  questManager: QuestManager
 
   avatarList: Avatar[]
   flycloakList: FlycloakData[]
@@ -141,7 +139,6 @@ export default class Player extends BaseClass {
     this.ridManager = new RuntimeIDManager(this)
     this.teamManager = new TeamManager(this)
     this.energyManager = new EnergyManager(this)
-    this.questManager = new QuestManager(this)
 
     this.hostWorld = new World(this)
 
@@ -270,18 +267,7 @@ export default class Player extends BaseClass {
   }
 
   async init(userData: UserData): Promise<void> {
-    const {
-      guidManager,
-      questManager,
-      profile,
-      props,
-      openState,
-      inventory,
-      widget,
-      teamManager,
-      avatarList,
-      hostWorld,
-    } = this
+    const { guidManager, profile, props, openState, inventory, widget, teamManager, avatarList, hostWorld } = this
     const {
       worldData,
       guidData,
@@ -295,13 +281,11 @@ export default class Player extends BaseClass {
       flycloakDataList,
       costumeDataList,
       emojiIdList,
-      questData,
       godMode,
       gameTime,
     } = userData || {}
 
     guidManager.init(guidData)
-    await questManager.init(questData)
     profile.init(profileData)
     props.init(propsData)
     openState.init(openStateData)
@@ -905,9 +889,6 @@ export default class Player extends BaseClass {
         avatarId: costume.AvatarId,
       })),
       emojiIdList: emojiCollection,
-      questData: {
-        quest: this.questManager.exportQuestData().map((quest) => quest.exportMainQuestData()),
-      },
       worldData: hostWorld.exportUserData(),
       godMode,
       gameTime,

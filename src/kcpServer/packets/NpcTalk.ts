@@ -1,5 +1,4 @@
 import Packet, { PacketInterface, PacketContext } from "#/packet"
-import { QuestContent } from "$/quest/enum"
 import { ClientStateEnum } from "@/types/enum"
 import { RetcodeEnum } from "@/types/proto/enum"
 
@@ -29,11 +28,6 @@ class NpcTalkPacket extends Packet implements PacketInterface {
 
     await context.player.emit("NpcTalkReq", data)
 
-    context.player.questManager.questList.map((quest) => {
-      quest.childQuest.map((childQuest) => {
-        childQuest.finishCondExecute(QuestContent.QUEST_CONTENT_COMPLETE_TALK, [talkId, 0])
-      })
-    })
     await this.response(context, {
       retcode: RetcodeEnum.RET_SUCC,
       curTalkId: talkId,

@@ -5,7 +5,6 @@ import GuidUserData from "./GuidUserData"
 import InventoryUserData from "./InventoryUserData"
 import ProfileUserData from "./ProfileUserData"
 import PropsUserData from "./PropsUserData"
-import QuestUserData from "./QuestUserData"
 import TeamManagerUserData from "./TeamManagerUserData"
 import WidgetUserData from "./WidgetUserData"
 import WorldUserData from "./WorldUserData"
@@ -24,7 +23,6 @@ export default interface UserData {
   costumeDataList: CostumeUserData[]
   emojiIdList: number[]
   worldData: WorldUserData
-  questData: QuestUserData
   godMode: boolean
   gameTime: number
 }
