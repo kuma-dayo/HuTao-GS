@@ -415,7 +415,7 @@ export default class Player extends BaseClass {
     for (const weaponData of weaponList) {
       const { Id } = weaponData
       const weapon = new Weapon(Id, this)
-      await weapon.initNew()
+      await weapon.initNew(90)
       if (!(inventoryData == null)) {
         if (inventoryData.itemDataList.find((item) => item.itemId == Id) == null) await inventory.add(weapon)
       } else {
