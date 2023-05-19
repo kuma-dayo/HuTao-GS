@@ -1,6 +1,8 @@
 import context from "./scriptLibContext"
 
+import BeginCameraSceneLook, { BeginCameraSceneLookNotify } from "#/packets/BeginCameraSceneLook"
 import DungeonChallenge from "$/challenge/dungeonChallenge"
+import Vector from "$/utils/vector"
 import Logger from "@/logger"
 import { EntityTypeEnum, EventTypeEnum, GadgetStateEnum } from "@/types/enum"
 import { PlayerDieTypeEnum } from "@/types/proto/enum"
@@ -19,9 +21,10 @@ export default class ScriptLib {
   }
 
   public SetGroupGadgetStateByConfigId(context: context, groupId: number, configId: number, gadgetState: number) {
+    const { scriptManager } = context
     logger.debug("[lua] Call SetGroupGadgetStateByConfigId", groupId, configId, gadgetState)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    const group = scriptManager.findGroup(groupId)
 
     const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -30,9 +33,10 @@ export default class ScriptLib {
   }
 
   public SetWorktopOptionsByGroupId(context: context, groupId: number, configId: number, options: number[]) {
+    const { scriptManager } = context
     logger.debug("[lua] Call SetWorktopOptionsByGroupId", groupId, configId, options)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    const group = scriptManager.findGroup(groupId)
 
     const gadget = group?.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -51,9 +55,10 @@ export default class ScriptLib {
   }
 
   public DelWorktopOptionByGroupId(context: context, groupId: number, configId: number, option: number) {
+    const { scriptManager } = context
     logger.debug("[lua] Call DelWorktopOptionByGroupId", groupId, configId, option)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === Number(groupId))
+    const group = scriptManager.findGroup(groupId)
 
     const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -83,9 +88,11 @@ export default class ScriptLib {
   }
 
   public AddExtraGroupSuite(context: context, groupId: number, suite: number) {
+    const { scriptManager } = context
+
     logger.debug("[lua] Call AddExtraGroupSuite", groupId, suite)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    const group = scriptManager.findGroup(groupId)
     group.addGroupSuite(suite)
   }
 
@@ -94,9 +101,11 @@ export default class ScriptLib {
   }
 
   public RemoveExtraGroupSuite(context: context, groupId: number, suite: number) {
+    const { scriptManager } = context
+
     logger.debug("[lua] Call RemoveExtraGroupSuite", groupId, suite)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    const group = scriptManager.findGroup(groupId)
 
     // TODO
     // group.removeGroupSuite(suite)
@@ -138,9 +147,11 @@ export default class ScriptLib {
   }
 
   public GetGroupMonsterCountByGroupId(context: context, groupId: number) {
+    const { scriptManager } = context
+
     logger.debug("[lua] Call GetGroupMonsterCountByGroupId", groupId)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    const group = scriptManager.findGroup(groupId)
 
     return group.aliveMonsterCount
   }
@@ -219,9 +230,11 @@ export default class ScriptLib {
   }
 
   public SetGroupVariableValueByGroup(context: context, key: string, value: number, groupId: number) {
+    const { scriptManager } = context
+
     logger.debug("[lua] Call SetGroupVariableValueByGroup", key, value, groupId)
 
-    context.currentGroup = context.currentGroup.block.groupList.find((group) => group.id === groupId)
+    context.currentGroup = scriptManager.findGroup(groupId)
 
     this.ChangeGroupVariableValue(context, key, value)
 
@@ -258,8 +271,6 @@ export default class ScriptLib {
 
   public MarkPlayerAction(_context: context, var1: number, var2: number, var3: number) {
     logger.debug("[lua] Call MarkPlayerAction", var1, var2, var3)
-
-    return 0
   }
 
   public AddQuestProgress(_context: context, var1: number) {
@@ -297,19 +308,62 @@ export default class ScriptLib {
   }
 
   public BeginCameraSceneLook(
-    _context: context,
+    context: context,
     table: {
-      look_pos: { x: number; y: number; z: number }
+      look_pos: Vector
+      is_allow_input: boolean
       duration: number
       is_force: boolean
       is_broadcast: boolean
       is_recover_keep_current: boolean
       delay: number
+      is_set_follow_pos: boolean
+      follow_pos: Vector
+      is_force_walk: boolean
+      is_change_play_mode: boolean
+      is_set_screen_XY: boolean
+      screen_x: number
+      screen_y: number
     }
   ) {
-    logger.debug("[lua] Call BeginCameraSceneLook", table)
-  }
+    const {
+      look_pos,
+      is_allow_input,
+      duration,
+      is_force,
+      is_broadcast,
+      is_recover_keep_current,
+      is_set_follow_pos,
+      follow_pos,
+      is_force_walk,
+      is_change_play_mode,
+      is_set_screen_XY,
+      screen_x,
+      screen_y,
+    } = table
 
+    const { scriptManager } = context
+    const NotifyData: BeginCameraSceneLookNotify = {
+      lookPos: look_pos,
+      AllowInput: is_allow_input,
+      duration: duration,
+      Force: is_force,
+      RecoverKeepCurrent: is_recover_keep_current,
+      FollowPos: is_set_follow_pos,
+      followPos: follow_pos,
+      ForceWalk: is_force_walk,
+      ChangePlayMode: is_change_play_mode,
+      ScreenXY: is_set_screen_XY,
+      screenX: screen_x,
+      screenY: screen_y,
+    }
+    logger.debug("[lua] Call BeginCameraSceneLook", context.currentGroup.id, table)
+
+    if (is_broadcast) BeginCameraSceneLook.broadcastNotify(context.currentGroup.scene.broadcastContextList, NotifyData)
+    else BeginCameraSceneLook.sendNotify(scriptManager.host.context, NotifyData)
+
+    return 0
+  }
   public SetPlatformRouteId(_context: context, var2: number, routeId: number) {
     logger.debug("[lua] Call SetPlatformRouteId", var2, routeId)
   }

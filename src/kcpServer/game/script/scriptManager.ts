@@ -1,3 +1,4 @@
+import Player from "$/player"
 import Scene from "$/scene"
 import SceneGroup from "$/scene/sceneGroup"
 import Logger from "@/logger"
@@ -18,14 +19,22 @@ export default class scriptManager {
     this.logger = new Logger("ScriptManager", 0xff7f50)
   }
 
-  async emit(type: EventTypeEnum, sceneGroupId: number, ...args: any[]) {
-    const { scriptTrigger, scriptLoader } = this.scene
-    this.currentGroup = this.sceneGroups.get(sceneGroupId)
-
-    await scriptTrigger.runTrigger(scriptLoader, this, type, ...args)
-  }
-
   setGroup(sceneGroup: SceneGroup) {
     this.sceneGroups.set(sceneGroup.id, sceneGroup)
+  }
+  get host(): Player {
+    return this.scene.world.host
+  }
+
+  findGroup(id: number): SceneGroup {
+    return this.sceneGroups.get(id)
+  }
+
+  async emit(type: EventTypeEnum, groupId: number, ...args: any[]) {
+    const { scriptTrigger, scriptLoader } = this.scene
+    this.currentGroup = this.sceneGroups.get(groupId)
+
+    if (this.currentGroup != undefined) await scriptTrigger.runTrigger(scriptLoader, this, type, ...args)
+    else this.logger.error(`No group with id ${groupId}`)
   }
 }
