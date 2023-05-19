@@ -122,9 +122,7 @@ export default class Scene extends BaseClass {
     this.dieY = -1000
 
     fileExists(join(cwd(), `data/game/${config.game.version}/Scripts/Scene/${sceneId}/scene${sceneId}.lua`)).then(
-      (exists) => {
-        this.EnableScript = GlobalState.get("EnableScript") && exists
-      }
+      (exists) => (this.EnableScript = GlobalState.get("EnableScript") && exists)
     )
 
     this.ischallenge = false
@@ -235,6 +233,11 @@ export default class Scene extends BaseClass {
 
     if (sceneBlockInit) return
     this.sceneBlockInit = true
+
+    // wait constructor fileExists
+    while (this.EnableScript === undefined) {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+    }
 
     if (!this.EnableScript) return
     for (const block of sceneBlockList) await block.initNew()
