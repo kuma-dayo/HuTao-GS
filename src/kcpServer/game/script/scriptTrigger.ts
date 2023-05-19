@@ -31,9 +31,12 @@ export default class ScriptTrigger extends BaseClass {
     this.lua = await new LuaFactory().createEngine()
     this.isInit = true
   }
+
   async runTrigger(scriptLoader: ScriptLoader, scriptManager: scriptManager, type: EventTypeEnum, ...args: any[]) {
     const { currentGroup } = scriptManager
+
     if (!this.isInit) await this.init()
+
     const lua = await scriptLoader.init(this.lua, scriptManager.scene.id, currentGroup.id)
 
     if (currentGroup.trigger?.length > 0)
@@ -56,7 +59,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = { param1: configId }
 
         if (Condition) {
@@ -81,6 +84,39 @@ export default class ScriptTrigger extends BaseClass {
 
   // AnyGadgetDie
 
+  handleAnyGadgetDie(scriptManager: scriptManager, lua: LuaEngine, gadgetId: number) {
+    const { currentGroup, logger } = scriptManager
+
+    try {
+      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
+        if (Event !== EventTypeEnum.EVENT_ANY_GADGET_DIE) return
+
+        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+        const action: actionFunc = lua.global.get(getFunctionName(Action))
+
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+        const args: ScriptArgs = { param1: gadgetId }
+
+        if (Condition) {
+          const conditionResult: boolean = condition({ ...context, args }, args)
+          logger.info(`[lua] EVENT_ANY_GADGET_DIE Condition ${conditionResult} ${args}`)
+
+          if (conditionResult && Action) {
+            logger.verbose("[lua] EVENT_ANY_GADGET_DIE Action")
+            action({ ...context, args }, args)
+          }
+        } else if (Action) {
+          logger.verbose("[lua] EVENT_ANY_GADGET_DIE Action")
+          action({ ...context, args }, args)
+        }
+
+        return
+      })
+    } finally {
+      lua.global.resetThread()
+    }
+  }
+
   // VariableChange
 
   handleVariableChange(scriptManager: scriptManager, lua: LuaEngine, oldValue: number, newValue: number) {
@@ -93,7 +129,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = { param1: oldValue, param2: newValue }
 
         if (Condition) {
@@ -128,7 +164,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = { param1: configId }
 
         if (Condition) {
@@ -166,7 +202,7 @@ export default class ScriptTrigger extends BaseClass {
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
         configIdList.forEach((configId) => {
-          const context: scriptLibContext = { currentGroup: currentGroup }
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
           if (Condition) {
@@ -200,7 +236,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = { param1: state, param2: configId }
 
         if (Condition) {
@@ -236,7 +272,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: sceneGroup }
+          const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: sceneGroup.scene.ischallenge ? 0 : 1 }
 
           if (Condition) {
@@ -272,7 +308,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = { param1: configId, param2: optionid }
 
         if (Condition) {
@@ -310,7 +346,7 @@ export default class ScriptTrigger extends BaseClass {
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
         configIdList.forEach((configId) => {
-          const context: scriptLibContext = { currentGroup: currentGroup }
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
           if (Condition) {
@@ -327,6 +363,8 @@ export default class ScriptTrigger extends BaseClass {
           }
         })
       })
+    } catch (e) {
+      logger.error(currentGroup, e)
     } finally {
       lua.global.resetThread()
     }
@@ -351,7 +389,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = null
 
         if (Condition) {
@@ -386,7 +424,7 @@ export default class ScriptTrigger extends BaseClass {
         const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
         const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup }
+        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
         const args: ScriptArgs = null
 
         if (Condition) {

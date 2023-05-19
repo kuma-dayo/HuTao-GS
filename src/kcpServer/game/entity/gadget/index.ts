@@ -138,4 +138,17 @@ export default class Gadget extends Entity {
 
     return info
   }
+
+  /**Events**/
+
+  // Death
+  async handleDeath(seqId?: number, batch = false) {
+    const { manager } = this
+
+    if (manager.scene.EnableScript) {
+      // if (manager.scene.ischallenge) await new KillGadgetTrigger().GadgetDeath(manager.scene.challenge)
+      await this.sceneGroup?.scene.scriptManager.emit(EventTypeEnum.EVENT_ANY_GADGET_DIE, this.gadgetId)
+    }
+    await super.handleDeath(seqId, batch)
+  }
 }
