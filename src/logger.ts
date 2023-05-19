@@ -55,7 +55,7 @@ export default class Logger {
   }
 
   isLogLevelVisible(level: LogLevel) {
-    return level <= logLevel
+    return level <= Number(logLevel)
   }
 
   write(str: string) {
