@@ -11,4 +11,5 @@ export interface AbilityInvokeEntry {
   forwardPeer: number
   eventId: number
   totalTickTime: number
+  isIgnoreAuth?: boolean
 }
