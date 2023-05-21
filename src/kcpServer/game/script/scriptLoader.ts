@@ -21,8 +21,8 @@ const logger = new Logger("ScriptLoader", 0xff7f50)
 
 export default class ScriptLoader {
   public async init(lua: LuaEngine, sceneId: number, groupId: number): Promise<LuaEngine> {
-    lua.global.set("require", function require(arg: string) {
-      logger.verbose("[lua] Call require", arg)
+    lua.global.set("require", (module: string) => {
+      logger.verbose("Call require", module)
     })
 
     lua.global.set("EntityType", EntityTypeEnum)
@@ -40,7 +40,7 @@ export default class ScriptLoader {
   public async ScriptByPath(lua: LuaEngine, path: string): Promise<LuaEngine> {
     const script = (await readFile(join(cwd(), `data/game/${config.game.version}/Scripts/`, path))).toString()
 
-    await lua.doString(script).catch((err) => logger.error("[lua] ScriptByPath", path, err))
+    await lua.doString(script).catch((err) => logger.error("ScriptByPath", path, err))
 
     return lua
   }

@@ -64,14 +64,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_ANY_MONSTER_DIE Condition ${conditionResult} ${args}`)
+          logger.verbose(`EVENT_ANY_MONSTER_DIE Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_ANY_MONSTER_DIE Action")
+            logger.verbose("EVENT_ANY_MONSTER_DIE Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_ANY_MONSTER_DIE Action")
+          logger.verbose("EVENT_ANY_MONSTER_DIE Action")
           action({ ...context, args }, args)
         }
 
@@ -99,14 +99,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.info(`[lua] EVENT_ANY_GADGET_DIE Condition ${conditionResult} ${args}`)
+          logger.info(`EVENT_ANY_GADGET_DIE Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_ANY_GADGET_DIE Action")
+            logger.verbose("EVENT_ANY_GADGET_DIE Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_ANY_GADGET_DIE Action")
+          logger.verbose("EVENT_ANY_GADGET_DIE Action")
           action({ ...context, args }, args)
         }
 
@@ -134,14 +134,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_VARIABLE_CHANGE Condition ${conditionResult} ${args}`)
+          logger.verbose(`EVENT_VARIABLE_CHANGE Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_VARIABLE_CHANGE Action")
+            logger.verbose("EVENT_VARIABLE_CHANGE Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_VARIABLE_CHANGE Action")
+          logger.verbose("EVENT_VARIABLE_CHANGE Action")
           action({ ...context, args }, args)
         }
 
@@ -169,14 +169,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_ENTER_REGION Condition ${conditionResult} ${args}`)
+          logger.verbose(`EVENT_ENTER_REGION Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_ENTER_REGION Action")
+            logger.verbose("EVENT_ENTER_REGION Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_ENTER_REGION Action")
+          logger.verbose("EVENT_ENTER_REGION Action")
           action({ ...context, args }, args)
         }
 
@@ -207,14 +207,14 @@ export default class ScriptTrigger extends BaseClass {
 
           if (Condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`[lua] EVENT_GADGET_CREATE Condition ${conditionResult} ${args}`)
+            logger.verbose(`EVENT_GADGET_CREATE Condition ${conditionResult} ${args}`)
 
             if (conditionResult && Action) {
-              logger.verbose("[lua] EVENT_GADGET_CREATE Action")
+              logger.verbose("EVENT_GADGET_CREATE Action")
               action({ ...context, args }, args)
             }
           } else if (Action) {
-            logger.verbose("[lua] EVENT_GADGET_CREATE Action")
+            logger.verbose("EVENT_GADGET_CREATE Action")
             action({ ...context, args }, args)
           }
         })
@@ -241,14 +241,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_GADGET_STATE_CHANGE Condition ${conditionResult} ${args}`)
+          logger.verbose(`EVENT_GADGET_STATE_CHANGE Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Action")
+            logger.verbose("EVENT_GADGET_STATE_CHANGE Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_GADGET_STATE_CHANGE Action")
+          logger.verbose("EVENT_GADGET_STATE_CHANGE Action")
           action({ ...context, args }, args)
         }
 
@@ -277,14 +277,14 @@ export default class ScriptTrigger extends BaseClass {
 
           if (Condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`[lua] EVENT_DUNGEON_SETTLE Condition ${conditionResult}`)
+            logger.verbose(`EVENT_DUNGEON_SETTLE Condition ${conditionResult}`)
 
             if (conditionResult && Action) {
-              logger.verbose("[lua] EVENT_DUNGEON_SETTLE Action")
+              logger.verbose("EVENT_DUNGEON_SETTLE Action")
               action({ ...context, args }, args)
             }
           } else if (Action) {
-            logger.verbose("[lua] EVENT_DUNGEON_SETTLE Action")
+            logger.verbose("EVENT_DUNGEON_SETTLE Action")
             action({ ...context, args }, args)
           }
         })
@@ -313,14 +313,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_SELECT_OPTION Condition ${conditionResult} ${args}`)
+          logger.verbose(`EVENT_SELECT_OPTION Condition ${conditionResult} ${args}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_SELECT_OPTION Action")
+            logger.verbose("EVENT_SELECT_OPTION Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_SELECT_OPTION Action")
+          logger.verbose("EVENT_SELECT_OPTION Action")
           action({ ...context, args }, args)
         }
 
@@ -351,14 +351,14 @@ export default class ScriptTrigger extends BaseClass {
 
           if (Condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`[lua] EVENT_ANY_MONSTER_LIVE Condition ${conditionResult} ${args}`)
+            logger.verbose(`EVENT_ANY_MONSTER_LIVE Condition ${conditionResult} ${args}`)
 
             if (conditionResult && Action) {
-              logger.verbose("[lua] EVENT_ANY_MONSTER_LIVE Action")
+              logger.verbose("EVENT_ANY_MONSTER_LIVE Action")
               action({ ...context, args }, args)
             }
           } else if (Action) {
-            logger.verbose("[lua] EVENT_ANY_MONSTER_LIVE Action")
+            logger.verbose("EVENT_ANY_MONSTER_LIVE Action")
             action({ ...context, args }, args)
           }
         })
@@ -394,14 +394,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_CHALLENGE_SUCCESS Condition ${conditionResult}`)
+          logger.verbose(`EVENT_CHALLENGE_SUCCESS Condition ${conditionResult}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_CHALLENGE_SUCCESS Action")
+            logger.verbose("EVENT_CHALLENGE_SUCCESS Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_CHALLENGE_SUCCESS Action")
+          logger.verbose("EVENT_CHALLENGE_SUCCESS Action")
           action({ ...context, args }, args)
         }
 
@@ -429,14 +429,14 @@ export default class ScriptTrigger extends BaseClass {
 
         if (Condition) {
           const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`[lua] EVENT_CHALLENGE_FAIL Condition ${conditionResult}`)
+          logger.verbose(`EVENT_CHALLENGE_FAIL Condition ${conditionResult}`)
 
           if (conditionResult && Action) {
-            logger.verbose("[lua] EVENT_CHALLENGE_FAIL Action")
+            logger.verbose("EVENT_CHALLENGE_FAIL Action")
             action({ ...context, args }, args)
           }
         } else if (Action) {
-          logger.verbose("[lua] EVENT_CHALLENGE_FAIL Action")
+          logger.verbose("EVENT_CHALLENGE_FAIL Action")
           action({ ...context, args }, args)
         }
 
