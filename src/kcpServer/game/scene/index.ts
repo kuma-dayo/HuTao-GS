@@ -302,6 +302,7 @@ export default class Scene extends BaseClass {
     for (const entry of invokes) {
       const entity = entityManager.getEntity(entry?.entityId)
       if (entity == null) {
+        entry.abilityData = entry.abilityData.toString()
         logger.debug("message.scene.debug.abilityInvokeNoEntity", entry)
         continue
       }
