@@ -3,6 +3,7 @@ import { cwd } from "process"
 
 import Handler, { HttpRequest, HttpResponse } from "#/handler"
 import config from "@/config"
+import GlobalState from "@/globalState"
 import curRegion from "@/tools/autoPatch/curRegion"
 import regionList from "@/tools/autoPatch/regionList"
 import translate from "@/translate"
@@ -168,7 +169,7 @@ class DispatchHandler extends Handler {
 
       curRegionData = await dataToProtobuffer(await readFile(binPath), "QueryCurrRegionHttpRsp", true)
     } else {
-      if (clientVersion === version) {
+      if (clientVersion === version || GlobalState.get("KickMismatchVersion")) {
         const customConfig = Buffer.from(JSON.stringify(clientCustomConfig))
         xor(customConfig, await DispatchKey.getXorKey())
 
