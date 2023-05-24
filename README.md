@@ -1,6 +1,14 @@
 # HuTao-GS
 Supported version: 1.4.0 - 3.7.0
 
+## HuTao-GS's current features
+
+* Logging in
+* Automatically gives all characters
+* Combat
+* Spawning monsters
+* Scene Script
+
 ## Requirements
 
 * [Node-Js](https://nodejs.org/en/)
@@ -52,7 +60,7 @@ data
     ├── ResVersionConfig.proto
     └── StopServerInfo.proto
 ```
-## Fidder Script
+## Fiddler Script
 ```
 import System;
 import System.Windows.Forms;
@@ -69,3 +77,11 @@ class Handlers
     }
 }
 ```
+## Contact
+```
+    Please DM me with any questions about this project.
+    Discord: kumadayo#2407
+```
+
+## Credit
+Wangsheng-Funeral-Parlor for Original [Hutao-GS](https://github.com/Wangsheng-Funeral-Parlor/HuTao-GS)

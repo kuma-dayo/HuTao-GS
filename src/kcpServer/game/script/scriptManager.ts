@@ -18,15 +18,14 @@ export default class scriptManager {
 
     this.logger = new Logger("ScriptManager", 0xff7f50)
   }
-
-  setGroup(sceneGroup: SceneGroup) {
-    this.sceneGroups.set(sceneGroup.id, sceneGroup)
-  }
   get host(): Player {
     return this.scene.world.host
   }
+  setGroup(sceneGroup: SceneGroup) {
+    this.sceneGroups.set(sceneGroup.id, sceneGroup)
+  }
 
-  findGroup(id: number): SceneGroup {
+  getGroup(id: number): SceneGroup {
     return this.sceneGroups.get(id)
   }
 

@@ -43,7 +43,7 @@ export default class ScriptTrigger extends BaseClass {
       await this.emit(toCamelCase(EventTypeEnum[type].replace("EVENT_", "")), scriptManager, lua, ...args)
   }
 
-  /** Event **/
+  /** Trigger Event **/
 
   // None
 
@@ -53,30 +53,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_ANY_MONSTER_DIE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_ANY_MONSTER_DIE)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: configId }
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: configId }
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_ANY_MONSTER_DIE Condition ${conditionResult} ${args}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_ANY_MONSTER_DIE Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_ANY_MONSTER_DIE Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -88,30 +88,32 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_ANY_GADGET_DIE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_ANY_MONSTER_DIE)
+        .forEach(({ Event, Condition, Action }) => {
+          if (Event !== EventTypeEnum.EVENT_ANY_GADGET_DIE) return
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: gadgetId }
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: gadgetId }
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.info(`EVENT_ANY_GADGET_DIE Condition ${conditionResult} ${args}`)
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_ANY_GADGET_DIE Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_ANY_GADGET_DIE Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -123,30 +125,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_VARIABLE_CHANGE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_VARIABLE_CHANGE)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: oldValue, param2: newValue }
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: oldValue, param2: newValue }
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_VARIABLE_CHANGE Condition ${conditionResult} ${args}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_VARIABLE_CHANGE Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_VARIABLE_CHANGE Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -158,30 +160,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_ENTER_REGION) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_ENTER_REGION)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: configId }
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: configId }
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_ENTER_REGION Condition ${conditionResult} ${args}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_ENTER_REGION Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_ENTER_REGION Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -195,30 +197,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_GADGET_CREATE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_GADGET_CREATE)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          configIdList.forEach((configId) => {
+            const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+            const args: ScriptArgs = { param1: configId }
 
-        configIdList.forEach((configId) => {
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-          const args: ScriptArgs = { param1: configId }
+            if (Condition) {
+              const conditionResult: boolean = condition({ ...context, args }, args)
+              logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-          if (Condition) {
-            const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`EVENT_GADGET_CREATE Condition ${conditionResult} ${args}`)
-
-            if (conditionResult && Action) {
-              logger.verbose("EVENT_GADGET_CREATE Action")
+              if (conditionResult && Action) {
+                logger.verbose(`${EventTypeEnum[Event]} Action`)
+                action({ ...context, args }, args)
+              }
+            } else if (Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
-            logger.verbose("EVENT_GADGET_CREATE Action")
-            action({ ...context, args }, args)
-          }
+          })
         })
-      })
     } finally {
       lua.global.resetThread()
     }
@@ -230,30 +232,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_GADGET_STATE_CHANGE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_GADGET_STATE_CHANGE)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: state, param2: configId }
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: state, param2: configId }
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_GADGET_STATE_CHANGE Condition ${conditionResult} ${args}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_GADGET_STATE_CHANGE Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_GADGET_STATE_CHANGE Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -266,28 +268,28 @@ export default class ScriptTrigger extends BaseClass {
 
     try {
       currentGroup.block.groupList.forEach((sceneGroup) => {
-        sceneGroup.trigger.forEach(({ Event, Condition, Action }) => {
-          if (Event !== EventTypeEnum.EVENT_DUNGEON_SETTLE) return
+        sceneGroup.trigger
+          .filter(({ Event }) => Event === EventTypeEnum.EVENT_DUNGEON_SETTLE)
+          .forEach(({ Event, Condition, Action }) => {
+            const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+            const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-          const action: actionFunc = lua.global.get(getFunctionName(Action))
+            const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
+            const args: ScriptArgs = { param1: sceneGroup.scene.ischallenge ? 0 : 1 }
 
-          const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
-          const args: ScriptArgs = { param1: sceneGroup.scene.ischallenge ? 0 : 1 }
+            if (Condition) {
+              const conditionResult: boolean = condition({ ...context, args }, args)
+              logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
-          if (Condition) {
-            const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`EVENT_DUNGEON_SETTLE Condition ${conditionResult}`)
-
-            if (conditionResult && Action) {
-              logger.verbose("EVENT_DUNGEON_SETTLE Action")
+              if (conditionResult && Action) {
+                logger.verbose(`${EventTypeEnum[Event]} Action`)
+                action({ ...context, args }, args)
+              }
+            } else if (Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
-            logger.verbose("EVENT_DUNGEON_SETTLE Action")
-            action({ ...context, args }, args)
-          }
-        })
+          })
 
         lua.global.resetThread()
       })
@@ -302,30 +304,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_SELECT_OPTION) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_SELECT_OPTION)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = { param1: configId, param2: optionid }
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = { param1: configId, param2: optionid }
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_SELECT_OPTION Condition ${conditionResult} ${args}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_SELECT_OPTION Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_SELECT_OPTION Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -339,30 +341,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_ANY_MONSTER_LIVE) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_ANY_MONSTER_LIVE)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          configIdList.forEach((configId) => {
+            const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+            const args: ScriptArgs = { param1: configId }
 
-        configIdList.forEach((configId) => {
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-          const args: ScriptArgs = { param1: configId }
+            if (Condition) {
+              const conditionResult: boolean = condition({ ...context, args }, args)
+              logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
-          if (Condition) {
-            const conditionResult: boolean = condition({ ...context, args }, args)
-            logger.verbose(`EVENT_ANY_MONSTER_LIVE Condition ${conditionResult} ${args}`)
-
-            if (conditionResult && Action) {
-              logger.verbose("EVENT_ANY_MONSTER_LIVE Action")
+              if (conditionResult && Action) {
+                logger.verbose(`${EventTypeEnum[Event]} Action`)
+                action({ ...context, args }, args)
+              }
+            } else if (Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
-            logger.verbose("EVENT_ANY_MONSTER_LIVE Action")
-            action({ ...context, args }, args)
-          }
+          })
         })
-      })
     } catch (e) {
       logger.error(currentGroup, e)
     } finally {
@@ -383,30 +385,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_CHALLENGE_SUCCESS) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_CHALLENGE_SUCCESS)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = null
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = null
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_CHALLENGE_SUCCESS Condition ${conditionResult}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_CHALLENGE_SUCCESS Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_CHALLENGE_SUCCESS Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -418,30 +420,30 @@ export default class ScriptTrigger extends BaseClass {
     const { currentGroup, logger } = scriptManager
 
     try {
-      currentGroup.trigger.forEach(({ Event, Condition, Action }) => {
-        if (Event !== EventTypeEnum.EVENT_CHALLENGE_FAIL) return
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_CHALLENGE_FAIL)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-        const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-        const action: actionFunc = lua.global.get(getFunctionName(Action))
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = null
 
-        const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
-        const args: ScriptArgs = null
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
-        if (Condition) {
-          const conditionResult: boolean = condition({ ...context, args }, args)
-          logger.verbose(`EVENT_CHALLENGE_FAIL Condition ${conditionResult}`)
-
-          if (conditionResult && Action) {
-            logger.verbose("EVENT_CHALLENGE_FAIL Action")
+            if (conditionResult && Action) {
+              logger.verbose(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
-        } else if (Action) {
-          logger.verbose("EVENT_CHALLENGE_FAIL Action")
-          action({ ...context, args }, args)
-        }
 
-        return
-      })
+          return
+        })
     } finally {
       lua.global.resetThread()
     }
@@ -469,6 +471,38 @@ export default class ScriptTrigger extends BaseClass {
   // QuestStart
 
   // GroupLoad
+  handleGroupLoad(scriptManager: scriptManager, lua: LuaEngine) {
+    const { currentGroup, logger } = scriptManager
+
+    try {
+      currentGroup.trigger
+        .filter(({ Event }) => Event === EventTypeEnum.EVENT_GROUP_LOAD)
+        .forEach(({ Event, Condition, Action }) => {
+          const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+          const action: actionFunc = lua.global.get(getFunctionName(Action))
+
+          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const args: ScriptArgs = null
+
+          if (Condition) {
+            const conditionResult: boolean = condition({ ...context, args }, args)
+            logger.debug(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
+
+            if (conditionResult && Action) {
+              logger.debug(`${EventTypeEnum[Event]} Action`)
+              action({ ...context, args }, args)
+            }
+          } else if (Action) {
+            logger.debug(`${EventTypeEnum[Event]} Action`)
+            action({ ...context, args }, args)
+          }
+
+          return
+        })
+    } finally {
+      lua.global.resetThread()
+    }
+  }
 
   // GroupWillUnload
 

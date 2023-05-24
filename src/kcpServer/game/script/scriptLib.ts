@@ -24,7 +24,7 @@ export default class ScriptLib {
     const { scriptManager } = context
     logger.debug("Call SetGroupGadgetStateByConfigId", groupId, configId, gadgetState)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
 
     const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -36,7 +36,7 @@ export default class ScriptLib {
     const { scriptManager } = context
     logger.debug("Call SetWorktopOptionsByGroupId", groupId, configId, options)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
 
     const gadget = group?.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -58,7 +58,7 @@ export default class ScriptLib {
     const { scriptManager } = context
     logger.debug("Call DelWorktopOptionByGroupId", groupId, configId, option)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
 
     const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
 
@@ -83,7 +83,7 @@ export default class ScriptLib {
 
     logger.debug("Call AddExtraGroupSuite", groupId, suite)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
     group.addGroupSuite(suite)
   }
 
@@ -96,7 +96,7 @@ export default class ScriptLib {
 
     logger.debug("Call RemoveExtraGroupSuite", groupId, suite)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
 
     // TODO
     // group.removeGroupSuite(suite)
@@ -142,7 +142,7 @@ export default class ScriptLib {
 
     logger.debug("Call GetGroupMonsterCountByGroupId", groupId)
 
-    const group = scriptManager.findGroup(groupId)
+    const group = scriptManager.getGroup(groupId)
 
     return group.aliveMonsterCount
   }
@@ -225,7 +225,7 @@ export default class ScriptLib {
 
     logger.debug("Call SetGroupVariableValueByGroup", key, value, groupId)
 
-    context.currentGroup = scriptManager.findGroup(groupId)
+    context.currentGroup = scriptManager.getGroup(groupId)
 
     this.ChangeGroupVariableValue(context, key, value)
 

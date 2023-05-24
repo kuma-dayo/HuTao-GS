@@ -641,6 +641,7 @@ export default class Player extends BaseClass {
       compilerPath = luacExePath
     } else {
       logger.error("windy compiler not found")
+      return false
     }
 
     await writeFile(scriptPath, data)
