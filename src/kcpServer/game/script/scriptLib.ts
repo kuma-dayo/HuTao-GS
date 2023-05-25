@@ -83,8 +83,7 @@ export default class ScriptLib {
 
     logger.debug("Call AddExtraGroupSuite", groupId, suite)
 
-    const group = scriptManager.getGroup(groupId)
-    group.addGroupSuite(suite)
+    scriptManager.addGroupSuite(groupId, suite)
   }
 
   public GoToGroupSuite(_context: context, groupId: number, suite: number) {
@@ -233,9 +232,11 @@ export default class ScriptLib {
   }
 
   public CreateMonster(context: context, table: { config_id: number; delay_time: number }) {
+    const { scriptManager, currentGroup } = context
+
     logger.debug("Call CreateMonster", table)
 
-    context.currentGroup.CreateMonster(table.config_id, table.delay_time)
+    scriptManager.CreateMonster(currentGroup.id, table.config_id, table.delay_time)
 
     return 0
   }
@@ -245,9 +246,10 @@ export default class ScriptLib {
   }
 
   public CreateGadget(context: context, table: { config_id: number }) {
+    const { scriptManager, currentGroup } = context
     logger.debug("Call CreateGadget", table)
 
-    context.currentGroup.CreateGadget(table.config_id)
+    scriptManager.CreateGadget(currentGroup.id, table.config_id)
 
     return 0
   }
@@ -376,10 +378,11 @@ export default class ScriptLib {
   }
 
   public RefreshGroup(context: context, table: { group_id: number; suite: number }) {
+    const { scriptManager } = context
     logger.debug("Call RefreshGroup", table)
 
-    const group = context.currentGroup.block.groupList.find((group) => group.id === table.group_id)
-    group.RefreshGroup(table.suite)
+    const groupId = context.currentGroup.block.groupList.find((group) => group.id === table.group_id).id
+    scriptManager.RefreshGroup(groupId, table.suite)
 
     return 0
   }

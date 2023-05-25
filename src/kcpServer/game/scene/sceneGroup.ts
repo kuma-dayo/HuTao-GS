@@ -75,7 +75,7 @@ export default class SceneGroup {
     return true
   }
 
-  private async loadMonsters(monsters: SceneMonsterScriptConfig[], force = false) {
+  async loadMonsters(monsters: SceneMonsterScriptConfig[], force = false) {
     const { block, id: groupId, monsterList } = this
     const { id: blockId, scene } = block
     const { world, entityManager } = scene
@@ -116,7 +116,7 @@ export default class SceneGroup {
       )
   }
 
-  private async loadNpcs(npcs: SceneNpcScriptConfig[], suites: SceneSuiteScriptConfig[]) {
+  async loadNpcs(npcs: SceneNpcScriptConfig[], suites: SceneSuiteScriptConfig[]) {
     const { block, id: groupId, npcList } = this
     const { id: blockId, scene } = block
     const { entityManager } = scene
@@ -149,7 +149,7 @@ export default class SceneGroup {
     }
   }
 
-  private async loadGadgets(gadgets: SceneGadgetScriptConfig[], force = false) {
+  async loadGadgets(gadgets: SceneGadgetScriptConfig[], force = false) {
     const { block, id: groupId, gadgetList } = this
     const { id: blockId, scene } = block
     const { entityManager } = scene
@@ -262,85 +262,5 @@ export default class SceneGroup {
 
     Logger.measure("Group unload", grpUnloadPerfMark)
     Logger.clearMarks(grpUnloadPerfMark)
-  }
-
-  async RefreshGroup(suite: number) {
-    const { block, id: groupId } = this
-    const { scene } = block
-    const { entityManager } = scene
-    const { id: sceneId } = block.scene
-    const groupData = await SceneData.getGroup(sceneId, groupId)
-    this.monsterList.map((monster) => entityManager.remove(monster, undefined, undefined, true))
-    this.gadgetList.map((gadget) => entityManager.remove(gadget, undefined, undefined, true))
-    this.monsterList = []
-    this.npcList = []
-    this.gadgetList = []
-
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
-    )
-
-    await this.loadMonsters(
-      Object.values(
-        groupData.Monsters?.filter((monster) => groupData.Suites?.[suite - 1]?.Monsters?.includes(monster.ConfigId)) ||
-          {}
-      )
-    )
-    await this.loadNpcs(Object.values(groupData.Npcs || {}), Object.values(groupData.Suites || {}))
-    await this.loadGadgets(
-      Object.values(
-        groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
-      )
-    )
-  }
-
-  async addGroupSuite(suite: number) {
-    const { block, id: groupId } = this
-    const { id: sceneId } = block.scene
-    const groupData = await SceneData.getGroup(sceneId, groupId)
-
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
-    )
-
-    await this.loadMonsters(
-      Object.values(
-        groupData.Monsters?.filter((monster) => groupData.Suites?.[suite - 1]?.Monsters?.includes(monster.ConfigId)) ||
-          {}
-      ),
-      true
-    )
-    await this.loadGadgets(
-      Object.values(
-        groupData.Gadgets?.filter((gadget) => groupData.Suites?.[suite - 1]?.Gadgets?.includes(gadget.ConfigId)) || {}
-      ),
-      true
-    )
-  }
-
-  async CreateMonster(configId: number, delayTime = 0) {
-    const { block, id: groupId } = this
-    const { id: sceneId } = block.scene
-
-    const groupData = await SceneData.getGroup(sceneId, groupId)
-
-    setTimeout(() => {
-      this.loadMonsters(
-        Object.values(groupData.Monsters?.filter((monster) => monster.ConfigId == configId) || {}),
-        true
-      )
-    }, delayTime)
-  }
-
-  async CreateGadget(configId: number) {
-    const { block, id: groupId } = this
-    const { id: sceneId } = block.scene
-
-    const groupData = await SceneData.getGroup(sceneId, groupId)
-
-    await this.loadGadgets(
-      Object.values(groupData.Gadgets?.filter((gadget) => gadget.ConfigId == configId) || {}),
-      true
-    )
   }
 }
