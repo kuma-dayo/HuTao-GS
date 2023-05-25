@@ -1,7 +1,6 @@
 import context from "./scriptLibContext"
 
 import BeginCameraSceneLook, { BeginCameraSceneLookNotify } from "#/packets/BeginCameraSceneLook"
-import DungeonChallenge from "$/challenge/dungeonChallenge"
 import Vector from "$/utils/vector"
 import Logger from "@/logger"
 import { EntityTypeEnum, EventTypeEnum, GadgetStateEnum } from "@/types/enum"
@@ -126,14 +125,6 @@ export default class ScriptLib {
       objectiveKills,
       param5
     )
-
-    const world = new DungeonChallenge(context.currentGroup, challengeId, challengeIndex, [
-      objectiveKills,
-      timeLimitOrGroupId,
-    ])
-    world.start()
-
-    return 0
   }
 
   public GetGroupMonsterCountByGroupId(context: context, groupId: number) {

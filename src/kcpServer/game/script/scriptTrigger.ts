@@ -263,40 +263,40 @@ export default class ScriptTrigger extends BaseClass {
 
   // DungeonSettle
 
-  handleDungeonSettle(scriptManager: scriptManager, lua: LuaEngine) {
-    const { currentGroup, logger } = scriptManager
+  // handleDungeonSettle(scriptManager: scriptManager, lua: LuaEngine) {
+  //   const { currentGroup, logger } = scriptManager
 
-    try {
-      currentGroup.block.groupList.forEach((sceneGroup) => {
-        sceneGroup.trigger
-          .filter(({ Event }) => Event === EventTypeEnum.EVENT_DUNGEON_SETTLE)
-          .forEach(({ Event, Condition, Action }) => {
-            const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
-            const action: actionFunc = lua.global.get(getFunctionName(Action))
+  //   try {
+  //     currentGroup.block.groupList.forEach((sceneGroup) => {
+  //       sceneGroup.trigger
+  //         .filter(({ Event }) => Event === EventTypeEnum.EVENT_DUNGEON_SETTLE)
+  //         .forEach(({ Event, Condition, Action }) => {
+  //           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
+  //           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-            const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
-            const args: ScriptArgs = { param1: sceneGroup.scene.ischallenge ? 0 : 1 }
+  //           const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
+  //           const args: ScriptArgs = { param1: sceneGroup.scene.ischallenge ? 0 : 1 }
 
-            if (Condition) {
-              const conditionResult: boolean = condition({ ...context, args }, args)
-              logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
+  //           if (Condition) {
+  //             const conditionResult: boolean = condition({ ...context, args }, args)
+  //             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
-              if (conditionResult && Action) {
-                logger.verbose(`${EventTypeEnum[Event]} Action`)
-                action({ ...context, args }, args)
-              }
-            } else if (Action) {
-              logger.verbose(`${EventTypeEnum[Event]} Action`)
-              action({ ...context, args }, args)
-            }
-          })
+  //             if (conditionResult && Action) {
+  //               logger.verbose(`${EventTypeEnum[Event]} Action`)
+  //               action({ ...context, args }, args)
+  //             }
+  //           } else if (Action) {
+  //             logger.verbose(`${EventTypeEnum[Event]} Action`)
+  //             action({ ...context, args }, args)
+  //           }
+  //         })
 
-        lua.global.resetThread()
-      })
-    } finally {
-      lua.global.resetThread()
-    }
-  }
+  //       lua.global.resetThread()
+  //     })
+  //   } finally {
+  //     lua.global.resetThread()
+  //   }
+  // }
 
   // SelectOption
 
