@@ -11,6 +11,7 @@ import PlayerEnterScene, { PlayerEnterSceneNotify } from "#/packets/PlayerEnterS
 import ScenePlayerLocation from "#/packets/ScenePlayerLocation"
 import SceneTime from "#/packets/SceneTime"
 import uidPrefix from "#/utils/uidPrefix"
+import Challenge from "$/challenge"
 import Entity from "$/entity"
 import Gadget from "$/entity/gadget"
 import TrifleItem from "$/entity/gadget/trifleItem"
@@ -90,6 +91,8 @@ export default class Scene extends BaseClass {
   destroyed: boolean
 
   EnableScript: boolean
+
+  activeChallenge: Challenge
 
   constructor(world: World, sceneId: number) {
     super()
