@@ -218,9 +218,10 @@ export default class SceneGroup {
 
     await this.scene.scriptManager.emit(EventTypeEnum.EVENT_GROUP_LOAD, this.id)
 
-    this.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
-    )
+    this.trigger =
+      groupData.Triggers.filter((trigger) =>
+        groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
+      ) || []
 
     this.Variables = groupData.Variables ?? []
 

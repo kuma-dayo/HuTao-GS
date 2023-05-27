@@ -14,56 +14,56 @@ class ReliquaryDataLoader extends Loader {
     super("ReliquaryData")
   }
 
-  async getData(): Promise<ReliquaryDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getReliquary(id: number): Promise<ReliquaryData> {
-    return (await this.getReliquaryList()).find((data) => data.Id === id)
+  getReliquary(id: number): ReliquaryData {
+    return this.getReliquaryList().find((data) => data.Id === id)
   }
 
-  async getReliquaryList(): Promise<ReliquaryData[]> {
-    return (await this.getData())?.Reliquary || []
+  getReliquaryList(): ReliquaryData[] {
+    return this.data?.Reliquary || []
   }
 
-  async getMainProp(id: number): Promise<ReliquaryMainPropData> {
-    return (await this.getMainPropList()).find((data) => data.Id === id)
+  getMainProp(id: number): ReliquaryMainPropData {
+    return this.getMainPropList().find((data) => data.Id === id)
   }
 
-  async getMainPropsByDepot(depotId: number): Promise<ReliquaryMainPropData[]> {
-    return (await this.getMainPropList()).filter((data) => data.PropDepotId === depotId)
+  getMainPropsByDepot(depotId: number): ReliquaryMainPropData[] {
+    return this.getMainPropList().filter((data) => data.PropDepotId === depotId)
   }
 
-  async getMainPropList(): Promise<ReliquaryMainPropData[]> {
-    return (await this.getData())?.MainProp || []
+  getMainPropList(): ReliquaryMainPropData[] {
+    return this.data?.MainProp || []
   }
 
-  async getAffix(id: number): Promise<ReliquaryAffixData> {
-    return (await this.getAffixList()).find((data) => data.Id === id)
+  getAffix(id: number): ReliquaryAffixData {
+    return this.getAffixList().find((data) => data.Id === id)
   }
 
-  async getAffixsByDepot(depotId: number): Promise<ReliquaryAffixData[]> {
-    return (await this.getAffixList()).filter((data) => data.DepotId === depotId)
+  getAffixsByDepot(depotId: number): ReliquaryAffixData[] {
+    return this.getAffixList().filter((data) => data.DepotId === depotId)
   }
 
-  async getAffixList(): Promise<ReliquaryAffixData[]> {
-    return (await this.getData())?.Affix || []
+  getAffixList(): ReliquaryAffixData[] {
+    return this.data?.Affix || []
   }
 
-  async getLevel(level: number, rank: number): Promise<ReliquaryLevelData> {
-    return (await this.getLevelList()).find((data) => data.Level === level && (data.Rank || 0) === rank)
+  getLevel(level: number, rank: number): ReliquaryLevelData {
+    return this.getLevelList().find((data) => data.Level === level && (data.Rank || 0) === rank)
   }
 
-  async getLevelList(): Promise<ReliquaryLevelData[]> {
-    return (await this.getData())?.Level || []
+  getLevelList(): ReliquaryLevelData[] {
+    return this.data?.Level || []
   }
 
-  async getSet(id: number): Promise<ReliquarySetData> {
-    return (await this.getSetList()).find((data) => data.Id === id)
+  getSet(id: number): ReliquarySetData {
+    return this.getSetList().find((data) => data.Id === id)
   }
 
-  async getSetList(): Promise<ReliquarySetData[]> {
-    return (await this.getData())?.Set || []
+  getSetList(): ReliquarySetData[] {
+    return this.data?.Set || []
   }
 }
 

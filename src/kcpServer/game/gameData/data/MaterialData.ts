@@ -8,16 +8,16 @@ class MaterialDataLoader extends Loader {
     super("MaterialData", [])
   }
 
-  async getData(): Promise<MaterialDataList> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getMaterial(id: number): Promise<MaterialData> {
-    return (await this.getMaterialList()).find((data) => data.Id === id)
+  getMaterial(id: number): MaterialData {
+    return this.getMaterialList().find((data) => data.Id === id)
   }
 
-  async getMaterialList(): Promise<MaterialData[]> {
-    return (await this.getData()) || []
+  getMaterialList(): MaterialData[] {
+    return this.data || []
   }
 }
 

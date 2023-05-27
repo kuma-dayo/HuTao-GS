@@ -8,12 +8,12 @@ class WeatherDataLoader extends Loader {
     super("WeatherData")
   }
 
-  async getData(): Promise<WeatherDataList> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getWeatherData(areaId: number): Promise<WeatherData> {
-    return (await this.getData()).find((data) => data.AreaID === areaId)
+  getWeatherData(areaId: number): WeatherData {
+    return this.data?.find((data) => data.AreaID === areaId)
   }
 }
 

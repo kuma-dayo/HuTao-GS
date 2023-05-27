@@ -9,24 +9,24 @@ class WeaponDataLoader extends Loader {
     super("WeaponData")
   }
 
-  async getData(): Promise<WeaponDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getWeapon(id: number): Promise<WeaponData> {
-    return (await this.getWeaponList()).find((data) => data.Id === id)
+  getWeapon(id: number): WeaponData {
+    return this.getWeaponList().find((data) => data.Id === id)
   }
 
-  async getWeaponByGadgetId(gadgetId: number): Promise<WeaponData> {
-    return (await this.getWeaponList()).find((data) => data.GadgetId === gadgetId)
+  getWeaponByGadgetId(gadgetId: number): WeaponData {
+    return this.getWeaponList().find((data) => data.GadgetId === gadgetId)
   }
 
-  async getWeaponList(): Promise<WeaponData[]> {
-    return (await this.getData())?.Weapon || []
+  getWeaponList(): WeaponData[] {
+    return this.data?.Weapon || []
   }
 
-  async getFightPropConfig(id: number): Promise<EntityFightPropConfig> {
-    const data = await this.getWeapon(id)
+  getFightPropConfig(id: number): EntityFightPropConfig {
+    const data = this.getWeapon(id)
     if (!data) {
       return {
         PropGrowCurves: [],

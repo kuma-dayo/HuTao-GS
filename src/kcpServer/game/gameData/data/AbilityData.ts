@@ -131,23 +131,21 @@ class AbilityDataLoader extends Loader {
     }
   }
 
-  async getData(): Promise<AbilityDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getAbilityGroup(name: string): Promise<ConfigAbilityGroup> {
-    await this.getData()
+  getAbilityGroup(name: string): ConfigAbilityGroup {
     return this.data?.Group?.[name] || null
   }
 
-  async getAbility(name: string): Promise<ConfigAbility> {
-    await this.getData()
+  getAbility(name: string): ConfigAbility {
     return this.abilityMap[name] || null
   }
 
-  async getActionByLocalId(abilityName: string, localId: number): Promise<ConfigAbilityAction | ConfigAbilityMixin> {
+  getActionByLocalId(abilityName: string, localId: number): ConfigAbilityAction | ConfigAbilityMixin {
     const configInfo = this.parseLocalId(localId)
-    const abilityData = await this.getAbility(abilityName)
+    const abilityData = this.getAbility(abilityName)
     if (configInfo == null || !abilityData) return null
 
     const { typeTag, actionID, configIdx, mixinIdx, modifierIdx } = configInfo
@@ -180,9 +178,7 @@ class AbilityDataLoader extends Loader {
     }
   }
 
-  async lookupString(abilityString: AbilityString): Promise<string | null> {
-    await this.getData()
-
+  lookupString(abilityString: AbilityString): string | null {
     const { str, hash } = abilityString || {}
     if (str) return str
 

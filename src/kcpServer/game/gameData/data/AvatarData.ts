@@ -9,12 +9,12 @@ class AvatarDataLoader extends Loader {
     super("AvatarData")
   }
 
-  async getData(): Promise<AvatarDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getAvatar(id: number, silent = false): Promise<AvatarData> {
-    const data = (await this.getAvatarList())?.find((avatar) => avatar.Id === id)
+  getAvatar(id: number, silent = false): AvatarData {
+    const data = this.getAvatarList().find((avatar) => avatar.Id === id)
     if (!silent) {
       if (data == null) this.warn("message.loader.avatarData.warn.noData", id)
       else if (data.Config == null) this.warn("message.loader.avatarData.warn.noConfig", id)
@@ -22,8 +22,8 @@ class AvatarDataLoader extends Loader {
     return data
   }
 
-  async getAvatarByName(name: string, silent = false): Promise<AvatarData> {
-    const data = (await this.getAvatarList())?.find((avatar) => avatar.Name === name)
+  getAvatarByName(name: string, silent = false): AvatarData {
+    const data = this.getAvatarList().find((avatar) => avatar.Name === name)
     if (!silent) {
       if (data == null) this.warn("message.loader.avatarData.warn.noData", name)
       else if (data.Config == null) this.warn("message.loader.avatarData.warn.noConfig", name)
@@ -31,28 +31,28 @@ class AvatarDataLoader extends Loader {
     return data
   }
 
-  async getAvatarList(): Promise<AvatarData[]> {
-    return (await this.getData())?.Avatar || []
+  getAvatarList(): AvatarData[] {
+    return this.data?.Avatar || []
   }
 
-  async getCostume(avatarId: number, id: number): Promise<CostumeData> {
-    return (await this.getCostumeList())?.find((costume) => costume.AvatarId === avatarId && costume.Id === id)
+  getCostume(avatarId: number, id: number): CostumeData {
+    return this.getCostumeList().find((costume) => costume.AvatarId === avatarId && costume.Id === id)
   }
 
-  async getCostumeList(): Promise<CostumeData[]> {
-    return (await this.getData())?.Costume || []
+  getCostumeList(): CostumeData[] {
+    return this.data?.Costume || []
   }
 
-  async getFlycloak(id: number): Promise<FlycloakData> {
-    return (await this.getFlycloakList())?.find((flycloak) => flycloak.Id === id)
+  getFlycloak(id: number): FlycloakData {
+    return this.getFlycloakList().find((flycloak) => flycloak.Id === id)
   }
 
-  async getFlycloakList(): Promise<FlycloakData[]> {
-    return (await this.getData())?.Flycloak || []
+  getFlycloakList(): FlycloakData[] {
+    return this.data?.Flycloak || []
   }
 
-  async getFightPropConfig(id: number): Promise<EntityFightPropConfig> {
-    const data = await this.getAvatar(id)
+  getFightPropConfig(id: number): EntityFightPropConfig {
+    const data = this.getAvatar(id)
     if (!data) {
       this.warn("message.loader.avatarData.warn.noFightPropConfig", id)
 

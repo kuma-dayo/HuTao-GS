@@ -15,6 +15,7 @@ export default class KillMonsterCountTrigger extends ChallengeTrigger {
   }
   public async onMonsterDeath(challenge: Challenge, monster: Monster): Promise<void> {
     const newScore = challenge.increaseScore
+
     await ChallengeData.broadcastNotify(challenge.scene.broadcastContextList, {
       paramIndex: 1,
       value: newScore,

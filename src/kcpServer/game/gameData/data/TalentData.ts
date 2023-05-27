@@ -8,16 +8,16 @@ class TalentDataLoader extends Loader {
     super("TalentData")
   }
 
-  async getData(): Promise<TalentDataList> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getAvatarTalent(id: number): Promise<AvatarTalentData> {
-    return (await this.getAvatarTalentList()).find((data) => data.Id === id)
+  getAvatarTalent(id: number): AvatarTalentData {
+    return this.getAvatarTalentList().find((data) => data.Id === id)
   }
 
-  async getAvatarTalentList(): Promise<AvatarTalentData[]> {
-    return (await this.getData()).Avatar || []
+  getAvatarTalentList(): AvatarTalentData[] {
+    return this.data.Avatar || []
   }
 }
 

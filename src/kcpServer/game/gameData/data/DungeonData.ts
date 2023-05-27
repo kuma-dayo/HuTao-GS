@@ -8,20 +8,20 @@ class DungeonDataLoader extends Loader {
     super("DungeonData")
   }
 
-  async getData(): Promise<DungeonDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getDungeon(id: number): Promise<DungeonData> {
-    return (await this.getDungeonList()).find((data) => data.Id === id)
+  getDungeon(id: number): DungeonData {
+    return this.getDungeonList().find((data) => data.Id === id)
   }
 
-  async getDungeonByScene(sceneId: number): Promise<DungeonData> {
-    return (await this.getDungeonList()).find((data) => data.SceneId === sceneId)
+  getDungeonByScene(sceneId: number): DungeonData {
+    return this.getDungeonList().find((data) => data.SceneId === sceneId)
   }
 
-  async getDungeonList(): Promise<DungeonData[]> {
-    return (await this.getData())?.Dungeon || []
+  getDungeonList(): DungeonData[] {
+    return this.data?.Dungeon || []
   }
 }
 

@@ -14,48 +14,48 @@ class MonsterDataLoader extends Loader {
     super("MonsterData")
   }
 
-  async getData(): Promise<MonsterDataGroup> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
-  async getMonster(id: number, silent = false): Promise<MonsterData> {
-    const data = (await this.getMonsterList()).find((data) => data.Id === id)
+  getMonster(id: number, silent = false): MonsterData {
+    const data = this.getMonsterList().find((data) => data.Id === id)
     if (!silent) {
       if (data == null) this.warn("message.loader.monsterData.warn.noData", id)
     }
     return data
   }
 
-  async getMonsterList(): Promise<MonsterData[]> {
-    return (await this.getData())?.Monster || []
+  getMonsterList(): MonsterData[] {
+    return this.data?.Monster || []
   }
 
-  async getAffix(id: number): Promise<MonsterAffixData> {
-    return (await this.getAffixList()).find((data) => data.Id === id)
+  getAffix(id: number): MonsterAffixData {
+    return this.getAffixList().find((data) => data.Id === id)
   }
 
-  async getAffixList(): Promise<MonsterAffixData[]> {
-    return (await this.getData())?.Affix || []
+  getAffixList(): MonsterAffixData[] {
+    return this.data?.Affix || []
   }
 
-  async getDescribe(id: number): Promise<MonsterDescribeData> {
-    return (await this.getDescribeList()).find((data) => data.Id === id)
+  getDescribe(id: number): MonsterDescribeData {
+    return this.getDescribeList().find((data) => data.Id === id)
   }
 
-  async getDescribeList(): Promise<MonsterDescribeData[]> {
-    return (await this.getData())?.Describe || []
+  getDescribeList(): MonsterDescribeData[] {
+    return this.data?.Describe || []
   }
 
-  async getSpecialName(labId: number): Promise<MonsterSpecialNameData> {
-    return (await this.getSpecialNameList()).find((data) => data.LabId === labId)
+  getSpecialName(labId: number): MonsterSpecialNameData {
+    return this.getSpecialNameList().find((data) => data.LabId === labId)
   }
 
-  async getSpecialNameList(): Promise<MonsterSpecialNameData[]> {
-    return (await this.getData())?.SpecialName || []
+  getSpecialNameList(): MonsterSpecialNameData[] {
+    return this.data?.SpecialName || []
   }
 
-  async getFightPropConfig(id: number): Promise<EntityFightPropConfig> {
-    const data = await this.getMonster(id, true)
+  getFightPropConfig(id: number): EntityFightPropConfig {
+    const data = this.getMonster(id, true)
     if (!data) {
       this.warn("message.loader.monsterData.warn.noFightPropConfig", id)
 

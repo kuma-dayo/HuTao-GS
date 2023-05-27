@@ -8,16 +8,16 @@ class MapAreaDataLoader extends Loader {
     super("MapAreaData", [])
   }
 
-  async getData(): Promise<MapAreaDataList> {
-    return super.getData()
+  async getData(): Promise<void> {
+    await super.getData()
   }
 
   async getMapArea(id: number): Promise<MapAreaData> {
-    return (await this.getMapAreaList()).find((data) => data.Id === id)
+    return this.getMapAreaList().find((data) => data.Id === id)
   }
 
-  async getMapAreaList(): Promise<MapAreaData[]> {
-    return (await this.getData()) || []
+  getMapAreaList(): MapAreaData[] {
+    return this.data || []
   }
 }
 
