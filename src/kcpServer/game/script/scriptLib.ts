@@ -183,7 +183,8 @@ export default class ScriptLib {
 
     logger.debug("Call ChangeGroupVariableValue", variable, value)
 
-    context.currentGroup.Variables.find((Variable) => Variable.Name === variable).Value = value
+    context.currentGroup.Variables.find((Variable) => Variable.Name === variable).Value += value
+
     return 0
   }
 
@@ -475,5 +476,9 @@ export default class ScriptLib {
 
   public GetGroupLogicStateValue(_context: context, param1: string) {
     logger.debug("Call GetGroupLogicStateValue", param1)
+  }
+
+  public CreateChannellerSlabCampRewardGadget(_context: context, configId: number) {
+    logger.debug("Call CreateChannellerSlabCampRewardGadget", configId)
   }
 }
