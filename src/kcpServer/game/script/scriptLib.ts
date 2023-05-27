@@ -1,6 +1,7 @@
 import context from "./scriptLibContext"
 
 import BeginCameraSceneLook, { BeginCameraSceneLookNotify } from "#/packets/BeginCameraSceneLook"
+import ChallengeFactory from "$/challenge/factory"
 import Vector from "$/utils/vector"
 import Logger from "@/logger"
 import { EntityTypeEnum, EventTypeEnum, GadgetStateEnum } from "@/types/enum"
@@ -125,6 +126,21 @@ export default class ScriptLib {
       objectiveKills,
       param5
     )
+
+    const challenge = ChallengeFactory.getChallenge(
+      challengeId,
+      challengeIndex,
+      timeLimitOrGroupId,
+      groupId,
+      objectiveKills,
+      param5,
+      context.currentGroup.scene,
+      context.currentGroup
+    )
+
+    context.currentGroup.scene.activeChallenge = challenge
+    challenge.start()
+    return 0
   }
 
   public GetGroupMonsterCountByGroupId(context: context, groupId: number) {
@@ -427,5 +443,37 @@ export default class ScriptLib {
     }
   ) {
     logger.debug("Call ScenePlaySound", table)
+  }
+
+  public RefreshBlossomGroup(_context: context, table: { group_id: number; suite: number; exclude_prev: boolean }) {
+    logger.debug("Call RefreshBlossomGroup", table)
+  }
+
+  public GetServerTimeByWeek(_context: context) {
+    logger.debug("Call GetServerTimeByWeek")
+  }
+
+  public RefreshHuntingClueGroup(_context: context) {
+    logger.debug("Call RefreshHuntingClueGroup")
+  }
+
+  public ChangeDeathZone(_context: context, table: { is_open: boolean }) {
+    logger.debug("Call ChangeDeathZone", table)
+  }
+
+  public GetDeathZoneStatus(_context: context, param1: number) {
+    logger.debug("Call GetDeathZoneStatus", param1)
+  }
+
+  public CheckIsInGroup(_context: context, groupId: number, configId: number) {
+    logger.debug("Call CheckIsInGroup", groupId, configId)
+  }
+
+  public SetGroupLogicStateValue(_context: context, param1: string, param2: number) {
+    logger.debug("Call SetGroupLogicStateValue", param1, param2)
+  }
+
+  public GetGroupLogicStateValue(_context: context, param1: string) {
+    logger.debug("Call GetGroupLogicStateValue", param1)
   }
 }

@@ -1,12 +1,13 @@
-import ChallengeFactory from "./factory"
+import ChallengeTrigger from "./trigger"
 
 import DungeonChallengeBegin from "#/packets/DungeonChallengeBegin"
 import DungeonChallengeFinish from "#/packets/DungeonChallengeFinish"
+import Gadget from "$/entity/gadget"
+import Monster from "$/entity/monster"
 import Scene from "$/scene"
 import SceneGroup from "$/scene/sceneGroup"
 import Logger from "@/logger"
 import { EventTypeEnum } from "@/types/enum"
-import { getTimeSeconds } from "@/utils/time"
 
 export default class Challenge {
   scene: Scene
@@ -21,7 +22,7 @@ export default class Challenge {
   success: boolean
   startedAt: number
   finishedTime: number
-  challengeTrigger: ChallengeFactory[]
+  challengeTrigger: ChallengeTrigger[]
 
   logger: Logger
 
@@ -33,7 +34,7 @@ export default class Challenge {
     paramList: number[],
     timeLimit: number,
     goal: number,
-    challengeTrigger: ChallengeFactory[]
+    challengeTrigger: ChallengeTrigger[]
   ) {
     this.scene = scene
     this.sceneGroup = sceneGroup
@@ -43,21 +44,29 @@ export default class Challenge {
     this.timeLimit = timeLimit
     this.goal = goal
     this.challengeTrigger = challengeTrigger
+    this.score = 0
 
     this.logger = new Logger("Challenge", 0x8696fe)
   }
 
   get increaseScore() {
-    this.score++
+    this.score += 1
     return this.score
   }
 
+  public onCheckTimeOut() {
+    if (!this.progress || this.timeLimit <= 0) return
+
+    this.challengeTrigger.forEach((t) => t.onCheckTimeout(this))
+  }
   public async start() {
     if (this.progress) return this.logger.debug("Challenge already started")
     this.progress = true
-    this.startedAt = getTimeSeconds()
+    this.startedAt = Date.now()
 
     await DungeonChallengeBegin.broadcastNotify(this.scene.broadcastContextList, this)
+
+    this.challengeTrigger.forEach((t) => t.onBegin(this))
   }
 
   public async done() {
@@ -82,5 +91,33 @@ export default class Challenge {
     this.finishedTime = this.scene.timestamp - this.startedAt
 
     await DungeonChallengeFinish.broadcastNotify(this.scene.broadcastContextList, this)
+
+    this.challengeTrigger.forEach((t) => t.onFinish(this))
+
+    this.scene.activeChallenge = null
+  }
+
+  public onMonsterDeath(monster: Monster) {
+    if (!this.progress || monster.groupId != this.sceneGroup.id) return
+
+    this.challengeTrigger.forEach((t) => t.onMonsterDeath(this, monster))
+  }
+
+  public onGadgetDeath(gadget: Gadget) {
+    if (!this.progress || gadget.groupId != this.sceneGroup.id) return
+
+    this.challengeTrigger.forEach((t) => t.onGadgetDeath(this, gadget))
+  }
+
+  public onGroupTriggerDeath(trigger: string, triggerGroup: SceneGroup) {
+    if (!this.progress || triggerGroup == null || triggerGroup.id != this.sceneGroup.id) return
+
+    this.challengeTrigger.forEach((t) => t.onGroupTrigger(this, trigger))
+  }
+
+  public onGadgetDamage(gadget: Gadget) {
+    if (!this.progress || gadget.groupId != this.sceneGroup.id) return
+
+    this.challengeTrigger.forEach((t) => t.onGadgetDamage(this, gadget))
   }
 }

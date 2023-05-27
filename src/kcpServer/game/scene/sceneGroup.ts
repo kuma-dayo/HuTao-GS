@@ -48,6 +48,8 @@ export default class SceneGroup {
     this.monsterList = []
     this.npcList = []
     this.gadgetList = []
+    this.trigger = []
+    this.Variables = []
 
     this.loaded = false
   }
@@ -216,8 +218,6 @@ export default class SceneGroup {
 
     await wob.waitTick()
 
-    await this.scene.scriptManager.emit(EventTypeEnum.EVENT_GROUP_LOAD, this.id)
-
     this.trigger =
       groupData.Triggers.filter((trigger) =>
         groupData.Suites?.[Overridesuite ?? groupData?.InitConfig?.[0] - 1]?.Triggers?.includes(trigger.Name)
@@ -243,6 +243,8 @@ export default class SceneGroup {
         ) || {}
       )
     )
+
+    await this.scene.scriptManager.emit(EventTypeEnum.EVENT_GROUP_LOAD, this.id)
 
     Logger.measure("Group load", grpLoadPerfMark)
     Logger.clearMarks(grpLoadPerfMark)

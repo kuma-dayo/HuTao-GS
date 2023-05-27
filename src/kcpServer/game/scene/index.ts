@@ -525,6 +525,10 @@ export default class Scene extends BaseClass {
 
     for (const sceneBlock of sceneBlockList) await sceneBlock.emit("Update")
 
+    if (this.activeChallenge != null) {
+      this.activeChallenge.onCheckTimeOut()
+    }
+
     if (lastThunder == null || Date.now() - lastThunder > 5e3) {
       this.lastThunder = Date.now() - Math.random() * 5e3
       const thunderTargets = playerList.filter((p) => p.thunderTarget)

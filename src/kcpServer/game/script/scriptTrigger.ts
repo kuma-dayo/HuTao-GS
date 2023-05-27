@@ -39,6 +39,9 @@ export default class ScriptTrigger extends BaseClass {
 
     const lua = await scriptLoader.init(this.lua, scriptManager.scene.id, currentGroup.id)
 
+    const activeChallenge = currentGroup.scene.activeChallenge
+
+    if (activeChallenge) activeChallenge.onGroupTriggerDeath(EventTypeEnum[type], currentGroup)
     if (currentGroup.trigger?.length > 0)
       await this.emit(toCamelCase(EventTypeEnum[type].replace("EVENT_", "")), scriptManager, lua, ...args)
   }
@@ -62,7 +65,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -70,7 +73,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -99,7 +102,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: gadgetId }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -107,7 +110,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -134,7 +137,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: oldValue, param2: newValue }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -142,7 +145,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -169,7 +172,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -177,7 +180,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -207,7 +210,7 @@ export default class ScriptTrigger extends BaseClass {
             const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: configId }
 
-            if (Condition) {
+            if (condition) {
               const conditionResult: boolean = condition({ ...context, args }, args)
               logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -215,7 +218,7 @@ export default class ScriptTrigger extends BaseClass {
                 logger.verbose(`${EventTypeEnum[Event]} Action`)
                 action({ ...context, args }, args)
               }
-            } else if (Action) {
+            } else if (action) {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
@@ -241,7 +244,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: state, param2: configId }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -249,7 +252,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -277,7 +280,7 @@ export default class ScriptTrigger extends BaseClass {
             const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: ischallenge ? 0 : 1 }
 
-            if (Condition) {
+            if (condition) {
               const conditionResult: boolean = condition({ ...context, args }, args)
               logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
@@ -285,7 +288,7 @@ export default class ScriptTrigger extends BaseClass {
                 logger.verbose(`${EventTypeEnum[Event]} Action`)
                 action({ ...context, args }, args)
               }
-            } else if (Action) {
+            } else if (action) {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
@@ -313,7 +316,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId, param2: optionid }
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -321,7 +324,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -351,7 +354,7 @@ export default class ScriptTrigger extends BaseClass {
             const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: configId }
 
-            if (Condition) {
+            if (condition) {
               const conditionResult: boolean = condition({ ...context, args }, args)
               logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult} ${JSON.stringify(args)}`)
 
@@ -359,14 +362,12 @@ export default class ScriptTrigger extends BaseClass {
                 logger.verbose(`${EventTypeEnum[Event]} Action`)
                 action({ ...context, args }, args)
               }
-            } else if (Action) {
+            } else if (action) {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
           })
         })
-    } catch (e) {
-      logger.error(currentGroup, e)
     } finally {
       lua.global.resetThread()
     }
@@ -394,7 +395,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
@@ -402,7 +403,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -429,7 +430,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.verbose(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
@@ -437,7 +438,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.verbose(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.verbose(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }
@@ -484,7 +485,7 @@ export default class ScriptTrigger extends BaseClass {
           const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
-          if (Condition) {
+          if (condition) {
             const conditionResult: boolean = condition({ ...context, args }, args)
             logger.debug(`${EventTypeEnum[Event]} Condition ${conditionResult}`)
 
@@ -492,7 +493,7 @@ export default class ScriptTrigger extends BaseClass {
               logger.debug(`${EventTypeEnum[Event]} Action`)
               action({ ...context, args }, args)
             }
-          } else if (Action) {
+          } else if (action) {
             logger.debug(`${EventTypeEnum[Event]} Action`)
             action({ ...context, args }, args)
           }

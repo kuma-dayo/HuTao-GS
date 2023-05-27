@@ -146,7 +146,7 @@ export default class Gadget extends Entity {
     const { manager } = this
 
     if (manager.scene.EnableScript) {
-      // if (manager.scene.ischallenge) await new KillGadgetTrigger().GadgetDeath(manager.scene.challenge)
+      if (manager.scene.activeChallenge != null) manager.scene.activeChallenge.onGadgetDeath(this)
       await this.sceneGroup?.scene.scriptManager.emit(EventTypeEnum.EVENT_ANY_GADGET_DIE, this.gadgetId)
     }
     await super.handleDeath(seqId, batch)

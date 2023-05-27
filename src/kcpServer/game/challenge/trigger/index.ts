@@ -17,5 +17,5 @@ export default abstract class ChallengeTrigger {
 
   public async onGadgetDamage(challenge: Challenge, gadget: Gadget): Promise<void> {}
 
-  public async onGroupTrigger(challenge: Challenge, trigger: any) {}
+  public async onGroupTrigger(challenge: Challenge, trigger: string) {}
 }

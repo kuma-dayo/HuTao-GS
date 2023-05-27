@@ -1,4 +1,4 @@
-import ChallengeFactoryHandler from "./factory/handler"
+import ChallengeTrigger from "./trigger"
 
 import Challenge from "."
 
@@ -17,7 +17,7 @@ export default class dungeonChallenge extends Challenge {
     paramList: number[],
     timeLimit: number,
     goal: number,
-    challengeTrigger: ChallengeFactoryHandler[]
+    challengeTrigger: ChallengeTrigger[]
   ) {
     super(scene, sceneGroup, challengeId, challengeIndex, paramList, timeLimit, goal, challengeTrigger)
   }

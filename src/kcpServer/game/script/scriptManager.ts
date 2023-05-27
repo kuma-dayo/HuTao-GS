@@ -54,9 +54,8 @@ export default class scriptManager {
     group.gadgetList = []
     group.npcList = []
 
-    group.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
-    )
+    group.trigger =
+      groupData.Triggers.filter((trigger) => groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)) || []
 
     await group.loadMonsters(
       Object.values(
@@ -78,9 +77,8 @@ export default class scriptManager {
     const { id: sceneId } = block.scene
     const groupData = await SceneData.getGroup(sceneId, groupId)
 
-    group.trigger = groupData.Triggers.filter((trigger) =>
-      groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)
-    )
+    group.trigger =
+      groupData.Triggers.filter((trigger) => groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)) || []
 
     await group.loadMonsters(
       Object.values(
