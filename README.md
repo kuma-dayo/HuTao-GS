@@ -1,5 +1,5 @@
 # HuTao-GS
-Supported version: 1.4.0 - 3.7.0
+Supported version: 1.4.0() - 3.7.0
 
 ## HuTao-GS's current features
 
@@ -8,6 +8,7 @@ Supported version: 1.4.0 - 3.7.0
 * Combat
 * Spawning monsters
 * Scene Script
+* Challenge
 
 ## Requirements
 
