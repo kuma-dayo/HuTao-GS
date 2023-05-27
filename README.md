@@ -1,5 +1,7 @@
 # HuTao-GS
-Supported version: 1.4.0() - 3.7.0
+Supported version: 1.4.0 - 3.7.0
+
+1.4.0 has not been tested much
 
 ## HuTao-GS's current features
 
