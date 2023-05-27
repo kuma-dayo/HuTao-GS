@@ -77,6 +77,11 @@ class Handlers
     }
 }
 ```
+
+## TODO
+I have changed most of the processing in szrc/kcpServer/game/gameData/data to not use async.
+I have not removed the async in the part that calls it, so it needs to be removed.
+
 ## Contact
 ```
     Please DM me with any questions about this project.
