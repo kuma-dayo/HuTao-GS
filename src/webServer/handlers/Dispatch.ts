@@ -169,7 +169,7 @@ class DispatchHandler extends Handler {
 
       curRegionData = await dataToProtobuffer(await readFile(binPath), "QueryCurrRegionHttpRsp", true)
     } else {
-      if (clientVersion === version || GlobalState.get("KickMismatchVersion")) {
+      if (clientVersion === version || !GlobalState.get("KickMismatchVersion")) {
         const customConfig = Buffer.from(JSON.stringify(clientCustomConfig))
         xor(customConfig, await DispatchKey.getXorKey())
 
