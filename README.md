@@ -29,7 +29,7 @@ npm i
 npm run start:dev
 ```
 ## Resource
-Generate resources using (HuTao-GD)[https://github.com/kuma-dayo/Hutao-GD.git]
+Generate resources using [HuTao-GD](https://github.com/kuma-dayo/Hutao-GD)
 ```
 data
 ├── game
