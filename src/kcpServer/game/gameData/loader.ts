@@ -9,6 +9,7 @@ const logger = new TLogger("LOADER", 0x34fa69)
 
 export default class Loader {
   path: string
+  tlogKey: string
   defaultData: any
 
   loggedMessagesMap: { [key: string]: number }
@@ -16,8 +17,9 @@ export default class Loader {
   busy: boolean
   data: any
 
-  constructor(path: string, defaultData: any = {}) {
+  constructor(path: string, tlogKey: string, defaultData: any = {}) {
     this.path = path
+    this.tlogKey = tlogKey
     this.defaultData = defaultData
 
     this.loggedMessagesMap = {}
@@ -66,6 +68,7 @@ export default class Loader {
 
   async getData() {
     if (this.data == null) await this.load()
-    return this.data
+
+    logger.info(this.tlogKey)
   }
 }

@@ -5,7 +5,7 @@ class SkillDataLoader extends Loader {
   declare data: SkillDataGroup
 
   constructor() {
-    super("SkillData")
+    super("SkillData", "message.cache.debug.skill")
   }
 
   async getData(): Promise<void> {

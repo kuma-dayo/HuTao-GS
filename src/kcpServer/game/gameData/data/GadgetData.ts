@@ -6,7 +6,7 @@ class GadgetDataLoader extends Loader {
   declare data: GadgetDataGroup
 
   constructor() {
-    super("GadgetData")
+    super("GadgetData", "message.cache.debug.gadget")
   }
 
   async getData(): Promise<void> {

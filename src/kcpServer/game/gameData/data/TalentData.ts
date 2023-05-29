@@ -5,7 +5,7 @@ class TalentDataLoader extends Loader {
   declare data: TalentDataList
 
   constructor() {
-    super("TalentData")
+    super("TalentData", "message.cache.debug.talent")
   }
 
   async getData(): Promise<void> {

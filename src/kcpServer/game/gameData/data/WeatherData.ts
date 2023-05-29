@@ -5,7 +5,7 @@ class WeatherDataLoader extends Loader {
   declare data: WeatherDataList
 
   constructor() {
-    super("WeatherData")
+    super("WeatherData", "message.cache.debug.weather")
   }
 
   async getData(): Promise<void> {

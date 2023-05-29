@@ -11,7 +11,7 @@ class MonsterDataLoader extends Loader {
   declare data: MonsterDataGroup
 
   constructor() {
-    super("MonsterData")
+    super("MonsterData", "message.cache.debug.monster")
   }
 
   async getData(): Promise<void> {

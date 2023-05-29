@@ -11,7 +11,7 @@ class ReliquaryDataLoader extends Loader {
   declare data: ReliquaryDataGroup
 
   constructor() {
-    super("ReliquaryData")
+    super("ReliquaryData", "message.cache.debug.reliquary")
   }
 
   async getData(): Promise<void> {

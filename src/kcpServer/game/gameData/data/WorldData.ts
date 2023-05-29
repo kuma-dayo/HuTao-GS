@@ -5,7 +5,7 @@ class WorldDataLoader extends Loader {
   declare data: WorldDataGroup
 
   constructor() {
-    super("WorldData", [])
+    super("WorldData", "message.cache.debug.world", [])
   }
 
   async getData(): Promise<void> {

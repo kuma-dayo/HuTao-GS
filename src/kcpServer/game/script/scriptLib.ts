@@ -15,8 +15,8 @@ export default class ScriptLib {
     logger.debug("Call SetGadgetStateByConfigId", configId, gadgetState)
 
     const gadget = context.currentGroup.gadgetList.find((gadget) => gadget.configId === configId)
-    gadget?.setGadgetState(gadgetState, true)
-
+    if (gadget) gadget.setGadgetState(gadgetState, true)
+    else return 1
     return 0
   }
 
@@ -58,9 +58,7 @@ export default class ScriptLib {
     const { scriptManager } = context
     logger.debug("Call DelWorktopOptionByGroupId", groupId, configId, option)
 
-    const group = scriptManager.getGroup(groupId)
-
-    const gadget = group.gadgetList.find((gadget) => gadget.configId === configId)
+    const gadget = scriptManager.getGroup(groupId).gadgetList.find((gadget) => gadget.configId === configId)
 
     gadget.setWorktopOption(gadget.worktopOption.filter((Option) => Option != option))
     return 0
@@ -209,8 +207,10 @@ export default class ScriptLib {
     logger.debug("Call CauseDungeonFail")
   }
 
-  public GetGroupVariableValueByGroup(_context: context, name: string, groupId: number) {
+  public GetGroupVariableValueByGroup(context: context, name: string, groupId: number) {
     logger.debug("Call GetGroupVariableValueByGroup", name, groupId)
+
+    return context.scriptManager.getGroup(groupId)?.Variables?.find((Variable) => Variable.Name === name)?.Value
   }
 
   public SetIsAllowUseSkill(_context: context, canUse: number) {
@@ -232,9 +232,9 @@ export default class ScriptLib {
 
     logger.debug("Call SetGroupVariableValueByGroup", key, value, groupId)
 
-    context.currentGroup = scriptManager.getGroup(groupId)
-
-    this.ChangeGroupVariableValue(context, key, value)
+    const variable = scriptManager.getGroup(groupId)?.Variables.find((Variable) => Variable.Name === key)
+    if (variable.Value) variable.Value = value
+    else return 1
 
     return 0
   }
@@ -389,8 +389,10 @@ export default class ScriptLib {
     const { scriptManager } = context
     logger.debug("Call RefreshGroup", table)
 
-    const groupId = context.currentGroup.block.groupList.find((group) => group.id === table.group_id).id
-    scriptManager.RefreshGroup(groupId, table.suite)
+    const groupId = context.currentGroup.block.groupList.find((group) => group.id === table.group_id)?.id
+
+    if (groupId) scriptManager.RefreshGroup(groupId, table.suite)
+    else return 1
 
     return 0
   }

@@ -6,7 +6,7 @@ class GrowCurveDataLoader extends Loader {
   declare data: GrowCurveDataGroup
 
   constructor() {
-    super("GrowCurveData")
+    super("GrowCurveData", "message.cache.debug.growCurve")
   }
 
   async getData(): Promise<void> {

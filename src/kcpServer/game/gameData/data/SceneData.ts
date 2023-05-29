@@ -8,7 +8,7 @@ class SceneDataLoader extends Loader {
   declare data: SceneDataList
 
   constructor() {
-    super("SceneData", [])
+    super("SceneData", "message.cache.debug.scene", [])
   }
 
   async getData(): Promise<void> {

@@ -5,7 +5,7 @@ class ShopDataLoader extends Loader {
   declare data: ShopDataList
 
   constructor() {
-    super("ShopData")
+    super("ShopData", "message.cache.debug.shop")
   }
 
   async getData(): Promise<void> {

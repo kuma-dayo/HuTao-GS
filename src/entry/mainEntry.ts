@@ -77,53 +77,24 @@ async function resourceCache() {
 
   tLogger.info("message.cache.info.start")
 
-  await AbilityData.getData()
-  tLogger.debug("message.cache.debug.ability")
-
-  await AvatarData.getData()
-  tLogger.debug("message.cache.debug.avatar")
-
-  await DungeonData.getData()
-  tLogger.debug("message.cache.debug.dungeon")
-
-  await GadgetData.getData()
-  tLogger.debug("message.cache.debug.gadget")
-
-  await GrowCurveData.getData()
-  tLogger.debug("message.cache.debug.growCurve")
-
-  await MapAreaData.getData()
-  tLogger.debug("message.cache.debug.mapArea")
-
-  await MaterialData.getData()
-  tLogger.debug("message.cache.debug.material")
-
-  await MonsterData.getData()
-  tLogger.debug("message.cache.debug.monster")
-
-  await ReliquaryData.getData()
-  tLogger.debug("message.cache.debug.reliquary")
-
-  await SceneData.getData()
-  tLogger.debug("message.cache.debug.scene")
-
-  await ShopData.getData()
-  tLogger.debug("message.cache.debug.shop")
-
-  await SkillData.getData()
-  tLogger.debug("message.cache.debug.skill")
-
-  await TalentData.getData()
-  tLogger.debug("message.cache.debug.talent")
-
-  await WeaponData.getData()
-  tLogger.debug("message.cache.debug.weapon")
-
-  await WeatherData.getData()
-  tLogger.debug("message.cache.debug.weather")
-
-  await WorldData.getData()
-  tLogger.debug("message.cache.debug.world")
+  await Promise.all([
+    AbilityData.getData(),
+    AvatarData.getData(),
+    DungeonData.getData(),
+    GadgetData.getData(),
+    GrowCurveData.getData(),
+    MapAreaData.getData(),
+    MaterialData.getData(),
+    MonsterData.getData(),
+    ReliquaryData.getData(),
+    SceneData.getData(),
+    ShopData.getData(),
+    SkillData.getData(),
+    TalentData.getData(),
+    WeaponData.getData(),
+    WeatherData.getData(),
+    WorldData.getData(),
+  ])
 
   tLogger.info("message.cache.info.success")
 }

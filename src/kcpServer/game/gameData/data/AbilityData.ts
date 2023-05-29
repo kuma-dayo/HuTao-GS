@@ -17,7 +17,7 @@ class AbilityDataLoader extends Loader {
   abilityMap: { [name: string]: ConfigAbility }
 
   constructor() {
-    super("AbilityData")
+    super("AbilityData", "message.cache.debug.ability")
 
     this.hashMap = {}
     this.abilityMap = {}

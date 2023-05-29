@@ -6,7 +6,7 @@ class WeaponDataLoader extends Loader {
   declare data: WeaponDataGroup
 
   constructor() {
-    super("WeaponData")
+    super("WeaponData", "message.cache.debug.weapon")
   }
 
   async getData(): Promise<void> {

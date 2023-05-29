@@ -82,12 +82,12 @@ export default class AbilityUtils {
     return Number(ability?.overrideMapContainer?.getValue({ hash: getStringHash(val), str: val })?.val || 0)
   }
 
-  async calcAmount(
+  calcAmount(
     ability: AppliedAbility,
     caster: Entity,
     target: Entity,
     config: HealHP | LoseHP | ReviveAvatar | ReviveDeadAvatar
-  ): Promise<number> {
+  ): number {
     const {
       Amount,
       AmountByCasterAttackRatio,

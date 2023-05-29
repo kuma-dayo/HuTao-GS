@@ -6,7 +6,7 @@ class AvatarDataLoader extends Loader {
   declare data: AvatarDataGroup
 
   constructor() {
-    super("AvatarData")
+    super("AvatarData", "message.cache.debug.avatar")
   }
 
   async getData(): Promise<void> {

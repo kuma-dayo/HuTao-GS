@@ -75,7 +75,7 @@ export default class scriptManager {
     const group = this.getGroup(groupId)
     const { block } = group
     const { id: sceneId } = block.scene
-    const groupData = await SceneData.getGroup(sceneId, groupId)
+    const groupData = SceneData.getGroup(sceneId, groupId)
 
     group.trigger =
       groupData.Triggers.filter((trigger) => groupData.Suites?.[suite - 1]?.Triggers?.includes(trigger.Name)) || []

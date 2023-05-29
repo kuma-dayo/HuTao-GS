@@ -5,7 +5,7 @@ class MaterialDataLoader extends Loader {
   declare data: MaterialDataList
 
   constructor() {
-    super("MaterialData", [])
+    super("MaterialData", "message.cache.debug.material", [])
   }
 
   async getData(): Promise<void> {

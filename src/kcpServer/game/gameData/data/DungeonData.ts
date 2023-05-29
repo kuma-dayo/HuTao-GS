@@ -5,7 +5,7 @@ class DungeonDataLoader extends Loader {
   declare data: DungeonDataGroup
 
   constructor() {
-    super("DungeonData")
+    super("DungeonData", "message.cache.debug.dungeon")
   }
 
   async getData(): Promise<void> {

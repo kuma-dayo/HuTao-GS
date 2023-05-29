@@ -5,7 +5,7 @@ class MapAreaDataLoader extends Loader {
   declare data: MapAreaDataList
 
   constructor() {
-    super("MapAreaData", [])
+    super("MapAreaData", "message.cache.debug.mapArea", [])
   }
 
   async getData(): Promise<void> {
