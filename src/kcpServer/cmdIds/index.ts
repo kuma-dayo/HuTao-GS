@@ -1,4 +1,4 @@
-import ver1_4 from "./ver1_4"
+import ver1_0 from "./ver1_0"
 import ver1_6_51 from "./ver1_6_51"
 import ver2_6 from "./ver2_6"
 import ver2_7 from "./ver2_7"
@@ -14,8 +14,12 @@ import config, { DEFAULT_CONFIG } from "@/config"
 import { CmdIds } from "@/types/kcp"
 
 const versionMap: { [version: string]: CmdIds } = {
-  "1.4.0": ver1_4,
-  "1.4.50": ver1_4,
+  "1.0.0": ver1_0,
+  "1.1.0": ver1_0,
+  "1.2.0": ver1_0,
+  "1.3.0": ver1_0,
+  "1.4.0": ver1_0,
+  "1.4.50": ver1_0,
   "1.6.51": ver1_6_51,
   "2.6.0": ver2_6,
   "2.7.0": ver2_7,
