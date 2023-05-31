@@ -1,8 +1,6 @@
 # HuTao-GS
 Supported version: 1.0.0 - 3.7.0
 
-1.0.0 - 1.2.0 It probably should work, but we haven't tested it.  
-
 Please let us know which version you would like us to support.  
 We'll consider adding it.
 ## HuTao-GS's current features
