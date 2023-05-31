@@ -1,8 +1,8 @@
 # HuTao-GS
 Supported version: 1.4.0 - 3.7.0
 
-1.4.0 has not been tested much
-
+Please let us know which version you would like us to support.  
+We'll consider adding it.
 ## HuTao-GS's current features
 
 * Logging in
