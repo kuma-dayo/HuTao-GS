@@ -42,7 +42,7 @@ class LogRecorderHandler extends Handler {
       errorCategory,
     } = <RecorderLogData>req.body
 
-    logger.debug(`[UID:${uid.toString() || "-".repeat(6)}]`, logStr)
+    logger.debug(`[UID:${uid?.toString() || "-".repeat(6)}]`, logStr)
 
     if (GlobalState.get("SaveRecorder")) {
       const path = join(cwd(), "data/log/client/recorder.json")
