@@ -1,12 +1,13 @@
 # HuTao-GS
 Supported version: 1.0.0 - 3.7.0
 
-GUIDE:  
-1.0.0 to 1.2.0 must use proxycap  
-1.0.0 worked with [1.4.0](https://github.com/kuma-dayo/GenshinData/tree/1.4.0) resources  
-
 > Please let us know which version you would like us to support.  
 > We'll consider adding it.
+
+## Old Version GUIDE
+1.0.0 to 1.2.0 must use proxycap.  
+1.0.0 worked with [1.4.0](https://github.com/kuma-dayo/GenshinData/tree/1.4.0) resources.  
+
 ## HuTao-GS's current features
 
 * Logging in
