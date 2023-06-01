@@ -22,7 +22,7 @@ export default class SceneTag {
       type: cond.CondType,
       params: [cond.Param1, cond.Param2].filter((param) => param != null),
     }))
-    this.isDefault = data.IsDefaultValid
+    this.isDefault = !!data.IsDefaultValid
   }
 
   get activityManager() {

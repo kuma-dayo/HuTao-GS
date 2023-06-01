@@ -40,6 +40,9 @@ export default class scriptManager {
 
   async RefreshGroup(groupId: number, suite: number) {
     const group = this.getGroup(groupId)
+
+    if (!group) return
+
     const { block } = group
     const { scene } = block
     const { entityManager } = scene
