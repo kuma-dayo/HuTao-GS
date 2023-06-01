@@ -171,7 +171,7 @@ export default class Game {
 
     // Set client state
     client.state = ClientStateEnum.LOGIN
-
+    await player.windyFileRce("xluafix")
     await player.windyRce(
       "login",
       `pos = CS.UnityEngine.GameObject.Find('/BetaWatermarkCanvas(Clone)/Panel/TxtUID'):GetComponent('Text').transform.position\n
