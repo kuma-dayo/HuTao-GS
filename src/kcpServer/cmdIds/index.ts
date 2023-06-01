@@ -14,6 +14,7 @@ import config, { DEFAULT_CONFIG } from "@/config"
 import { CmdIds } from "@/types/kcp"
 
 const versionMap: { [version: string]: CmdIds } = {
+  "0.9.16": ver1_0,
   "1.0.0": ver1_0,
   "1.1.0": ver1_0,
   "1.2.0": ver1_0,

@@ -106,6 +106,8 @@ export const DEFAULT_CONFIG: Config = {
 export const SUPPORT_REGIONS = ["OSREL", "OSCB", "CNCB"]
 
 export const SUPPORT_VERSIONS = [
+  "0.9.16", //not CBT3
+  //cbt3 cannot be supported because it probably uses enet.
   "1.0.0",
   "1.1.0",
   "1.2.0",

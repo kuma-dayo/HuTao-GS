@@ -86,8 +86,8 @@ class DispatchHandler extends Handler {
         }
         break
       }
-      case clientVersion >= 0x010000: {
-        // >= 1.0.0
+      case clientVersion >= 0x910: {
+        // >= 0.9.16
         response = (
           await this.curRegionRsp(
             searchParams.get("dispatchSeed"),
