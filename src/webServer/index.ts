@@ -126,9 +126,9 @@ export default class WebServer extends EventEmitter {
       const request = new HttpRequest(this, req)
       await request.waitBody()
 
-      const { url } = request
+      const { url, searchParams } = request
       const { host, pathname } = url
-      const fullUrl = host + pathname
+      const fullUrl = host + pathname + "?" + searchParams
 
       let response: HttpResponse
       let isVerbose = false
