@@ -5,19 +5,16 @@ import SceneGroup from "$/scene/sceneGroup"
 import Logger from "@/logger"
 import { EventTypeEnum } from "@/types/enum"
 
+const logger = new Logger("ScriptManager", 0xff7f50)
 export default class scriptManager {
   scene: Scene
   sceneGroups: Map<number, SceneGroup>
 
   currentGroup: SceneGroup
 
-  logger: Logger
-
   constructor(scene: Scene) {
     this.scene = scene
     this.sceneGroups = new Map()
-
-    this.logger = new Logger("ScriptManager", 0xff7f50)
   }
   get host(): Player {
     return this.scene.world.host
@@ -35,7 +32,7 @@ export default class scriptManager {
     this.currentGroup = this.sceneGroups.get(groupId)
 
     if (this.currentGroup != undefined) await scriptTrigger.runTrigger(scriptLoader, this, type, ...args)
-    else this.logger.error(`No group with id ${groupId}`)
+    else logger.error(`No group with id ${groupId}`)
   }
 
   async RefreshGroup(groupId: number, suite: number) {

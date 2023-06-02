@@ -1,21 +1,24 @@
 import { LuaEngine, LuaFactory } from "wasmoon"
 
 import ScriptArgs from "./scriptArgs"
-import scriptLibContext from "./scriptLibContext"
+import context from "./scriptLibContext"
 import ScriptLoader from "./scriptLoader"
 import scriptManager from "./scriptManager"
 
 import BaseClass from "#/baseClass"
+import Logger from "@/logger"
 import { EventTypeEnum } from "@/types/enum"
 import { getFunctionName, toCamelCase } from "@/utils/string"
 
 interface conditionFunc {
-  (scriptLibContext: scriptLibContext, args: ScriptArgs): boolean
+  (context: context, args: ScriptArgs): boolean
 }
 
 interface actionFunc {
-  (scriptLibContext: scriptLibContext, args: ScriptArgs): void
+  (context: context, args: ScriptArgs): void
 }
+
+const logger = new Logger("ScriptTrigger", 0xff7f50)
 
 export default class ScriptTrigger extends BaseClass {
   lua: LuaEngine
@@ -53,7 +56,7 @@ export default class ScriptTrigger extends BaseClass {
   // AnyMonsterDie
 
   handleAnyMonsterDie(scriptManager: scriptManager, lua: LuaEngine, configId: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -62,7 +65,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
           if (condition) {
@@ -88,7 +91,7 @@ export default class ScriptTrigger extends BaseClass {
   // AnyGadgetDie
 
   handleAnyGadgetDie(scriptManager: scriptManager, lua: LuaEngine, gadgetId: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -99,7 +102,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: gadgetId }
 
           if (condition) {
@@ -125,7 +128,7 @@ export default class ScriptTrigger extends BaseClass {
   // VariableChange
 
   handleVariableChange(scriptManager: scriptManager, lua: LuaEngine, oldValue: number, newValue: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -134,7 +137,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: oldValue, param2: newValue }
 
           if (condition) {
@@ -160,7 +163,7 @@ export default class ScriptTrigger extends BaseClass {
   // EnterRegion
 
   handleEnterRegion(scriptManager: scriptManager, lua: LuaEngine, configId: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -169,7 +172,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId }
 
           if (condition) {
@@ -197,7 +200,7 @@ export default class ScriptTrigger extends BaseClass {
   // GadgetCreate
 
   handleGadgetCreate(scriptManager: scriptManager, lua: LuaEngine, configIdList: number[]) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -207,7 +210,7 @@ export default class ScriptTrigger extends BaseClass {
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
           configIdList.forEach((configId) => {
-            const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+            const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: configId }
 
             if (condition) {
@@ -232,7 +235,7 @@ export default class ScriptTrigger extends BaseClass {
   // GadgetStateChange
 
   handleGadgetStateChange(scriptManager: scriptManager, lua: LuaEngine, configId: number, state: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -241,7 +244,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: state, param2: configId }
 
           if (condition) {
@@ -267,7 +270,7 @@ export default class ScriptTrigger extends BaseClass {
   // DungeonSettle
 
   handleDungeonSettle(scriptManager: scriptManager, lua: LuaEngine, ischallenge: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.block.groupList.forEach((sceneGroup) => {
@@ -277,7 +280,7 @@ export default class ScriptTrigger extends BaseClass {
             const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
             const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-            const context: scriptLibContext = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
+            const context: context = { currentGroup: sceneGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: ischallenge ? 0 : 1 }
 
             if (condition) {
@@ -304,7 +307,7 @@ export default class ScriptTrigger extends BaseClass {
   // SelectOption
 
   handleSelectOption(scriptManager: scriptManager, lua: LuaEngine, configId: number, optionid: number) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -313,7 +316,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = { param1: configId, param2: optionid }
 
           if (condition) {
@@ -341,7 +344,7 @@ export default class ScriptTrigger extends BaseClass {
   // AnyMonsterLive
 
   handleAnyMonsterLive(scriptManager: scriptManager, lua: LuaEngine, configIdList: number[]) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -351,7 +354,7 @@ export default class ScriptTrigger extends BaseClass {
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
           configIdList.forEach((configId) => {
-            const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+            const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
             const args: ScriptArgs = { param1: configId }
 
             if (condition) {
@@ -383,7 +386,7 @@ export default class ScriptTrigger extends BaseClass {
   // ChallengeSuccess
 
   handleChallengeSuccess(scriptManager: scriptManager, lua: LuaEngine) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -392,7 +395,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
           if (condition) {
@@ -418,7 +421,7 @@ export default class ScriptTrigger extends BaseClass {
   // ChallengeFail
 
   handleChallengeFail(scriptManager: scriptManager, lua: LuaEngine) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -427,7 +430,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
           if (condition) {
@@ -473,7 +476,7 @@ export default class ScriptTrigger extends BaseClass {
 
   // GroupLoad
   handleGroupLoad(scriptManager: scriptManager, lua: LuaEngine) {
-    const { currentGroup, logger } = scriptManager
+    const { currentGroup } = scriptManager
 
     try {
       currentGroup.trigger
@@ -482,7 +485,7 @@ export default class ScriptTrigger extends BaseClass {
           const condition: conditionFunc = lua.global.get(getFunctionName(Condition))
           const action: actionFunc = lua.global.get(getFunctionName(Action))
 
-          const context: scriptLibContext = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
+          const context: context = { currentGroup: currentGroup, scriptManager: scriptManager, uid: 0 }
           const args: ScriptArgs = null
 
           if (condition) {
