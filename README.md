@@ -1,3 +1,5 @@
+# This code has been moved to another repository https://github.com/Wangsheng-Funeral-Parlor/HuTao-GS/tree/dev
+
 # HuTao-GS
 Supported version: 0.9.16 - 3.7.0
 
