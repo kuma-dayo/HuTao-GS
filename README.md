@@ -1,8 +1,8 @@
 # HuTao-GS
 Supported version: 0.9.16 - 3.7.0
 
-> Please let us know which version you would like us to support.  
-> We'll consider adding it.
+> Let us know if there is a version you would like us to support.  
+> Will probably add.
 
 ## Old Version GUIDE
 0.9.16 to 1.2.0 must use proxycap.  
